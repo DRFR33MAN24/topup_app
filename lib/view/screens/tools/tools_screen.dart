@@ -1,0 +1,37 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stylizeit/provider/theme_provider.dart';
+import 'package:stylizeit/util/custom_themes.dart';
+import 'package:stylizeit/util/dimensions.dart';
+
+class ToolsScreen extends StatefulWidget {
+  const ToolsScreen({Key? key}) : super(key: key);
+
+  @override
+  _ToolsScreenState createState() => _ToolsScreenState();
+}
+
+class _ToolsScreenState extends State<ToolsScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+        onWillPop: () async {
+          Navigator.of(context).pop();
+
+          return true;
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: Row(children: [
+              const SizedBox(width: Dimensions.paddingSizeSmall),
+              Text('Magic Tools',
+                  style: robotoRegular.copyWith(
+                      fontSize: 20, color: Theme.of(context).cardColor)),
+            ]),
+            backgroundColor: Provider.of<ThemeProvider>(context).darkTheme
+                ? Colors.black
+                : Theme.of(context).primaryColor,
+          ),
+        ));
+  }
+}
