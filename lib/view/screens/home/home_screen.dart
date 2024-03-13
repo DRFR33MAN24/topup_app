@@ -24,6 +24,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future<void> _loadData(bool reload) async {
     await Provider.of<StyleProvider>(Get.context!, listen: false)
@@ -66,6 +67,33 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     return Scaffold(
+      key: _scaffoldKey,
+      endDrawerEnableOpenDragGesture: false,
+      drawer: Drawer(
+        child: ListView(children: [
+          DrawerHeader(child: Text("Drawer")),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text("Home"),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: Icon(Icons.account_box),
+            title: Text("About"),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: Icon(Icons.grid_3x3_outlined),
+            title: Text("Products"),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: Icon(Icons.contact_mail),
+            title: Text("Contact"),
+            onTap: () {},
+          )
+        ]),
+      ),
       body: SafeArea(
           child: RefreshIndicator(
         onRefresh: () async {
@@ -81,31 +109,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 centerTitle: false,
                 automaticallyImplyLeading: false,
                 backgroundColor: Theme.of(context).cardColor,
-                title: Image.asset(Images.logoWithNameImage, height: 35),
+                title: IconButton(
+                  onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+                  icon: Row(children: [
+                    Icon(
+                      Icons.list,
+                      color: Theme.of(context).primaryColor,
+                      size: 32,
+                    )
+                  ]),
+                ),
                 actions: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 40),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const PickPackage()));
-                      },
-                      icon: Row(children: [
-                        Image.asset(
-                          Images.coins,
-                          height: Dimensions.iconSizeDefault,
-                          width: Dimensions.iconSizeDefault,
-                          color: ColorResources.getPrimary(context),
-                        ),
-                        Text("1000000",
-                            style: titilliumSemiBold.copyWith(
-                              color: ColorResources.getPrimary(context),
-                              fontSize: Dimensions.fontSizeExtraSmall,
-                            )),
-                      ]),
-                    ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const PickPackage()));
+                    },
+                    icon: Row(children: [
+                      Icon(
+                        Icons.notifications,
+                        color: Theme.of(context).primaryColor,
+                        size: 32,
+                      )
+                    ]),
                   ),
                 ],
               ),
@@ -124,6 +152,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           tagsMap = styleProvider.tagsToggleMap;
 
                           return Column(children: [
+                            Container(
+                              width: 250,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).primaryColor,
+                                border: Border.all(
+                                  width: 1.0,
+                                  color: Theme.of(context).cardColor,
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0) //
+                                    ),
+                              ),
+                            ),
                             SingleChildScrollView(
                               physics: BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
@@ -198,11 +240,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                         height: Dimensions.cardHeight,
                                         child: StaggeredGridView.countBuilder(
                                           itemCount: styleList.length,
-                                          crossAxisCount: 2,
+                                          crossAxisCount: 3,
                                           padding: const EdgeInsets.all(0),
                                           physics:
                                               const NeverScrollableScrollPhysics(),
-                                          shrinkWrap: true,
+                                          shrinkWrap: false,
                                           staggeredTileBuilder: (int index) =>
                                               const StaggeredTile.fit(1),
                                           itemBuilder: (BuildContext context,

@@ -12,6 +12,7 @@ class ConfigModel {
 
   bool? _emailVerification;
   bool? _phoneVerification;
+  String? _countryCode;
 
   List<SocialLogin>? _socialLogin;
   String? _forgetPasswordVerification;
@@ -31,6 +32,7 @@ class ConfigModel {
       List<String>? language,
       bool? emailVerification,
       bool? phoneVerification,
+      String? countryCode,
       List<SocialLogin>? socialLogin,
       String? forgetPasswordVerification,
       Announcement? announcement,
@@ -55,7 +57,7 @@ class ConfigModel {
 
     _emailVerification = emailVerification;
     _phoneVerification = phoneVerification;
-
+    _countryCode = countryCode;
     _socialLogin = socialLogin;
     _forgetPasswordVerification = forgetPasswordVerification;
     _announcement = announcement;
@@ -79,6 +81,7 @@ class ConfigModel {
 
   bool? get emailVerification => _emailVerification;
   bool? get phoneVerification => _phoneVerification;
+  String? get countryCode => _countryCode;
 
   List<SocialLogin>? get socialLogin => _socialLogin;
   String? get forgetPasswordVerification => _forgetPasswordVerification;
@@ -106,6 +109,7 @@ class ConfigModel {
 
     _emailVerification = json['email_verification'];
     _phoneVerification = json['phone_verification'];
+    _countryCode = json['country_code'];
 
     if (json['social_login'] != null) {
       _socialLogin = [];
@@ -149,6 +153,7 @@ class ConfigModel {
 
     data['email_verification'] = _emailVerification;
     data['phone_verification'] = _phoneVerification;
+    data['country_code'] = _countryCode;
 
     if (_socialLogin != null) {
       data['social_login'] = _socialLogin!.map((v) => v.toJson()).toList();

@@ -10,6 +10,7 @@ import 'package:stylizeit/util/color_resources.dart';
 import 'package:stylizeit/util/images.dart';
 import 'package:stylizeit/view/basewidgets/no_internet_screen.dart';
 import 'package:stylizeit/view/screens/auth/auth_screen.dart';
+import 'package:stylizeit/view/screens/auth/widget/mobile_verify_screen.dart';
 import 'package:stylizeit/view/screens/auth/widget/otp_verification_screen.dart';
 //import 'package:stylizeit/view/screens/auth/auth_screen.dart';
 import 'package:stylizeit/view/screens/dashboard/dashboard_screen.dart';
@@ -104,7 +105,7 @@ class SplashScreenState extends State<SplashScreen> {
               } else {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (BuildContext context) =>
-                        const VerificationScreen('', '')));
+                        const MobileVerificationScreen("")));
                 // builder: (BuildContext context) =>
                 //     const DashboardScreen()));
               }

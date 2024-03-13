@@ -450,5 +450,6 @@
   "offline_payment_title": "Bank Transfer",
   "stripe_title": "Pay with credit card",
   "charity_platform": "Charity Pazaar",
-  "tools": "tools"
+  "tools": "tools",
+  "payment": "Payment"
 }

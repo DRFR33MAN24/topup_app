@@ -4,14 +4,14 @@ import 'package:stylizeit/provider/theme_provider.dart';
 import 'package:stylizeit/util/custom_themes.dart';
 import 'package:stylizeit/util/dimensions.dart';
 
-class ToolsScreen extends StatefulWidget {
-  const ToolsScreen({Key? key}) : super(key: key);
+class OrdersScreen extends StatefulWidget {
+  const OrdersScreen({Key? key}) : super(key: key);
 
   @override
-  _ToolsScreenState createState() => _ToolsScreenState();
+  _OrdersScreenState createState() => _OrdersScreenState();
 }
 
-class _ToolsScreenState extends State<ToolsScreen> {
+class _OrdersScreenState extends State<OrdersScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -24,7 +24,7 @@ class _ToolsScreenState extends State<ToolsScreen> {
           appBar: AppBar(
             title: Row(children: [
               const SizedBox(width: Dimensions.paddingSizeSmall),
-              Text('Magic Tools',
+              Text('Orders',
                   style: robotoRegular.copyWith(
                       fontSize: 20, color: Theme.of(context).cardColor)),
             ]),

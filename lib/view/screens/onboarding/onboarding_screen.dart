@@ -10,6 +10,7 @@ import 'package:stylizeit/util/images.dart';
 // import 'package:stylizeit/view/screens/auth/auth_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:stylizeit/view/screens/auth/auth_screen.dart';
+import 'package:stylizeit/view/screens/auth/widget/mobile_verify_screen.dart';
 import 'package:stylizeit/view/screens/dashboard/dashboard_screen.dart';
 
 class OnBoardingScreen extends StatelessWidget {
@@ -112,7 +113,8 @@ class OnBoardingScreen extends StatelessWidget {
                                 .disableIntro();
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                    builder: (context) => const AuthScreen()));
+                                    builder: (context) =>
+                                        const MobileVerificationScreen("")));
                             // builder: (context) =>
                             //     const DashboardScreen()));
                           } else {

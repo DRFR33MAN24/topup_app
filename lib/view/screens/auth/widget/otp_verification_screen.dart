@@ -14,6 +14,8 @@ import 'package:stylizeit/view/screens/auth/auth_screen.dart';
 
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
+import 'package:stylizeit/view/screens/auth/widget/mobile_verify_screen.dart';
+import 'package:stylizeit/view/screens/dashboard/dashboard_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
   final String tempToken;
@@ -52,6 +54,23 @@ class _VerificationScreenState extends State<VerificationScreen> {
   void dispose() {
     super.dispose();
     _timer?.cancel();
+  }
+
+  route(bool isRoute, String? token) async {
+    if (isRoute) {
+      if (token != null) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (_) => const DashboardScreen()),
+            (route) => false);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("phone verify error"), backgroundColor: Colors.red));
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("phone verify error"), backgroundColor: Colors.red));
+    }
   }
 
   @override
@@ -176,12 +195,12 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                     buttonText:
                                         getTranslated('verify', context),
                                     onTap: () {
-                                      bool phoneVerification =
-                                          Provider.of<SplashProvider>(context,
-                                                      listen: false)
-                                                  .configModel!
-                                                  .forgetPasswordVerification ==
-                                              'phone';
+                                      // bool phoneVerification =
+                                      //     Provider.of<SplashProvider>(context,
+                                      //                 listen: false)
+                                      //             .configModel!
+                                      //             .forgetPasswordVerification ==
+                                      //         'phone';
                                       // if (phoneVerification &&
                                       //     widget.fromForgetPassword) {
                                       //   Provider.of<AuthProvider>(context,
@@ -212,35 +231,31 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                       //   });
                                       // }
                                       {
-                                        if (Provider.of<SplashProvider>(context,
+                                        Provider.of<AuthProvider>(context,
                                                 listen: false)
-                                            .configModel!
-                                            .phoneVerification!) {
-                                          Provider.of<AuthProvider>(context,
-                                                  listen: false)
-                                              .verifyPhone(widget.mobileNumber,
-                                                  widget.tempToken)
-                                              .then((value) {
-                                            if (value.isSuccess) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content: Text(getTranslated(
-                                                    'sign_up_successfully_now_login',
-                                                    context)!),
-                                                backgroundColor: Colors.green,
-                                              ));
-                                              Navigator.pushAndRemoveUntil(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (_) =>
-                                                          const AuthScreen()),
-                                                  (route) => false);
-                                            } else {
-                                              showCustomSnackBar(
-                                                  value.message, context);
-                                            }
-                                          });
-                                        }
+                                            .verifyPhone(widget.mobileNumber,
+                                                widget.tempToken, route)
+                                            .then((value) {
+                                          if (value.isSuccess) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                              content: Text(getTranslated(
+                                                  'sign_up_successfully_now_login',
+                                                  context)!),
+                                              backgroundColor: Colors.green,
+                                            ));
+                                            Navigator.pushAndRemoveUntil(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        const DashboardScreen()),
+                                                (route) => false);
+                                          } else {
+                                            showCustomSnackBar(
+                                                value.message, context);
+                                          }
+                                        });
+
                                         //  else {
                                         //   Provider.of<AuthProvider>(context,
                                         //           listen: false)

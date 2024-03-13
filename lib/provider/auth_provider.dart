@@ -72,7 +72,8 @@ class AuthProvider with ChangeNotifier {
     return responseModel;
   }
 
-  Future<ResponseModel> verifyPhone(String phone, String token) async {
+  Future<ResponseModel> verifyPhone(
+      String phone, String token, Function callback) async {
     _isPhoneNumberVerificationButtonLoading = true;
     _verificationMsg = '';
     notifyListeners();
@@ -85,6 +86,23 @@ class AuthProvider with ChangeNotifier {
         apiResponse.response!.statusCode == 200) {
       responseModel =
           ResponseModel(apiResponse.response!.data["message"], true);
+      Map map = apiResponse.response!.data;
+      String? token = '';
+      try {
+        token = map["token"];
+      } catch (e) {
+        if (kDebugMode) {
+          print(e);
+        }
+      }
+
+      if (token != null && token.isNotEmpty) {
+        authRepo!.saveUserToken(token);
+        await authRepo!.updateToken();
+      }
+
+      callback(true, token);
+      notifyListeners();
     } else {
       String? errorMessage;
       if (apiResponse.error is String) {

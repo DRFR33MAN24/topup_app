@@ -44,7 +44,7 @@ class _StyleWidgetState extends State<StyleWidget>
       ..addListener(() {
         setState(() {});
       });
-    controller.repeat(reverse: true);
+    // controller.repeat(reverse: true);
   }
 
   @override

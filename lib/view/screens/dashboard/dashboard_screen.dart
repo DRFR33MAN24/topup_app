@@ -8,6 +8,7 @@ import 'package:stylizeit/view/screens/auth/auth_screen.dart';
 import 'package:stylizeit/view/screens/home/home_screen.dart';
 
 import 'package:provider/provider.dart';
+import 'package:stylizeit/view/screens/payment/payment_screen.dart';
 import 'package:stylizeit/view/screens/tools/tools_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -30,7 +31,8 @@ class DashboardScreenState extends State<DashboardScreen> {
 
     _screens = [
       const HomeScreen(),
-      const ToolsScreen(),
+      const OrdersScreen(),
+      const PaymentScreen(),
     ];
 
     NetworkInfo.checkConnectivity(context);
@@ -86,6 +88,18 @@ class DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  BottomNavigationBarItem _barItemIcon(
+      IconData icon, String? label, int index) {
+    return BottomNavigationBarItem(
+      icon: Icon(icon,
+          color: index == _pageIndex
+              ? Theme.of(context).primaryColor
+              : Theme.of(context).textTheme.bodyLarge!.color!.withOpacity(0.5),
+          size: 25),
+      label: label,
+    );
+  }
+
   void _setPage(int pageIndex) {
     setState(() {
       _pageController.jumpToPage(pageIndex);
@@ -97,7 +111,9 @@ class DashboardScreenState extends State<DashboardScreen> {
     List<BottomNavigationBarItem> list = [];
 
     list.add(_barItem(Images.homeImage, getTranslated('home', context), 0));
-    list.add(_barItem(Images.tools, getTranslated('tools', context), 1));
+    list.add(
+        _barItemIcon(Icons.shopping_cart, getTranslated('orders', context), 1));
+    list.add(_barItemIcon(Icons.payment, getTranslated('home', context), 2));
 
     return list;
   }
