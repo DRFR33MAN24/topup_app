@@ -20,7 +20,17 @@ class AppConstants {
   static const String checkPhoneUri = '/api/auth/check-phone';
   static const String resendPhoneOtpUri = '/api/v1/auth/resend-otp-check-phone';
   static const String latestStyles = '/api/styles/styles?limit=10&&offset=';
+  static const String transaction =
+      '/api/transaction/transaction?limit=10&&offset=';
   static const String stylesTags = '/api/styles/tags';
+
+  static const String customerUri = '/api/styles/tags';
+  static const String deleteCustomerAccount = '/api/styles/tags';
+  static const String updateProfileUri = '/api/styles/tags';
+
+  static const String latestCategories =
+      '/api/categories/categories?limit=10&&offset=';
+  static const String categoriesTags = '/api/categories/tags';
   static const String packages = '/api/payment/packages';
 
   static const String placeOrder = '/api/orders/place-order';

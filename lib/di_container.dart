@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:stylizeit/data/datasource/remote/dio/dio_client.dart';
 import 'package:stylizeit/data/datasource/remote/dio/logging_interceptor.dart';
 import 'package:stylizeit/data/repository/auth_repo.dart';
+import 'package:stylizeit/data/repository/category_repo.dart';
 import 'package:stylizeit/data/repository/onboarding_repo.dart';
 import 'package:stylizeit/data/repository/order_repo.dart';
 import 'package:stylizeit/data/repository/payment_repo.dart';
@@ -10,6 +11,7 @@ import 'package:stylizeit/data/repository/splash_repo.dart';
 import 'package:stylizeit/data/repository/style_repo.dart';
 import 'package:stylizeit/helper/network_info.dart';
 import 'package:stylizeit/provider/auth_provider.dart';
+import 'package:stylizeit/provider/category_provider.dart';
 import 'package:stylizeit/provider/google_sign_in_provider.dart';
 import 'package:stylizeit/provider/localization_provider.dart';
 import 'package:stylizeit/provider/onboarding_provider.dart';
@@ -34,6 +36,7 @@ Future<void> init() async {
   // Repository
 
   sl.registerLazySingleton(() => StyleRepo(dioClient: sl()));
+  sl.registerLazySingleton(() => CategoryRepo(dioClient: sl()));
   sl.registerLazySingleton(() => PaymentRepo(dioClient: sl()));
 
   sl.registerLazySingleton(() => OnBoardingRepo(dioClient: sl()));
@@ -48,6 +51,7 @@ Future<void> init() async {
   // Provider
 
   sl.registerFactory(() => StyleProvider(styleRepo: sl()));
+  sl.registerFactory(() => CategoryProvider(categoryRepo: sl()));
 
   sl.registerFactory(() => OnBoardingProvider(onboardingRepo: sl()));
   sl.registerFactory(() => AuthProvider(authRepo: sl()));

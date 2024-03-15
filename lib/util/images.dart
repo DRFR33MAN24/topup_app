@@ -75,6 +75,7 @@ class Images {
   static const String searchIcon = 'assets/images/search_icon.png';
   static const String splashScreenLogo =
       'assets/images/logo_with_name_white.svg';
+  static const String logo_giftme = 'assets/images/logo_giftme.png';
   static const String cPolicy = 'assets/images/c_policy.png';
   static const String returnPolicy = 'assets/images/return_policy.png';
   static const String refundPolicy = 'assets/images/refund_policy.png';

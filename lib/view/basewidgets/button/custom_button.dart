@@ -35,9 +35,9 @@ class CustomButton extends StatelessWidget {
             //         : Theme.of(context).primaryColor),
             boxShadow: [
               BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 1,
-                  blurRadius: 7,
+                  color: Theme.of(context).primaryColor,
+                  // spreadRadius: 1,
+                  // blurRadius: 7,
                   offset: const Offset(0, 1)), // changes position of shadow
             ],
             borderRadius: BorderRadius.circular(radius != null
@@ -47,6 +47,7 @@ class CustomButton extends StatelessWidget {
                     : Dimensions.paddingSizeSmall)),
         child: Text(buttonText!,
             style: titilliumSemiBold.copyWith(
+              color: Colors.white,
               fontSize: 16,
               //  color: Theme.of(context).cardColor
             )),

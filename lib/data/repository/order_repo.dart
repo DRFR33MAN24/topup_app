@@ -23,23 +23,17 @@ class OrderRepo {
   // }
 
   Future<http.StreamedResponse> placeOrder(
-      String styleId, Uint8List? img, String token) async {
+      String serviceId, String token) async {
     // File file = File.fromRawPath(img!);
     http.MultipartRequest request = http.MultipartRequest(
         'POST', Uri.parse('${AppConstants.baseUrl}${AppConstants.placeOrder}'));
     request.headers.addAll(<String, String>{'Authorization': 'Bearer $token'});
-    if (img != null) {
-      // request.files.add(http.MultipartFile(
-      //     'image', file.readAsBytes().asStream(), file.lengthSync(),
-      //     filename: "source_img.png"));
-      request.files.add(
-          http.MultipartFile.fromBytes('image', img, filename: "order.png"));
-    }
+
     Map<String, String> fields = {};
 
     fields.addAll(<String, String>{
       '_method': 'post',
-      'style_id': styleId,
+      'style_id': serviceId,
     });
 
     request.fields.addAll(fields);

@@ -1,15 +1,15 @@
 {
   "project_info": {
     "project_number": "554105716189",
-    "project_id": "stylizeit-80103",
-    "storage_bucket": "stylizeit-80103.appspot.com"
+    "project_id": "giftme-80103",
+    "storage_bucket": "giftme-80103.appspot.com"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:554105716189:android:23f06ffb2525e5bdd30a34",
         "android_client_info": {
-          "package_name": "com.codeone.stylizeit"
+          "package_name": "com.codeone.giftme"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "554105716189-en9rnm66f3no6n0tdb9j6ka5ci39lnul.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.codeone.stylizeit",
+            "package_name": "com.codeone.giftme",
             "certificate_hash": "e091f7ed24cb1a8e4b63be586e189495e18001cd"
           }
         },

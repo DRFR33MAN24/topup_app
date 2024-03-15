@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:stylizeit/helper/custom_delegate.dart';
 import 'package:stylizeit/localization/app_localization.dart';
 import 'package:stylizeit/provider/auth_provider.dart';
+import 'package:stylizeit/provider/category_provider.dart';
 import 'package:stylizeit/provider/google_sign_in_provider.dart';
 import 'package:stylizeit/provider/localization_provider.dart';
 import 'package:stylizeit/provider/onboarding_provider.dart';
@@ -25,6 +26,7 @@ Future<void> main() async {
   await di.init();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => di.sl<StyleProvider>()),
+    ChangeNotifierProvider(create: (context) => di.sl<CategoryProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<OnBoardingProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<AuthProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<OrderProvider>()),

@@ -113,7 +113,7 @@ class DashboardScreenState extends State<DashboardScreen> {
     list.add(_barItem(Images.homeImage, getTranslated('home', context), 0));
     list.add(
         _barItemIcon(Icons.shopping_cart, getTranslated('orders', context), 1));
-    list.add(_barItemIcon(Icons.payment, getTranslated('home', context), 2));
+    list.add(_barItemIcon(Icons.payment, getTranslated('payment', context), 2));
 
     return list;
   }

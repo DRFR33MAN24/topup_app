@@ -169,7 +169,7 @@ class _EditPhotoState extends State<EditPhoto> {
                             SizedBox(
                               width: 10,
                             ),
-                            Text(orderProvider.progress),
+                            // Text(orderProvider.progress),
                           ],
                         ),
                       ),
@@ -191,10 +191,10 @@ class _EditPhotoState extends State<EditPhoto> {
 
     _clip(ClipOption(x: offsetX, y: offsetY, width: scaleX, height: scaleY));
 
-    Provider.of<OrderProvider>(context, listen: false).placeOrder(
-        widget.style.id.toString(),
-        result,
-        Provider.of<AuthProvider>(context, listen: false).getUserToken());
+    // Provider.of<OrderProvider>(context, listen: false).placeOrder(
+    //     widget.style.id.toString(),
+    //     result,
+    //     Provider.of<AuthProvider>(context, listen: false).getUserToken());
   }
 
   void setProvider(ImageProvider? provider, Uint8List? result) {
@@ -222,8 +222,8 @@ class _EditPhotoState extends State<EditPhoto> {
   }
 
   applyStyle() async {
-    Provider.of<OrderProvider>(context, listen: false)
-        .placeOrder("1", result, "");
+    // Provider.of<OrderProvider>(context, listen: false)
+    //     .placeOrder("1", result, "");
   }
 
   Future<void> handleOption(List<Option> options) async {

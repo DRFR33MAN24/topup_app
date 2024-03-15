@@ -138,18 +138,18 @@ class SplashScreenState extends State<SplashScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Image.asset(
-                      //   Images.splashScreenLogo,
-                      //   height: 250.0,
-                      //   fit: BoxFit.scaleDown,
-                      //   width: 250.0,
-                      // ),
-                      SvgPicture.asset(
-                        Images.splashScreenLogo,
-                        height: 200.0,
+                      Image.asset(
+                        Images.logo_giftme,
+                        height: 250.0,
                         fit: BoxFit.scaleDown,
-                        width: 200.0,
-                      )
+                        width: 250.0,
+                      ),
+                      // SvgPicture.asset(
+                      //   Images.splashScreenLogo,
+                      //   height: 200.0,
+                      //   fit: BoxFit.scaleDown,
+                      //   width: 200.0,
+                      // )
                     ],
                   ),
                 ),

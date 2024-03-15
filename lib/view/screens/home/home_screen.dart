@@ -1,14 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stylizeit/data/model/response/style_model.dart';
+import 'package:stylizeit/data/model/response/category_model.dart' as cat;
 import 'package:stylizeit/main.dart';
+import 'package:stylizeit/provider/category_provider.dart';
 import 'package:stylizeit/provider/style_provider.dart';
 import 'package:stylizeit/util/color_resources.dart';
 import 'package:stylizeit/util/custom_themes.dart';
 import 'package:stylizeit/util/dimensions.dart';
 import 'package:stylizeit/util/images.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:stylizeit/view/basewidgets/category_widget.dart';
 import 'package:stylizeit/view/basewidgets/style_shimmer.dart';
 import 'package:stylizeit/view/basewidgets/style_widget.dart';
 import 'package:stylizeit/view/screens/cashout/cashout_screen.dart';
@@ -27,9 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Future<void> _loadData(bool reload) async {
-    await Provider.of<StyleProvider>(Get.context!, listen: false)
-        .getStyleList('1', '', reload: reload);
-    await Provider.of<StyleProvider>(Get.context!, listen: false).getTagsList();
+    await Provider.of<CategoryProvider>(Get.context!, listen: false)
+        .getCategoryList('1', '', reload: reload);
+    await Provider.of<CategoryProvider>(Get.context!, listen: false)
+        .getTagsList();
   }
 
   @override
@@ -45,23 +48,25 @@ class _HomeScreenState extends State<HomeScreen> {
     _scrollController.addListener(() {
       if (_scrollController.position.maxScrollExtent ==
               _scrollController.position.pixels &&
-          Provider.of<StyleProvider>(context, listen: false)
-              .styleList
+          Provider.of<CategoryProvider>(context, listen: false)
+              .categoryList
               .isNotEmpty &&
-          !Provider.of<StyleProvider>(context, listen: false).isLoading) {
+          !Provider.of<CategoryProvider>(context, listen: false).isLoading) {
         int? pageSize;
 
-        pageSize = Provider.of<StyleProvider>(context, listen: false).pageSize;
+        pageSize =
+            Provider.of<CategoryProvider>(context, listen: false).pageSize;
 
         if (offset < pageSize!) {
           offset++;
           if (kDebugMode) {
             print('end of the page');
           }
-          Provider.of<StyleProvider>(context, listen: false).showBottomLoader();
+          Provider.of<CategoryProvider>(context, listen: false)
+              .showBottomLoader();
 
-          Provider.of<StyleProvider>(context, listen: false)
-              .getStyleList(offset.toString(), null);
+          Provider.of<CategoryProvider>(context, listen: false)
+              .getCategoryList(offset.toString(), null);
         }
       }
     });
@@ -71,25 +76,54 @@ class _HomeScreenState extends State<HomeScreen> {
       endDrawerEnableOpenDragGesture: false,
       drawer: Drawer(
         child: ListView(children: [
-          DrawerHeader(child: Text("Drawer")),
+          DrawerHeader(
+              child: Column(
+            children: const [
+              CircleAvatar(
+                radius: 48,
+                backgroundImage: AssetImage(Images.homeImage),
+              ),
+              Text("name")
+            ],
+          )),
           ListTile(
-            leading: Icon(Icons.home),
-            title: Text("Home"),
+            leading: Icon(
+              Icons.person,
+              color: Theme.of(context).primaryColor,
+            ),
+            title: Text("My Profile"),
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.account_box),
-            title: Text("About"),
+            leading: Icon(
+              Icons.money,
+              color: Theme.of(context).primaryColor,
+            ),
+            title: Text("Transactions"),
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.grid_3x3_outlined),
-            title: Text("Products"),
+            leading: Icon(
+              Icons.contact_support,
+              color: Theme.of(context).primaryColor,
+            ),
+            title: Text("Contact Us"),
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.contact_mail),
-            title: Text("Contact"),
+            leading: Icon(
+              Icons.person_remove,
+              color: Theme.of(context).primaryColor,
+            ),
+            title: Text("Delete Account"),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.logout,
+              color: Theme.of(context).primaryColor,
+            ),
+            title: Text("Log Out"),
             onTap: () {},
           )
         ]),
@@ -144,12 +178,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           Dimensions.paddingSizeSmall,
                           Dimensions.paddingSizeDefault,
                           Dimensions.paddingSizeSmall),
-                      child: Consumer<StyleProvider>(
-                        builder: (context, styleProvider, child) {
-                          List<Style> styleList;
+                      child: Consumer<CategoryProvider>(
+                        builder: (context, categoryProvider, child) {
+                          List<cat.Category> categoryList;
                           Map<String, bool> tagsMap;
-                          styleList = styleProvider.styleList;
-                          tagsMap = styleProvider.tagsToggleMap;
+                          categoryList = categoryProvider.categoryList;
+                          tagsMap = categoryProvider.tagsToggleMap;
 
                           return Column(children: [
                             Container(
@@ -183,16 +217,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                             tagsMap.keys.toList()[buttonIndex];
                                         if (buttonIndex == index) {
                                           if (buttonIndexStr == "All") {
-                                            Provider.of<StyleProvider>(
+                                            Provider.of<CategoryProvider>(
                                                     Get.context!,
                                                     listen: false)
-                                                .getStyleList('1', '',
+                                                .getCategoryList('1', '',
                                                     reload: true);
                                           } else {
-                                            Provider.of<StyleProvider>(
+                                            Provider.of<CategoryProvider>(
                                                     Get.context!,
                                                     listen: false)
-                                                .getStyleList(
+                                                .getCategoryList(
                                                     '1', buttonIndexStr,
                                                     reload: true);
                                           }
@@ -234,12 +268,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ))
                                       .toList()),
                             ),
-                            !styleProvider.isLoading
-                                ? styleList.isNotEmpty
+                            !categoryProvider.isLoading
+                                ? categoryList.isNotEmpty
                                     ? SizedBox(
                                         height: Dimensions.cardHeight,
                                         child: StaggeredGridView.countBuilder(
-                                          itemCount: styleList.length,
+                                          itemCount: categoryList.length,
                                           crossAxisCount: 3,
                                           padding: const EdgeInsets.all(0),
                                           physics:
@@ -249,16 +283,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                               const StaggeredTile.fit(1),
                                           itemBuilder: (BuildContext context,
                                               int index) {
-                                            return StyleWidget(
-                                                style: styleList[index]);
+                                            return CategoryWidget(
+                                                category: categoryList[index]);
                                             // return SizedBox();
                                           },
                                         ),
                                       )
                                     : const SizedBox.shrink()
                                 : StyleShimmer(
-                                    isEnabled: styleProvider.isLoading),
-                            styleProvider.isLoading
+                                    isEnabled: categoryProvider.isLoading),
+                            categoryProvider.isLoading
                                 ? Center(
                                     child: Padding(
                                     padding: const EdgeInsets.all(
