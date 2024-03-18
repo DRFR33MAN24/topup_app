@@ -10,9 +10,11 @@ import 'package:stylizeit/provider/localization_provider.dart';
 import 'package:stylizeit/provider/onboarding_provider.dart';
 import 'package:stylizeit/provider/order_provider.dart';
 import 'package:stylizeit/provider/payment_provider.dart';
+import 'package:stylizeit/provider/profile_provider.dart';
 import 'package:stylizeit/provider/splash_provider.dart';
 import 'package:stylizeit/provider/style_provider.dart';
 import 'package:stylizeit/provider/theme_provider.dart';
+import 'package:stylizeit/provider/tranaction_provider.dart';
 import 'package:stylizeit/theme/dark_theme.dart';
 import 'package:stylizeit/theme/light_theme.dart';
 import 'package:stylizeit/util/app_constants.dart';
@@ -27,6 +29,8 @@ Future<void> main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => di.sl<StyleProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<CategoryProvider>()),
+    ChangeNotifierProvider(create: (context) => di.sl<ProfileProvider>()),
+    ChangeNotifierProvider(create: (context) => di.sl<TransactionProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<OnBoardingProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<AuthProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<OrderProvider>()),

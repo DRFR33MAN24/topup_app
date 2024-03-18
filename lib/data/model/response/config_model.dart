@@ -1,7 +1,7 @@
 class ConfigModel {
   String? _aboutUs;
   String? _privacyPolicy;
-
+  num? _currencyConversionFactor;
   String? _termsConditions;
   RefundPolicy? _refundPolicy;
   RefundPolicy? _returnPolicy;
@@ -24,6 +24,7 @@ class ConfigModel {
   ConfigModel(
       {String? aboutUs,
       String? privacyPolicy,
+      num? currencyConversionFactor,
       String? termsConditions,
       RefundPolicy? refundPolicy,
       RefundPolicy? returnPolicy,
@@ -70,6 +71,7 @@ class ConfigModel {
 
   String? get aboutUs => _aboutUs;
   String? get privacyPolicy => _privacyPolicy;
+  num? get currencyConversionFactor => _currencyConversionFactor;
 
   String? get termsConditions => _termsConditions;
   RefundPolicy? get refundPolicy => _refundPolicy;
@@ -92,6 +94,7 @@ class ConfigModel {
   ConfigModel.fromJson(Map<String, dynamic> json) {
     _aboutUs = json['about_us'];
     _privacyPolicy = json['privacy_policy'];
+    _currencyConversionFactor = json['currency_conversion_factor'];
 
     _termsConditions = json['terms_&_conditions'];
     _refundPolicy = json['refund_policy'] != null
@@ -136,6 +139,7 @@ class ConfigModel {
 
     data['about_us'] = _aboutUs;
     data['privacy_policy'] = _privacyPolicy;
+    data["currency_conversion_factor"] = _currencyConversionFactor;
 
     data['terms_&_conditions'] = _termsConditions;
     if (_refundPolicy != null) {

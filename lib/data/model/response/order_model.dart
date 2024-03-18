@@ -105,7 +105,7 @@ class Order {
     _serviceId = json["service_id"];
     _qty = json["quantity"];
     _uploadedImg = json["uploaded_img"];
-    _price = json["price"];
+    _price = json["price"].toString();
     _status = json["status"];
     _description = json["status_description"];
     _reason = json["reason"];

@@ -6,6 +6,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:stylizeit/data/model/response/category_model.dart' as cat;
+import 'package:stylizeit/data/model/response/order_model.dart';
 import 'package:stylizeit/localization/language_constants.dart';
 import 'package:stylizeit/provider/order_provider.dart';
 import 'package:stylizeit/provider/theme_provider.dart';
@@ -18,7 +19,7 @@ import 'dart:io';
 import 'package:stylizeit/view/basewidgets/button/custom_button.dart';
 import 'package:stylizeit/view/basewidgets/service_widget.dart';
 import 'package:stylizeit/view/basewidgets/style_image_widget.dart';
-import 'package:stylizeit/view/screens/style/edit_photo_screen.dart';
+
 import 'package:stylizeit/provider/style_provider.dart';
 
 class CategoryDetailsScreen extends StatefulWidget {
@@ -115,8 +116,8 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                          color: Theme.of(context).disabledColor,
-                          spreadRadius: 3),
+                          color: Theme.of(context).highlightColor,
+                          spreadRadius: 2),
                     ],
                   ),
                   child: Column(
@@ -156,10 +157,16 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                               CustomPrice(price: selectedService.price!),
                             ],
                           ),
-                          CustomButton(
-                            buttonText: "Buy",
-                            onTap: () {},
-                          )
+                          !Provider.of<OrderProvider>(context).isLoading
+                              ? CustomButton(
+                                  radius: 45,
+                                  buttonText: "Buy",
+                                  onTap: () {},
+                                )
+                              : Center(
+                                  child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          Theme.of(context).primaryColor)))
                         ],
                       )
                     ],

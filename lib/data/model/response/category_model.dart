@@ -180,6 +180,7 @@ class Tag {
   int? _id;
 
   String? _tag;
+  String? _image;
   String? _createdAt;
   String? _updatedAt;
 
@@ -187,16 +188,19 @@ class Tag {
       {int? id,
       int? categoryId,
       String? tag,
+      String? image,
       String? updated_at,
       String? created_at}) {
     _id = id;
 
     _tag = tag;
+    _image = image;
     _createdAt = created_at;
     _updatedAt = updated_at;
   }
 
   String? get tag => _tag;
+  String? get image => _image;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
 
@@ -204,6 +208,7 @@ class Tag {
 
   Tag.fromJson(Map<String, dynamic> json) {
     _tag = json['tag'];
+    _image = json['image'];
 
     _id = json["id"];
     _createdAt = json["created_at"];
@@ -215,6 +220,7 @@ class Tag {
     data["id"] = _id;
 
     data['tag'] = _tag;
+    data['image'] = _image;
     data["created_at"] = _createdAt;
     data["updated_at"] = _updatedAt;
     return data;
@@ -255,6 +261,7 @@ class Service {
   int? _min_amount;
   int? _max_amount;
   int? _category_id;
+  String? _image;
 
   String? _title;
   String? _link;
@@ -271,6 +278,7 @@ class Service {
       int? min_amount,
       int? max_amount,
       int? categoryId,
+      String? image,
       String? title,
       String? link,
       String? params,
@@ -285,6 +293,8 @@ class Service {
     _max_amount = max_amount;
     _category_id = categoryId;
 
+    _image = image;
+
     _title = title;
     _link = link;
     _params = params;
@@ -296,6 +306,7 @@ class Service {
   }
 
   String? get title => _title;
+  String? get image => _image;
   String? get link => _link;
   String? get params => _params;
   String? get price => _price;
@@ -318,6 +329,7 @@ class Service {
     _price = json['price'];
     _description = json['description'];
     _type = json['service_type'];
+    _image = json['image'];
 
     _id = json["id"];
     _status = json["service_status"];
@@ -335,6 +347,7 @@ class Service {
     data['min_amount'] = _min_amount;
     data['max_amount'] = _max_amount;
     data["category_id"] = _category_id;
+    data["image"] = _image;
 
     data['title'] = _title;
     data["link"] = _link;

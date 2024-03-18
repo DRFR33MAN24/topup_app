@@ -70,6 +70,7 @@ class ProfileRepo {
         '_method': 'put',
         'f_name': userInfoModel.fName!,
         'l_name': userInfoModel.lName!,
+        'email': userInfoModel.email!,
         'phone': userInfoModel.phone!
       });
     } else {
@@ -77,8 +78,8 @@ class ProfileRepo {
         '_method': 'put',
         'f_name': userInfoModel.fName!,
         'l_name': userInfoModel.lName!,
+        'email': userInfoModel.email!,
         'phone': userInfoModel.phone!,
-        'password': pass
       });
     }
     request.fields.addAll(fields);

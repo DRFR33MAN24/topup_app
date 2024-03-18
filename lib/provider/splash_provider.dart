@@ -16,6 +16,9 @@ class SplashProvider extends ChangeNotifier {
   bool _onOff = true;
   bool get onOff => _onOff;
 
+  String _currentCurrency = "USD";
+  String get currentCurrency => _currentCurrency;
+
   ConfigModel? get configModel => _configModel;
 
   bool get hasConnection => _hasConnection;
@@ -64,6 +67,11 @@ class SplashProvider extends ChangeNotifier {
 
   void changeAnnouncementOnOff(bool on) {
     _onOff = !_onOff;
+    notifyListeners();
+  }
+
+  void changeCurrency(String currency) {
+    _currentCurrency = currency;
     notifyListeners();
   }
 }

@@ -7,7 +7,6 @@ import 'package:stylizeit/util/dimensions.dart';
 import 'package:stylizeit/util/images.dart';
 import 'package:stylizeit/view/basewidgets/CustomPrice.dart';
 import 'package:stylizeit/view/screens/category/category_details_screen.dart';
-import 'package:stylizeit/view/screens/style/style_details_screen.dart';
 
 class ServiceWidget extends StatefulWidget {
   final cat.Service service;
@@ -47,8 +46,8 @@ class _ServiceWidgetState extends State<ServiceWidget>
             BoxShadow(
                 color: widget.isSelected!
                     ? Theme.of(context).primaryColor
-                    : Theme.of(context).disabledColor,
-                spreadRadius: 3),
+                    : Theme.of(context).highlightColor,
+                spreadRadius: 2),
           ],
         ),
         margin: const EdgeInsets.all(5),
@@ -72,7 +71,7 @@ class _ServiceWidgetState extends State<ServiceWidget>
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 width: 100,
-                height: 100,
+                height: 80,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

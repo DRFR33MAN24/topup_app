@@ -11,16 +11,15 @@ class OrderRepo {
   final DioClient dioClient;
   OrderRepo({required this.dioClient});
 
-  // Future<ApiResponse> placeOrder() async {
-  //   try {
-  //     final response = await dioClient!.post(
-  //       AppConstants.placeOrder,
-  //     );
-  //     return ApiResponse.withSuccess(response);
-  //   } catch (e) {
-  //     return ApiResponse.withError(ApiErrorHandler.getMessage(e));
-  //   }
-  // }
+  Future<ApiResponse> getLatestOrdersList(String offset, String date) async {
+    try {
+      final response = await dioClient!.get(
+          AppConstants.latestOrders + '&&offset=' + offset + '&&date=${date}');
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
 
   Future<http.StreamedResponse> placeOrder(
       String serviceId, String token) async {

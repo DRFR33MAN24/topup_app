@@ -7,10 +7,14 @@ class CategoryRepo {
   final DioClient? dioClient;
   CategoryRepo({required this.dioClient});
 
-  Future<ApiResponse> getLatestCategoryList(String offset, String tag) async {
+  Future<ApiResponse> getLatestCategoryList(
+      String offset, String tag, String search) async {
     try {
-      final response = await dioClient!
-          .get(AppConstants.latestCategories + offset + '&&tag=${tag}');
+      final response = await dioClient!.get(AppConstants.latestCategories +
+          '&&offset=' +
+          offset +
+          '&&tag=${tag}' +
+          '&&search=${search}');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

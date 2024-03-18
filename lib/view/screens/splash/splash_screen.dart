@@ -3,6 +3,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:stylizeit/localization/language_constants.dart';
 import 'package:stylizeit/provider/auth_provider.dart';
+import 'package:stylizeit/provider/profile_provider.dart';
 
 import 'package:stylizeit/provider/splash_provider.dart';
 
@@ -90,6 +91,8 @@ class SplashScreenState extends State<SplashScreen> {
                 .isLoggedIn()) {
               Provider.of<AuthProvider>(context, listen: false)
                   .updateToken(context);
+              Provider.of<ProfileProvider>(context, listen: false)
+                  .getUserInfo(context);
 
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (BuildContext context) => const DashboardScreen()));
@@ -121,40 +124,47 @@ class SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       key: _globalKey,
       body: Provider.of<SplashProvider>(context).hasConnection
-          ? Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  // color: Provider.of<ThemeProvider>(context).darkTheme
-                  //     ? Colors.black
-                  //     : ColorResources.getPrimary(context),
-                  // child: CustomPaint(
-                  //   painter: SplashPainter(),
-                  // ),
-                ),
-                Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        Images.logo_giftme,
-                        height: 250.0,
-                        fit: BoxFit.scaleDown,
-                        width: 250.0,
-                      ),
-                      // SvgPicture.asset(
-                      //   Images.splashScreenLogo,
-                      //   height: 200.0,
-                      //   fit: BoxFit.scaleDown,
-                      //   width: 200.0,
-                      // )
-                    ],
-                  ),
-                ),
-              ],
+          ? Image.asset(
+              Images.logo_giftme,
+              fit: BoxFit.cover,
+              height: double.infinity,
+              width: double.infinity,
+              alignment: Alignment.center,
             )
+          // ? Stack(
+          //     clipBehavior: Clip.none,
+          //     children: [
+          //       Container(
+          //         width: MediaQuery.of(context).size.width,
+          //         height: MediaQuery.of(context).size.height,
+          //         // color: Provider.of<ThemeProvider>(context).darkTheme
+          //         //     ? Colors.black
+          //         //     : ColorResources.getPrimary(context),
+          //         // child: CustomPaint(
+          //         //   painter: SplashPainter(),
+          //         // ),
+          //       ),
+          //       Center(
+          //         child: Column(
+          //           mainAxisSize: MainAxisSize.min,
+          //           children: [
+          //             Image.asset(
+          //               Images.logo_giftme,
+          //               height: 250.0,
+          //               fit: BoxFit.scaleDown,
+          //               width: 250.0,
+          //             ),
+          //             // SvgPicture.asset(
+          //             //   Images.splashScreenLogo,
+          //             //   height: 200.0,
+          //             //   fit: BoxFit.scaleDown,
+          //             //   width: 200.0,
+          //             // )
+          //           ],
+          //         ),
+          //       ),
+          //     ],
+          //   )
           : const NoInternetOrDataScreen(
               isNoInternet: true, child: SplashScreen()),
     );

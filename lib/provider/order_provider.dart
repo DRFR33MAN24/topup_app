@@ -4,27 +4,60 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
+import 'package:stylizeit/data/model/response/base/api_response.dart';
 import 'package:stylizeit/data/model/response/order_model.dart';
 import 'package:stylizeit/data/model/response/response_model.dart';
 import 'package:stylizeit/data/repository/order_repo.dart';
 import 'package:http/http.dart' as http;
+import 'package:stylizeit/helper/api_checker.dart';
 import 'package:stylizeit/main.dart';
 import 'package:stylizeit/util/app_constants.dart';
-import 'package:stylizeit/view/screens/style/result_screen.dart';
 
 class OrderProvider with ChangeNotifier {
   final OrderRepo? orderRepo;
-  PusherChannelsFlutter? pusher;
 
   OrderProvider({required this.orderRepo});
 
-  Order? currentOrder;
-
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+  List<Order> _ordersList = [];
+  List<Order> get ordersList => _ordersList;
 
-  bool _connected = false;
-  bool get connected => _connected;
+  int? _pageSize;
+  int? get pageSize => _pageSize;
+
+  List<String> _offsetList = [];
+  List<String> get offsetList => _offsetList;
+
+  Future<void> getOrdersList(String offset, String? date,
+      {bool reload = false}) async {
+    _isLoading = true;
+    if (reload) {
+      _offsetList = [];
+      _ordersList = [];
+    }
+    if (!_offsetList.contains(offset.toString())) {
+      _offsetList.add(offset.toString());
+      ApiResponse apiResponse =
+          await orderRepo!.getLatestOrdersList(offset, date!);
+      if (apiResponse.response != null &&
+          apiResponse.response!.statusCode == 200) {
+        _ordersList
+            .addAll(OrderModel.fromJson(apiResponse.response!.data).orders!);
+        _pageSize = OrderModel.fromJson(apiResponse.response!.data).totalSize;
+
+        _isLoading = false;
+      } else {
+        ApiChecker.checkApi(apiResponse);
+      }
+      notifyListeners();
+    } else {
+      if (_isLoading) {
+        _isLoading = false;
+        notifyListeners();
+      }
+    }
+  }
 
   Future<ResponseModel> placeOrder(String serviceId, String token) async {
     _isLoading = true;
@@ -50,7 +83,7 @@ class OrderProvider with ChangeNotifier {
       if (kDebugMode) {
         print('${response.statusCode} ${response.reasonPhrase}');
       }
-      _connected = false;
+
       responseModel = ResponseModel(
           '${response.statusCode} ${response.reasonPhrase}', false);
     }

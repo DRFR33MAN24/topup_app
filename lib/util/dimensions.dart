@@ -38,7 +38,7 @@ class Dimensions {
   static const double splashLogoWidth = 150.0;
 
   static const double chooseReviewImageSize = 40.0;
-  static const double profileImageSize = 100.0;
+  static const double profileImageSize = 80.0;
   static const double logoHeight = 80.0;
   static const double cardHeight = 320.0;
 }

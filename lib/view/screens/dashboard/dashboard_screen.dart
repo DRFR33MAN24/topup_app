@@ -8,8 +8,9 @@ import 'package:stylizeit/view/screens/auth/auth_screen.dart';
 import 'package:stylizeit/view/screens/home/home_screen.dart';
 
 import 'package:provider/provider.dart';
+import 'package:stylizeit/view/screens/orders/orders_screen.dart';
 import 'package:stylizeit/view/screens/payment/payment_screen.dart';
-import 'package:stylizeit/view/screens/tools/tools_screen.dart';
+import 'package:stylizeit/view/screens/contact_us/contact_us_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -32,7 +33,7 @@ class DashboardScreenState extends State<DashboardScreen> {
     _screens = [
       const HomeScreen(),
       const OrdersScreen(),
-      const PaymentScreen(),
+      const ContactUs(),
     ];
 
     NetworkInfo.checkConnectivity(context);

@@ -4,18 +4,30 @@ import 'package:provider/provider.dart';
 import 'package:stylizeit/data/model/response/category_model.dart' as cat;
 import 'package:stylizeit/main.dart';
 import 'package:stylizeit/provider/category_provider.dart';
+import 'package:stylizeit/provider/profile_provider.dart';
+import 'package:stylizeit/provider/splash_provider.dart';
 import 'package:stylizeit/provider/style_provider.dart';
+import 'package:stylizeit/util/app_constants.dart';
 import 'package:stylizeit/util/color_resources.dart';
 import 'package:stylizeit/util/custom_themes.dart';
 import 'package:stylizeit/util/dimensions.dart';
 import 'package:stylizeit/util/images.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:stylizeit/view/basewidgets/CustomPrice.dart';
+import 'package:stylizeit/view/basewidgets/animated_custom_dialog.dart';
+import 'package:stylizeit/view/basewidgets/category_shimmer.dart';
 import 'package:stylizeit/view/basewidgets/category_widget.dart';
+import 'package:stylizeit/view/basewidgets/search_widget.dart';
+import 'package:stylizeit/view/basewidgets/sign_out_confirmation_dialog.dart';
 import 'package:stylizeit/view/basewidgets/style_shimmer.dart';
-import 'package:stylizeit/view/basewidgets/style_widget.dart';
+
+import 'package:stylizeit/view/basewidgets/tag_widget.dart';
 import 'package:stylizeit/view/screens/cashout/cashout_screen.dart';
 import 'package:stylizeit/view/screens/dashboard/dashboard_screen.dart';
-import 'package:stylizeit/view/screens/pick_package/pick_package.dart';
+import 'package:stylizeit/view/screens/contact_us/contact_us_screen.dart';
+import 'package:stylizeit/view/screens/profile/profile_screen.dart';
+import 'package:stylizeit/view/screens/send_money/send_money_screen.dart';
+import 'package:stylizeit/view/screens/transactions/transactions_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,10 +39,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final TextEditingController controller = TextEditingController(text: "");
 
+  late cat.Tag selectedTag;
+  int offset = 1;
   Future<void> _loadData(bool reload) async {
+    if (reload) {
+      offset = 1;
+    }
     await Provider.of<CategoryProvider>(Get.context!, listen: false)
-        .getCategoryList('1', '', reload: reload);
+        .getCategoryList('1', '', "", reload: reload);
     await Provider.of<CategoryProvider>(Get.context!, listen: false)
         .getTagsList();
   }
@@ -40,11 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     _loadData(false);
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    int offset = 1;
     _scrollController.addListener(() {
       if (_scrollController.position.maxScrollExtent ==
               _scrollController.position.pixels &&
@@ -60,74 +74,25 @@ class _HomeScreenState extends State<HomeScreen> {
         if (offset < pageSize!) {
           offset++;
           if (kDebugMode) {
-            print('end of the page');
+            print('dbg end of the page ${offset} ${pageSize}');
           }
           Provider.of<CategoryProvider>(context, listen: false)
               .showBottomLoader();
 
           Provider.of<CategoryProvider>(context, listen: false)
-              .getCategoryList(offset.toString(), null);
+              .getCategoryList(offset.toString(), "", "", reload: false);
         }
       }
     });
+  }
 
+  var key = GlobalKey();
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       endDrawerEnableOpenDragGesture: false,
-      drawer: Drawer(
-        child: ListView(children: [
-          DrawerHeader(
-              child: Column(
-            children: const [
-              CircleAvatar(
-                radius: 48,
-                backgroundImage: AssetImage(Images.homeImage),
-              ),
-              Text("name")
-            ],
-          )),
-          ListTile(
-            leading: Icon(
-              Icons.person,
-              color: Theme.of(context).primaryColor,
-            ),
-            title: Text("My Profile"),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.money,
-              color: Theme.of(context).primaryColor,
-            ),
-            title: Text("Transactions"),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.contact_support,
-              color: Theme.of(context).primaryColor,
-            ),
-            title: Text("Contact Us"),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.person_remove,
-              color: Theme.of(context).primaryColor,
-            ),
-            title: Text("Delete Account"),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.logout,
-              color: Theme.of(context).primaryColor,
-            ),
-            title: Text("Log Out"),
-            onTap: () {},
-          )
-        ]),
-      ),
+      drawer: AppDrawer(),
       body: SafeArea(
           child: RefreshIndicator(
         onRefresh: () async {
@@ -135,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: Stack(children: [
           CustomScrollView(
-            controller: _scrollController,
+            // controller: _scrollController,
             slivers: [
               SliverAppBar(
                 floating: true,
@@ -156,10 +121,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const PickPackage()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => const ContactUs()));
                     },
                     icon: Row(children: [
                       Icon(
@@ -181,25 +144,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Consumer<CategoryProvider>(
                         builder: (context, categoryProvider, child) {
                           List<cat.Category> categoryList;
-                          Map<String, bool> tagsMap;
+                          Map<cat.Tag, bool> tagsMap;
                           categoryList = categoryProvider.categoryList;
                           tagsMap = categoryProvider.tagsToggleMap;
 
                           return Column(children: [
-                            Container(
-                              width: 250,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
-                                border: Border.all(
-                                  width: 1.0,
-                                  color: Theme.of(context).cardColor,
-                                ),
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10.0) //
-                                    ),
-                              ),
-                            ),
+                            BalanceWidget(),
+                            Divider(),
                             SingleChildScrollView(
                               physics: BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
@@ -213,28 +164,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                       for (int buttonIndex = 0;
                                           buttonIndex < tagsMap.length;
                                           buttonIndex++) {
-                                        String buttonIndexStr =
+                                        cat.Tag buttonIndexTag =
                                             tagsMap.keys.toList()[buttonIndex];
                                         if (buttonIndex == index) {
-                                          if (buttonIndexStr == "All") {
-                                            Provider.of<CategoryProvider>(
-                                                    Get.context!,
-                                                    listen: false)
-                                                .getCategoryList('1', '',
-                                                    reload: true);
+                                          if (buttonIndexTag.tag == "Finance") {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        SendMoney()));
                                           } else {
                                             Provider.of<CategoryProvider>(
                                                     Get.context!,
                                                     listen: false)
                                                 .getCategoryList(
-                                                    '1', buttonIndexStr,
+                                                    '1', buttonIndexTag.tag, "",
                                                     reload: true);
                                           }
                                           tagsMap.update(
-                                              buttonIndexStr, (value) => true);
+                                              buttonIndexTag, (value) => true);
+                                          selectedTag = buttonIndexTag;
                                         } else {
                                           tagsMap.update(
-                                              buttonIndexStr, (value) => false);
+                                              buttonIndexTag, (value) => false);
                                         }
                                       }
                                     });
@@ -242,56 +194,109 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: tagsMap.keys
                                       .map((e) => Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                  border: Border.all(
-                                                    width: 1.0,
-                                                    color: Theme.of(context)
-                                                        .cardColor,
-                                                  ),
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(
-                                                              5.0) //
-                                                          ),
-                                                ),
-                                                padding:
-                                                    const EdgeInsets.all(8),
-                                                child: Text(
-                                                  e,
-                                                  style: TextStyle(
-                                                      color: Theme.of(context)
-                                                          .cardColor),
-                                                )),
+                                            child: IgnorePointer(
+                                                child: TagWidget(
+                                                    tag: e,
+                                                    isSelected: tagsMap[e])),
                                           ))
                                       .toList()),
                             ),
-                            !categoryProvider.isLoading
-                                ? categoryList.isNotEmpty
-                                    ? SizedBox(
-                                        height: Dimensions.cardHeight,
-                                        child: StaggeredGridView.countBuilder(
-                                          itemCount: categoryList.length,
-                                          crossAxisCount: 3,
-                                          padding: const EdgeInsets.all(0),
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          shrinkWrap: false,
-                                          staggeredTileBuilder: (int index) =>
-                                              const StaggeredTile.fit(1),
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return CategoryWidget(
-                                                category: categoryList[index]);
-                                            // return SizedBox();
-                                          },
+                            Divider(),
+                            Stack(children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 60,
+                                alignment: Alignment.center,
+                                child: Row(children: [
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context).cardColor,
+                                          borderRadius: const BorderRadius.only(
+                                              topLeft: Radius.circular(
+                                                  Dimensions.paddingSizeSmall),
+                                              bottomLeft: Radius.circular(
+                                                  Dimensions
+                                                      .paddingSizeSmall))),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: Dimensions.paddingSizeSmall,
+                                          horizontal:
+                                              Dimensions.paddingSizeSmall,
                                         ),
-                                      )
-                                    : const SizedBox.shrink()
-                                : StyleShimmer(
-                                    isEnabled: categoryProvider.isLoading),
+                                        child: TextFormField(
+                                          controller: controller,
+                                          onFieldSubmitted: (query) {},
+                                          onChanged: (query) {
+                                            Provider.of<CategoryProvider>(
+                                                    Get.context!,
+                                                    listen: false)
+                                                .getCategoryList('1', '', query,
+                                                    reload: true);
+                                          },
+                                          textInputAction:
+                                              TextInputAction.search,
+                                          maxLines: 1,
+                                          textAlignVertical:
+                                              TextAlignVertical.center,
+                                          decoration: InputDecoration(
+                                              hintText: "Search here...",
+                                              isDense: true,
+                                              hintStyle: robotoRegular.copyWith(
+                                                  color: Theme.of(context)
+                                                      .hintColor),
+                                              border: InputBorder.none,
+                                              suffixIcon: controller
+                                                      .text.isNotEmpty
+                                                  ? IconButton(
+                                                      icon: const Icon(
+                                                          Icons.clear,
+                                                          color: Colors.black),
+                                                      onPressed: () {
+                                                        controller.clear();
+                                                        Provider.of<CategoryProvider>(
+                                                                Get.context!,
+                                                                listen: false)
+                                                            .getCategoryList(
+                                                                '1', "", "",
+                                                                reload: true);
+                                                      },
+                                                    )
+                                                  : null),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                ]),
+                              ),
+                            ]),
+                            categoryList.isNotEmpty
+                                ? SizedBox(
+                                    height: Dimensions.cardHeight,
+                                    child: RefreshIndicator(
+                                      onRefresh: () async {
+                                        _loadData(true);
+                                      },
+                                      child: StaggeredGridView.countBuilder(
+                                        controller: _scrollController,
+                                        itemCount: categoryList.length,
+                                        crossAxisCount: 3,
+                                        padding: const EdgeInsets.all(0),
+                                        physics: const BouncingScrollPhysics(),
+                                        shrinkWrap: false,
+                                        staggeredTileBuilder: (int index) =>
+                                            const StaggeredTile.fit(1),
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return CategoryWidget(
+                                              category: categoryList[index]);
+                                          // return SizedBox();
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
                             categoryProvider.isLoading
                                 ? Center(
                                     child: Padding(
@@ -311,5 +316,180 @@ class _HomeScreenState extends State<HomeScreen> {
         ]),
       )),
     );
+  }
+}
+
+class BalanceWidget extends StatefulWidget {
+  const BalanceWidget({
+    super.key,
+  });
+
+  @override
+  State<BalanceWidget> createState() => _BalanceWidgetState();
+}
+
+class _BalanceWidgetState extends State<BalanceWidget> {
+  bool isSwitched = false;
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Theme.of(context).canvasColor,
+          border: Border.all(
+            width: 1.0,
+            color: Theme.of(context).cardColor,
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(10.0) //
+              ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: const [
+                Text(
+                  "Current Balance",
+                  style: robotoRegular,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomPrice(price: "0.0")
+              ],
+            ),
+            Column(
+              children: [
+                Text(
+                  "LBP",
+                  style: robotoBold,
+                ),
+                RotatedBox(
+                    quarterTurns: 1,
+                    child: Switch(
+                        activeColor: Theme.of(context).primaryColor,
+                        value: isSwitched,
+                        onChanged: (value) {
+                          if (value) {
+                            Provider.of<SplashProvider>(context, listen: false)
+                                .changeCurrency("USD");
+                          } else {
+                            Provider.of<SplashProvider>(context, listen: false)
+                                .changeCurrency("LBP");
+                          }
+                          setState(() {
+                            isSwitched = value;
+                          });
+                        })),
+                Text("USD", style: robotoBold)
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AppDrawer extends StatelessWidget {
+  const AppDrawer({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+        child: Consumer<ProfileProvider>(builder: (context, profile, child) {
+      return ListView(children: [
+        DrawerHeader(
+            child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: FadeInImage.assetNetwork(
+                placeholder: Images.placeholder,
+                width: Dimensions.profileImageSize,
+                height: Dimensions.profileImageSize,
+                fit: BoxFit.cover,
+                image:
+                    '${AppConstants.baseUrl}\\storage\\profile\\${profile.userInfoModel!.image}',
+                imageErrorBuilder: (c, o, s) => Image.asset(Images.placeholder,
+                    width: Dimensions.profileImageSize,
+                    height: Dimensions.profileImageSize,
+                    fit: BoxFit.cover),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(profile.userInfoModel!.fName! +
+                  " " +
+                  profile.userInfoModel!.lName!),
+            )
+          ],
+        )),
+        ListTile(
+          leading: Icon(
+            Icons.person,
+            color: Theme.of(context).primaryColor,
+          ),
+          title: Text("My Profile"),
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => ProfileScreen()));
+          },
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.money,
+            color: Theme.of(context).primaryColor,
+          ),
+          title: Text("Transactions"),
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => TransactionScreen()));
+          },
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.contact_support,
+            color: Theme.of(context).primaryColor,
+          ),
+          title: Text("Contact Us"),
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => ContactUs()));
+          },
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.person_remove,
+            color: Theme.of(context).primaryColor,
+          ),
+          title: Text("Delete Account"),
+          onTap: () => showAnimatedDialog(
+              context,
+              SignOutConfirmationDialog(
+                isDelete: true,
+                customerId: profile.userInfoModel!.id,
+              ),
+              isFlip: true),
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.logout,
+            color: Theme.of(context).primaryColor,
+          ),
+          title: Text("Log Out"),
+          onTap: () => showAnimatedDialog(
+              context,
+              SignOutConfirmationDialog(
+                isDelete: false,
+                customerId: profile.userInfoModel!.id,
+              ),
+              isFlip: true),
+        )
+      ]);
+    }));
   }
 }

@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:stylizeit/data/model/response/category_model.dart' as cat;
+import 'package:stylizeit/util/app_constants.dart';
 import 'package:stylizeit/util/color_resources.dart';
 import 'package:stylizeit/util/dimensions.dart';
 import 'package:stylizeit/util/images.dart';
 import 'package:stylizeit/view/screens/category/category_details_screen.dart';
-import 'package:stylizeit/view/screens/style/style_details_screen.dart';
 
 class CategoryWidget extends StatefulWidget {
   final cat.Category category;
@@ -49,8 +49,19 @@ class _CategoryWidgetState extends State<CategoryWidget>
                 ClipRRect(
                   // key: key,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  child: Image.network(
-                    widget.category.image!,
+                  child: FadeInImage.assetNetwork(
+                    placeholder: Images.placeholder,
+                    width: Dimensions.profileImageSize,
+                    height: Dimensions.profileImageSize,
+                    fit: BoxFit.cover,
+                    image: AppConstants.baseUrl +
+                        "/storage/" +
+                        widget.category.image!,
+                    imageErrorBuilder: (c, o, s) => Image.asset(
+                        Images.placeholder,
+                        width: Dimensions.profileImageSize,
+                        height: Dimensions.profileImageSize,
+                        fit: BoxFit.cover),
                   ),
                 ),
               ],

@@ -135,6 +135,7 @@ class ProfileProvider extends ChangeNotifier {
 
   Future<ResponseModel> updateUserInfo(UserInfoModel updateUserModel,
       String pass, File? file, String token) async {
+    print("dbg ${updateUserModel}");
     _isLoading = true;
     notifyListeners();
 

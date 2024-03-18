@@ -4,7 +4,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 // ThemeData dark =
 //     FlexThemeData.dark(scheme: FlexScheme.mandyRed, useMaterial3: true);
 ThemeData dark = ThemeData(
-  fontFamily: 'TitilliumWeb',
+  fontFamily: 'Vazirmatn',
   primaryColor: const Color(0xFF1455AC),
   brightness: Brightness.dark,
   highlightColor: const Color(0xFF252525),

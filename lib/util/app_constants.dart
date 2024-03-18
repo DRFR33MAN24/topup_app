@@ -1,7 +1,7 @@
 import 'package:stylizeit/data/model/response/language_model.dart';
 
 class AppConstants {
-  static const String appName = 'StylizeIt';
+  static const String appName = 'GiftMe';
   static const String appVersion = '14.0';
   static const String baseUrl = 'http://192.168.1.9:8000';
   static const String socketUri = 'ws://192.168.1.9:6001';
@@ -24,12 +24,12 @@ class AppConstants {
       '/api/transaction/transaction?limit=10&&offset=';
   static const String stylesTags = '/api/styles/tags';
 
-  static const String customerUri = '/api/styles/tags';
-  static const String deleteCustomerAccount = '/api/styles/tags';
-  static const String updateProfileUri = '/api/styles/tags';
+  static const String customerUri = '/api/customer/info';
+  static const String deleteCustomerAccount = '/api/customer/account-delete';
+  static const String updateProfileUri = '/api/customer/update-profile';
 
-  static const String latestCategories =
-      '/api/categories/categories?limit=10&&offset=';
+  static const String latestCategories = '/api/categories/categories?limit=10';
+  static const String latestOrders = '/api/orders/orders?limit=10';
   static const String categoriesTags = '/api/categories/tags';
   static const String packages = '/api/payment/packages';
 

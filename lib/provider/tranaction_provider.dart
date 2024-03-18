@@ -21,7 +21,8 @@ class TransactionProvider extends ChangeNotifier {
   List<String> _offsetList = [];
   List<String> get offsetList => _offsetList;
 
-  Future<void> getTransactionList(String offset, {bool reload = false}) async {
+  Future<void> getTransactionList(String offset, String date,
+      {bool reload = false}) async {
     _isLoading = true;
     if (reload) {
       _offsetList = [];
@@ -30,7 +31,7 @@ class TransactionProvider extends ChangeNotifier {
     if (!_offsetList.contains(offset.toString())) {
       _offsetList.add(offset.toString());
       ApiResponse apiResponse =
-          await transactionRepo!.getTransactionList(offset);
+          await transactionRepo!.getTransactionList(offset, date);
       if (apiResponse.response != null &&
           apiResponse.response!.statusCode == 200) {
         _transactionList.addAll(

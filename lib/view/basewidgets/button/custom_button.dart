@@ -45,12 +45,15 @@ class CustomButton extends StatelessWidget {
                 : isBorder
                     ? Dimensions.paddingSizeExtraSmall
                     : Dimensions.paddingSizeSmall)),
-        child: Text(buttonText!,
-            style: titilliumSemiBold.copyWith(
-              color: Colors.white,
-              fontSize: 16,
-              //  color: Theme.of(context).cardColor
-            )),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+          child: Text(buttonText!,
+              style: titilliumSemiBold.copyWith(
+                color: Colors.white,
+                fontSize: 16,
+                //  color: Theme.of(context).cardColor
+              )),
+        ),
       ),
     );
   }
