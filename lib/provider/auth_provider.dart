@@ -8,7 +8,6 @@ import 'package:stylizeit/data/model/response/response_model.dart';
 import 'package:stylizeit/data/model/response/social_login_model.dart';
 import 'package:stylizeit/data/repository/auth_repo.dart';
 import 'package:stylizeit/helper/api_checker.dart';
-import 'package:stylizeit/main.dart';
 
 class AuthProvider with ChangeNotifier {
   final AuthRepo? authRepo;

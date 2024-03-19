@@ -1,12 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:stylizeit/data/model/response/category_model.dart' as cat;
-import 'package:stylizeit/util/color_resources.dart';
+import 'package:stylizeit/util/app_constants.dart';
 import 'package:stylizeit/util/dimensions.dart';
 import 'package:stylizeit/util/images.dart';
 import 'package:stylizeit/view/basewidgets/CustomPrice.dart';
-import 'package:stylizeit/view/screens/category/category_details_screen.dart';
 
 class ServiceWidget extends StatefulWidget {
   final cat.Service service;
@@ -59,10 +56,19 @@ class _ServiceWidgetState extends State<ServiceWidget>
                 ClipRRect(
                   // key: key,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  child: Image.asset(
-                    Images.placeholder_1x1,
-                    fit: BoxFit.contain,
+                  child: FadeInImage.assetNetwork(
+                    placeholder: Images.placeholder,
                     width: 150,
+                    height: 150,
+                    fit: BoxFit.cover,
+                    image: AppConstants.baseUrl +
+                        "/storage/" +
+                        widget.service.image!,
+                    imageErrorBuilder: (c, o, s) => Image.asset(
+                        Images.placeholder,
+                        width: Dimensions.profileImageSize,
+                        height: Dimensions.profileImageSize,
+                        fit: BoxFit.cover),
                   ),
                 ),
               ],
@@ -71,7 +77,7 @@ class _ServiceWidgetState extends State<ServiceWidget>
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 width: 100,
-                height: 80,
+                height: 50,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -80,8 +86,7 @@ class _ServiceWidgetState extends State<ServiceWidget>
                       maxLines: 1,
                       softWrap: false,
                       widget.service.title!,
-                      style: const TextStyle(
-                          color: Color.fromARGB(255, 2, 2, 2), fontSize: 16),
+                      style: const TextStyle(color: Colors.black, fontSize: 16),
                     ),
                     CustomPrice(price: widget.service.price!)
                   ],

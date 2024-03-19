@@ -1,14 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:stylizeit/data/model/response/category_model.dart' as cat;
 import 'package:stylizeit/util/app_constants.dart';
-import 'package:stylizeit/util/color_resources.dart';
 import 'package:stylizeit/util/custom_themes.dart';
 import 'package:stylizeit/util/dimensions.dart';
 import 'package:stylizeit/util/images.dart';
-import 'package:stylizeit/view/basewidgets/CustomPrice.dart';
-import 'package:stylizeit/view/screens/category/category_details_screen.dart';
 
 class TagWidget extends StatefulWidget {
   final cat.Tag tag;

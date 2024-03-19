@@ -1,33 +1,25 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:stylizeit/data/model/response/category_model.dart' as cat;
 import 'package:stylizeit/main.dart';
 import 'package:stylizeit/provider/category_provider.dart';
 import 'package:stylizeit/provider/profile_provider.dart';
 import 'package:stylizeit/provider/splash_provider.dart';
-import 'package:stylizeit/provider/style_provider.dart';
 import 'package:stylizeit/util/app_constants.dart';
-import 'package:stylizeit/util/color_resources.dart';
 import 'package:stylizeit/util/custom_themes.dart';
 import 'package:stylizeit/util/dimensions.dart';
 import 'package:stylizeit/util/images.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:stylizeit/view/basewidgets/CustomPrice.dart';
 import 'package:stylizeit/view/basewidgets/animated_custom_dialog.dart';
-import 'package:stylizeit/view/basewidgets/category_shimmer.dart';
 import 'package:stylizeit/view/basewidgets/category_widget.dart';
-import 'package:stylizeit/view/basewidgets/search_widget.dart';
 import 'package:stylizeit/view/basewidgets/sign_out_confirmation_dialog.dart';
-import 'package:stylizeit/view/basewidgets/style_shimmer.dart';
-
 import 'package:stylizeit/view/basewidgets/tag_widget.dart';
-import 'package:stylizeit/view/screens/cashout/cashout_screen.dart';
-import 'package:stylizeit/view/screens/dashboard/dashboard_screen.dart';
 import 'package:stylizeit/view/screens/contact_us/contact_us_screen.dart';
 import 'package:stylizeit/view/screens/profile/profile_screen.dart';
-import 'package:stylizeit/view/screens/send_money/send_money_screen.dart';
 import 'package:stylizeit/view/screens/transactions/transactions_screen.dart';
+import 'package:stylizeit/view/screens/transfer_balance/transfer_balance.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -172,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 MaterialPageRoute(
                                                     builder: (BuildContext
                                                             context) =>
-                                                        SendMoney()));
+                                                        TransferBalance()));
                                           } else {
                                             Provider.of<CategoryProvider>(
                                                     Get.context!,
@@ -332,61 +324,59 @@ class _BalanceWidgetState extends State<BalanceWidget> {
   bool isSwitched = false;
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          border: Border.all(
-            width: 1.0,
-            color: Theme.of(context).cardColor,
-          ),
-          borderRadius: const BorderRadius.all(Radius.circular(10.0) //
-              ),
+    return Container(
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        border: Border.all(
+          width: 1.0,
+          color: Theme.of(context).cardColor,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: const [
-                Text(
-                  "Current Balance",
-                  style: robotoRegular,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                CustomPrice(price: "0.0")
-              ],
+        borderRadius: const BorderRadius.all(Radius.circular(10.0) //
             ),
-            Column(
-              children: [
-                Text(
-                  "LBP",
-                  style: robotoBold,
-                ),
-                RotatedBox(
-                    quarterTurns: 1,
-                    child: Switch(
-                        activeColor: Theme.of(context).primaryColor,
-                        value: isSwitched,
-                        onChanged: (value) {
-                          if (value) {
-                            Provider.of<SplashProvider>(context, listen: false)
-                                .changeCurrency("USD");
-                          } else {
-                            Provider.of<SplashProvider>(context, listen: false)
-                                .changeCurrency("LBP");
-                          }
-                          setState(() {
-                            isSwitched = value;
-                          });
-                        })),
-                Text("USD", style: robotoBold)
-              ],
-            )
-          ],
-        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            children: const [
+              Text(
+                "Current Balance",
+                style: robotoRegular,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              CustomPrice(price: "0.0")
+            ],
+          ),
+          Column(
+            children: [
+              Text(
+                "LBP",
+                style: robotoBold,
+              ),
+              RotatedBox(
+                  quarterTurns: 1,
+                  child: Switch(
+                      activeColor: Theme.of(context).primaryColor,
+                      value: isSwitched,
+                      onChanged: (value) {
+                        if (value) {
+                          Provider.of<SplashProvider>(context, listen: false)
+                              .changeCurrency("USD");
+                        } else {
+                          Provider.of<SplashProvider>(context, listen: false)
+                              .changeCurrency("LBP");
+                        }
+                        setState(() {
+                          isSwitched = value;
+                        });
+                      })),
+              Text("USD", style: robotoBold)
+            ],
+          )
+        ],
       ),
     );
   }
@@ -447,7 +437,7 @@ class AppDrawer extends StatelessWidget {
           title: Text("Transactions"),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => TransactionScreen()));
+                builder: (BuildContext context) => TransactionsScreen()));
           },
         ),
         ListTile(

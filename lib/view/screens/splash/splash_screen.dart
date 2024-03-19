@@ -1,25 +1,20 @@
 import 'dart:async';
+
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stylizeit/localization/language_constants.dart';
 import 'package:stylizeit/provider/auth_provider.dart';
 import 'package:stylizeit/provider/profile_provider.dart';
-
 import 'package:stylizeit/provider/splash_provider.dart';
-
 import 'package:stylizeit/util/color_resources.dart';
 import 'package:stylizeit/util/images.dart';
 import 'package:stylizeit/view/basewidgets/no_internet_screen.dart';
-import 'package:stylizeit/view/screens/auth/auth_screen.dart';
 import 'package:stylizeit/view/screens/auth/widget/mobile_verify_screen.dart';
-import 'package:stylizeit/view/screens/auth/widget/otp_verification_screen.dart';
 //import 'package:stylizeit/view/screens/auth/auth_screen.dart';
 import 'package:stylizeit/view/screens/dashboard/dashboard_screen.dart';
 import 'package:stylizeit/view/screens/maintenance/maintenance_screen.dart';
 import 'package:stylizeit/view/screens/onboarding/onboarding_screen.dart';
-
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

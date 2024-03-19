@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stylizeit/localization/language_constants.dart';
-import 'package:stylizeit/provider/order_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:stylizeit/provider/payment_provider.dart';
 import 'package:stylizeit/util/custom_themes.dart';
 import 'package:stylizeit/util/dimensions.dart';
-import 'package:provider/provider.dart';
 
 class CustomCheckBox extends StatelessWidget {
   final int index;

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class TransactionModel {
   int? _totalSize;
   int? _limit;

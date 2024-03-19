@@ -9,7 +9,6 @@ import 'package:stylizeit/util/dimensions.dart';
 import 'package:stylizeit/util/images.dart';
 import 'package:stylizeit/view/basewidgets/button/custom_button.dart';
 import 'package:stylizeit/view/screens/cashout/widget/custom_check_box.dart';
-import 'package:stylizeit/view/screens/dashboard/dashboard_screen.dart';
 import 'package:stylizeit/view/screens/payment/payment_screen.dart';
 
 class CashoutScreen extends StatefulWidget {

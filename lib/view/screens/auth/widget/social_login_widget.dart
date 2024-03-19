@@ -2,17 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:provider/provider.dart';
 import 'package:stylizeit/data/model/response/social_login_model.dart';
-import 'package:stylizeit/localization/language_constants.dart';
-import 'package:stylizeit/main.dart';
 import 'package:stylizeit/provider/auth_provider.dart';
-
 import 'package:stylizeit/provider/google_sign_in_provider.dart';
 import 'package:stylizeit/provider/splash_provider.dart';
 import 'package:stylizeit/provider/theme_provider.dart';
-import 'package:stylizeit/util/images.dart';
 import 'package:stylizeit/view/screens/dashboard/dashboard_screen.dart';
-import 'package:provider/provider.dart';
 
 //import 'otp_verification_screen.dart';
 

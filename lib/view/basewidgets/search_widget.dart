@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'package:stylizeit/util/color_resources.dart';
 import 'package:stylizeit/util/custom_themes.dart';
 import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/view/basewidgets/show_custom_snakbar.dart';
-import 'package:provider/provider.dart';
-
-import '../../localization/language_constants.dart';
 
 class SearchWidget extends StatefulWidget {
   final String? hintText;

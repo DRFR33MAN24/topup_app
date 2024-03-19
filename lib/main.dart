@@ -18,8 +18,9 @@ import 'package:stylizeit/provider/tranaction_provider.dart';
 import 'package:stylizeit/theme/dark_theme.dart';
 import 'package:stylizeit/theme/light_theme.dart';
 import 'package:stylizeit/util/app_constants.dart';
+import 'package:stylizeit/util/custom_themes.dart';
 import 'package:stylizeit/view/screens/splash/splash_screen.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
+
 import 'di_container.dart' as di;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         theme: Provider.of<ThemeProvider>(context).darkTheme ? dark : light,
+
         // theme: FlexThemeData.light(scheme: FlexScheme.mandyRed),
         // // The Mandy red, dark theme.
         // darkTheme: FlexThemeData.dark(scheme: FlexScheme.mandyRed),

@@ -3,20 +3,14 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 import 'package:stylizeit/data/model/response/base/api_response.dart';
-import 'package:stylizeit/data/model/response/base/error_response.dart';
 import 'package:stylizeit/data/model/response/response_model.dart';
 import 'package:stylizeit/data/model/response/user_info_model.dart';
 import 'package:stylizeit/data/repository/profile_repo.dart';
 import 'package:stylizeit/helper/api_checker.dart';
 import 'package:stylizeit/main.dart';
-import 'package:stylizeit/view/basewidgets/show_custom_snakbar.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
-
-import 'order_provider.dart';
 
 class ProfileProvider extends ChangeNotifier {
   final ProfileRepo? profileRepo;

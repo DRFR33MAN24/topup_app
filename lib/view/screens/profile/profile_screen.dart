@@ -1,27 +1,21 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:stylizeit/data/model/response/user_info_model.dart';
-
 import 'package:stylizeit/localization/language_constants.dart';
 import 'package:stylizeit/provider/auth_provider.dart';
 import 'package:stylizeit/provider/profile_provider.dart';
-import 'package:stylizeit/provider/splash_provider.dart';
 import 'package:stylizeit/provider/theme_provider.dart';
 import 'package:stylizeit/util/app_constants.dart';
 import 'package:stylizeit/util/color_resources.dart';
 import 'package:stylizeit/util/custom_themes.dart';
 import 'package:stylizeit/util/dimensions.dart';
 import 'package:stylizeit/util/images.dart';
-import 'package:stylizeit/view/basewidgets/animated_custom_dialog.dart';
 import 'package:stylizeit/view/basewidgets/button/custom_button.dart';
-import 'package:stylizeit/view/basewidgets/sign_out_confirmation_dialog.dart';
-import 'package:stylizeit/view/basewidgets/textfield/custom_password_textfield.dart';
 import 'package:stylizeit/view/basewidgets/textfield/custom_textfield.dart';
-
-import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -224,8 +218,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                         ),
                         Text(
                           '${profile.userInfoModel!.fName ?? ""} ${profile.userInfoModel!.lName ?? ''}',
-                          style: titilliumSemiBold.copyWith(
-                              color: ColorResources.white, fontSize: 20.0),
+                          style: titilliumSemiBold.copyWith(fontSize: 20.0),
                         )
                       ],
                     ),

@@ -1,6 +1,9 @@
 class ConfigModel {
   String? _aboutUs;
   String? _privacyPolicy;
+  String? _email;
+  String? _phone;
+
   num? _currencyConversionFactor;
   String? _termsConditions;
   RefundPolicy? _refundPolicy;
@@ -24,6 +27,8 @@ class ConfigModel {
   ConfigModel(
       {String? aboutUs,
       String? privacyPolicy,
+      String? email,
+      String? phone,
       num? currencyConversionFactor,
       String? termsConditions,
       RefundPolicy? refundPolicy,
@@ -41,6 +46,8 @@ class ConfigModel {
       PaymentMethods? paymentMethods}) {
     _aboutUs = aboutUs;
     _privacyPolicy = privacyPolicy;
+    _email = email;
+    _phone = phone;
 
     _termsConditions = termsConditions;
     if (refundPolicy != null) {
@@ -71,6 +78,8 @@ class ConfigModel {
 
   String? get aboutUs => _aboutUs;
   String? get privacyPolicy => _privacyPolicy;
+  String? get phone => _phone;
+  String? get email => _email;
   num? get currencyConversionFactor => _currencyConversionFactor;
 
   String? get termsConditions => _termsConditions;
@@ -94,6 +103,8 @@ class ConfigModel {
   ConfigModel.fromJson(Map<String, dynamic> json) {
     _aboutUs = json['about_us'];
     _privacyPolicy = json['privacy_policy'];
+    _email = json['company_email'];
+    _phone = json['company_phone'];
     _currencyConversionFactor = json['currency_conversion_factor'];
 
     _termsConditions = json['terms_&_conditions'];
@@ -139,6 +150,8 @@ class ConfigModel {
 
     data['about_us'] = _aboutUs;
     data['privacy_policy'] = _privacyPolicy;
+    data['company_phone'] = _phone;
+    data['company_email'] = _email;
     data["currency_conversion_factor"] = _currencyConversionFactor;
 
     data['terms_&_conditions'] = _termsConditions;

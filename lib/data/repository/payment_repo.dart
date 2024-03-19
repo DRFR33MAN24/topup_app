@@ -9,7 +9,7 @@ class PaymentRepo {
 
   Future<ApiResponse> getPackages() async {
     try {
-      final response = await dioClient!.get(AppConstants.packages);
+      final response = await dioClient.get(AppConstants.packages);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

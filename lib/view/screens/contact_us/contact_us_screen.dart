@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stylizeit/main.dart';
 import 'package:stylizeit/provider/payment_provider.dart';
+import 'package:stylizeit/provider/splash_provider.dart';
 import 'package:stylizeit/provider/theme_provider.dart';
 import 'package:stylizeit/util/custom_themes.dart';
 import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/view/basewidgets/button/custom_button.dart';
-import 'package:stylizeit/view/screens/cashout/cashout_screen.dart';
 
 class ContactUs extends StatefulWidget {
   const ContactUs({Key? key}) : super(key: key);
@@ -48,8 +47,8 @@ class _ContactUsState extends State<ContactUs> {
                 ? Colors.black
                 : Theme.of(context).primaryColor,
           ),
-          body: Consumer<PyamentProvider>(
-              builder: (context, paymentProvider, child) {
+          body: Consumer<SplashProvider>(
+              builder: (context, splashProvider, child) {
             return Column(
               children: [
                 ListTile(
@@ -57,7 +56,7 @@ class _ContactUsState extends State<ContactUs> {
                     Icons.phone,
                     color: Theme.of(context).primaryColor,
                   ),
-                  title: Text("Support:"),
+                  title: Text("Support: ${splashProvider.configModel!.phone!}"),
                   onTap: () {},
                 ),
                 ListTile(
@@ -65,7 +64,8 @@ class _ContactUsState extends State<ContactUs> {
                     Icons.chat,
                     color: Theme.of(context).primaryColor,
                   ),
-                  title: Text("Whatsapp:"),
+                  title:
+                      Text("Whatsapp: ${splashProvider.configModel!.phone!}"),
                   onTap: () {},
                 ),
                 ListTile(
@@ -73,7 +73,7 @@ class _ContactUsState extends State<ContactUs> {
                     Icons.email,
                     color: Theme.of(context).primaryColor,
                   ),
-                  title: Text("Email:"),
+                  title: Text("Email: ${splashProvider.configModel!.email!}"),
                   onTap: () {},
                 ),
               ],

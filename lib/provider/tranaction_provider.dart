@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:stylizeit/data/model/response/base/api_response.dart';
-import 'package:stylizeit/data/model/response/style_model.dart';
 import 'package:stylizeit/data/model/response/transaction_model.dart';
-import 'package:stylizeit/data/repository/style_repo.dart';
 import 'package:stylizeit/data/repository/transaction_repo.dart';
 import 'package:stylizeit/helper/api_checker.dart';
 

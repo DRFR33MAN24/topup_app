@@ -18,11 +18,16 @@ class _CustomPriceState extends State<CustomPrice> {
       if (splashProvider.currentCurrency == "USD") {
         return Text(
           "${widget.price} \$",
-          style: robotoBold.copyWith(fontSize: 18, fontStyle: FontStyle.italic),
+          style: robotoBold.copyWith(
+              fontSize: 18, fontStyle: FontStyle.italic, color: Colors.black),
         );
       } else {
         return Text(
-            "${double.parse(widget.price) * splashProvider.configModel!.currencyConversionFactor!} LBP");
+            "${double.parse(widget.price) * splashProvider.configModel!.currencyConversionFactor!} LBP",
+            style: robotoBold.copyWith(
+                fontSize: 18,
+                fontStyle: FontStyle.italic,
+                color: Colors.black));
       }
     });
   }

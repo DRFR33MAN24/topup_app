@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:stylizeit/helper/network_info.dart';
-import 'package:stylizeit/provider/splash_provider.dart';
-
 import 'package:stylizeit/localization/language_constants.dart';
 import 'package:stylizeit/util/images.dart';
-import 'package:stylizeit/view/screens/auth/auth_screen.dart';
-import 'package:stylizeit/view/screens/home/home_screen.dart';
-
-import 'package:provider/provider.dart';
-import 'package:stylizeit/view/screens/orders/orders_screen.dart';
-import 'package:stylizeit/view/screens/payment/payment_screen.dart';
 import 'package:stylizeit/view/screens/contact_us/contact_us_screen.dart';
+import 'package:stylizeit/view/screens/home/home_screen.dart';
+import 'package:stylizeit/view/screens/orders/orders_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);

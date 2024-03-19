@@ -54,18 +54,18 @@ class CustomTextField extends StatelessWidget {
         border: isBorder
             ? Border.all(width: .8, color: Theme.of(context).hintColor)
             : null,
-        color: Theme.of(context).highlightColor,
+        // color: Theme.of(context).highlightColor,
         borderRadius: isPhoneNumber
             ? const BorderRadius.only(
                 topRight: Radius.circular(6), bottomRight: Radius.circular(6))
             : BorderRadius.circular(6),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 3,
-              offset: const Offset(0, 1)) // changes position of shadow
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //       color: Colors.grey.withOpacity(0.1),
+        //       spreadRadius: 1,
+        //       blurRadius: 3,
+        //       offset: const Offset(0, 1)) // changes position of shadow
+        // ],
       ),
       child: TextFormField(
         textAlign: textAlign != null

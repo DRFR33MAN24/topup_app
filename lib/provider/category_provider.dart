@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:stylizeit/data/model/response/base/api_response.dart';
 import 'package:stylizeit/data/model/response/category_model.dart' as cat;
-
 import 'package:stylizeit/data/repository/category_repo.dart';
-
 import 'package:stylizeit/helper/api_checker.dart';
 
 class CategoryProvider extends ChangeNotifier {
@@ -63,7 +61,7 @@ class CategoryProvider extends ChangeNotifier {
       _tagsList.addAll(cat.TagModel.fromJson(apiResponse.response!.data).tags!);
 
       _tagsToggleMap =
-          Map.fromEntries(_tagsList.map((e) => MapEntry(e!, false)));
+          Map.fromEntries(_tagsList.map((e) => MapEntry(e, false)));
 
       _isLoading = false;
     } else {

@@ -1,11 +1,9 @@
-import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import 'package:stylizeit/data/datasource/remote/dio/dio_client.dart';
 import 'package:stylizeit/data/datasource/remote/exception/api_error_handler.dart';
 import 'package:stylizeit/data/model/response/base/api_response.dart';
-import 'package:stylizeit/data/model/response/order_model.dart';
 import 'package:stylizeit/util/app_constants.dart';
-import 'package:http/http.dart' as http;
 
 class OrderRepo {
   final DioClient dioClient;
@@ -13,7 +11,7 @@ class OrderRepo {
 
   Future<ApiResponse> getLatestOrdersList(String offset, String date) async {
     try {
-      final response = await dioClient!.get(
+      final response = await dioClient.get(
           AppConstants.latestOrders + '&&offset=' + offset + '&&date=${date}');
       return ApiResponse.withSuccess(response);
     } catch (e) {

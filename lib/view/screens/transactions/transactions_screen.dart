@@ -1,31 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stylizeit/main.dart';
-import 'package:stylizeit/provider/payment_provider.dart';
 import 'package:stylizeit/provider/theme_provider.dart';
+import 'package:stylizeit/provider/tranaction_provider.dart';
 import 'package:stylizeit/util/custom_themes.dart';
 import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/view/basewidgets/button/custom_button.dart';
-import 'package:stylizeit/view/screens/cashout/cashout_screen.dart';
 
-class TransactionScreen extends StatefulWidget {
-  const TransactionScreen({Key? key}) : super(key: key);
+class TransactionsScreen extends StatefulWidget {
+  const TransactionsScreen({Key? key}) : super(key: key);
 
   @override
-  _TransactionScreenState createState() => _TransactionScreenState();
+  _TransactionsScreenState createState() => _TransactionsScreenState();
 }
 
-class _TransactionScreenState extends State<TransactionScreen> {
+class _TransactionsScreenState extends State<TransactionsScreen> {
+  int offset = 1;
+  DateTime selectedDate = DateTime.now();
+  Future<void> loadData(bool reload) async {
+    if (reload) {
+      offset = 1;
+    }
+    await Provider.of<TransactionProvider>(Get.context!, listen: false)
+        .getTransactionList('1', '', reload: reload);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadData();
-  }
-
-  loadData() async {
-    await Provider.of<PyamentProvider>(Get.context!, listen: false)
-        .getPackages();
+    loadData(true);
   }
 
   @override
@@ -40,18 +43,43 @@ class _TransactionScreenState extends State<TransactionScreen> {
           appBar: AppBar(
             title: Row(children: [
               const SizedBox(width: Dimensions.paddingSizeSmall),
-              Text('Orders',
+              Text('Transactions',
                   style: robotoRegular.copyWith(
                       fontSize: 20, color: Theme.of(context).cardColor)),
             ]),
             backgroundColor: Provider.of<ThemeProvider>(context).darkTheme
                 ? Colors.black
                 : Theme.of(context).primaryColor,
+            actions: [
+              GestureDetector(
+                onTap: () async {
+                  final DateTime? date = await showDatePicker(
+                      context: context,
+                      initialDate: selectedDate,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(3000));
+
+                  if (date != null) {
+                    await Provider.of<TransactionProvider>(Get.context!,
+                            listen: false)
+                        .getTransactionList('1', date.toIso8601String(),
+                            reload: true);
+                  }
+                },
+                child: Container(
+                    margin: EdgeInsets.all(8),
+                    child: Icon(
+                      Icons.date_range,
+                      size: 32,
+                      color: Theme.of(context).canvasColor,
+                    )),
+              )
+            ],
           ),
-          body: Consumer<PyamentProvider>(
-              builder: (context, paymentProvider, child) {
+          body: Consumer<TransactionProvider>(
+              builder: (context, transactionProvider, child) {
             return ListView.builder(
-              itemCount: 50,
+              itemCount: transactionProvider.transactionList.length,
               itemBuilder: (BuildContext context, int index) {
                 return TransactionWidget();
               },

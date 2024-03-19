@@ -1,12 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:stylizeit/data/model/response/category_model.dart' as cat;
 import 'package:stylizeit/util/app_constants.dart';
-import 'package:stylizeit/util/color_resources.dart';
 import 'package:stylizeit/util/dimensions.dart';
 import 'package:stylizeit/util/images.dart';
-import 'package:stylizeit/view/screens/category/category_details_screen.dart';
+import 'package:stylizeit/view/screens/category/giftcard_category_details_screen.dart';
+import 'package:stylizeit/view/screens/category/telecom_category_details_screen.dart';
 
 class CategoryWidget extends StatefulWidget {
   final cat.Category category;
@@ -35,9 +33,15 @@ class _CategoryWidgetState extends State<CategoryWidget>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) =>
-                CategoryDetailsScreen(category: widget.category)));
+        if (widget.category.type == "giftcard") {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  GiftCardCategoryDetailsScreen(category: widget.category)));
+        } else {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  TelecomCategoryDetailsScreen(category: widget.category)));
+        }
       },
       child: Container(
         margin: const EdgeInsets.all(5),

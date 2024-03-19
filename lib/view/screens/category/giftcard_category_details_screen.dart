@@ -1,38 +1,25 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:stylizeit/data/model/response/category_model.dart' as cat;
-import 'package:stylizeit/data/model/response/order_model.dart';
-import 'package:stylizeit/localization/language_constants.dart';
 import 'package:stylizeit/provider/order_provider.dart';
-import 'package:stylizeit/provider/theme_provider.dart';
-import 'package:stylizeit/util/app_constants.dart';
-import 'package:stylizeit/util/custom_themes.dart';
-import 'package:stylizeit/util/dimensions.dart';
 import 'package:stylizeit/view/basewidgets/CustomPrice.dart';
-import 'dart:io';
-
 import 'package:stylizeit/view/basewidgets/button/custom_button.dart';
 import 'package:stylizeit/view/basewidgets/service_widget.dart';
-import 'package:stylizeit/view/basewidgets/style_image_widget.dart';
 
-import 'package:stylizeit/provider/style_provider.dart';
-
-class CategoryDetailsScreen extends StatefulWidget {
+class GiftCardCategoryDetailsScreen extends StatefulWidget {
   final cat.Category category;
 
-  const CategoryDetailsScreen({Key? key, required this.category})
+  const GiftCardCategoryDetailsScreen({Key? key, required this.category})
       : super(key: key);
 
   @override
-  _CategoryDetailsScreenState createState() => _CategoryDetailsScreenState();
+  _GiftCardCategoryDetailsScreenState createState() =>
+      _GiftCardCategoryDetailsScreenState();
 }
 
-class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
+class _GiftCardCategoryDetailsScreenState
+    extends State<GiftCardCategoryDetailsScreen> {
   late Map<cat.Service, bool> servicesMap;
   late cat.Service selectedService;
 
@@ -107,19 +94,19 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                Container(
+                Card(
                   margin: EdgeInsets.all(20),
-                  padding: EdgeInsets.all(10),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Theme.of(context).highlightColor,
-                          spreadRadius: 2),
-                    ],
-                  ),
+                  // padding: EdgeInsets.all(10),
+                  // width: double.infinity,
+                  // decoration: BoxDecoration(
+                  //   borderRadius: BorderRadius.circular(10),
+                  //   color: Colors.white,
+                  //   boxShadow: [
+                  //     BoxShadow(
+                  //         color: Theme.of(context).highlightColor,
+                  //         spreadRadius: 2),
+                  //   ],
+                  // ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -138,7 +125,7 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text("ID"),
+                      Text("Player ID"),
                       SizedBox(
                         height: 10,
                       ),
@@ -148,14 +135,18 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      Row(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("total price"),
                               CustomPrice(price: selectedService.price!),
                             ],
+                          ),
+                          SizedBox(
+                            height: 10,
                           ),
                           !Provider.of<OrderProvider>(context).isLoading
                               ? CustomButton(

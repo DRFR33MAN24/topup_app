@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stylizeit/util/color_resources.dart';
-import 'package:stylizeit/util/dimensions.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CategoryShimmer extends StatelessWidget {

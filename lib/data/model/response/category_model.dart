@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-
 class CategoryModel {
   int? _totalSize;
   int? _limit;
@@ -49,6 +47,7 @@ class Category {
   int? _id;
   String? _title;
   String? _description;
+  String? _type;
   String? _image;
   String? _status;
   List<Tag>? _tags;
@@ -61,6 +60,7 @@ class Category {
     int? id,
     String? title,
     String? description,
+    String? type,
     String? image,
     List<Tag>? tags,
     List<Service>? services,
@@ -71,6 +71,7 @@ class Category {
     _id = id;
     _title = title;
     _description = description;
+    _type = type;
     _image = image;
     _status = status;
     _tags = tags;
@@ -82,6 +83,7 @@ class Category {
   int? get id => _id;
   String? get title => _title;
   String? get description => _description;
+  String? get type => _type;
   String? get image => _image;
   String? get status => _status;
 
@@ -94,6 +96,7 @@ class Category {
     _id = json["id"];
     _title = json["category_title"];
     _description = json["description"];
+    _type = json["type"];
     _image = json["image"];
     _status = json["status"];
 
@@ -132,6 +135,7 @@ class Category {
     data["id"] = _id;
     data["title"] = _title;
     data["description"] = _description;
+    data["type"] = _type;
     data["image"] = _image;
     data["status"] = _status;
 

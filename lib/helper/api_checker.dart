@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:stylizeit/data/model/response/base/api_response.dart';
-import 'package:stylizeit/main.dart';
-import 'package:stylizeit/provider/auth_provider.dart';
-
-import 'package:provider/provider.dart';
 
 class ApiChecker {
   static void checkApi(ApiResponse apiResponse) {
