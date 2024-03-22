@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:stylizeit/data/model/response/category_model.dart' as cat;
-import 'package:stylizeit/util/app_constants.dart';
-import 'package:stylizeit/util/custom_themes.dart';
-import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/util/images.dart';
+import 'package:giftme/data/model/response/category_model.dart' as cat;
+import 'package:giftme/util/app_constants.dart';
+import 'package:giftme/util/custom_themes.dart';
+import 'package:giftme/util/dimensions.dart';
+import 'package:giftme/util/images.dart';
 
 class TagWidget extends StatefulWidget {
   final cat.Tag tag;

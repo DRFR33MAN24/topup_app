@@ -95,8 +95,8 @@ class Category {
   Category.fromJson(Map<String, dynamic> json) {
     _id = json["id"];
     _title = json["category_title"];
-    _description = json["description"];
-    _type = json["type"];
+    _description = json["category_description"];
+    _type = json["category_type"];
     _image = json["image"];
     _status = json["status"];
 

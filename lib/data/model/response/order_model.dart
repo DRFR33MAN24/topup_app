@@ -1,3 +1,5 @@
+import 'package:giftme/data/model/response/category_model.dart';
+
 class OrderModel {
   int? _totalSize;
   int? _limit;
@@ -45,6 +47,7 @@ class Order {
   int? _userId;
   int? _categoryId;
   int? _serviceId;
+  Service? _service;
   int? _qty;
   String? _uploadedImg;
 
@@ -61,6 +64,7 @@ class Order {
       int? userId,
       int? categoryId,
       int? serviceId,
+      Service? service,
       int? qty,
       String? uploadedImg,
       String? price,
@@ -74,6 +78,7 @@ class Order {
     _userId = userId;
     _categoryId = categoryId;
     _serviceId = serviceId;
+    _service = service;
     _qty = qty;
     _uploadedImg = uploadedImg;
     _orderStatus = orderStatus;
@@ -85,6 +90,7 @@ class Order {
   int? get userId => _userId;
   int? get categoryId => _categoryId;
   int? get serviceId => _serviceId;
+  Service? get service => _service;
   int? get qty => _qty;
   String? get uploadedImg => _uploadedImg;
 
@@ -101,6 +107,7 @@ class Order {
     _userId = json["user_id"];
     _categoryId = json["category_id"];
     _serviceId = json["service_id"];
+    _service = Service.fromJson(json["service"]);
     _qty = json["quantity"];
     _uploadedImg = json["uploaded_img"];
     _price = json["price"].toString();
@@ -118,6 +125,7 @@ class Order {
     data["user_id"] = userId;
     data["category_id"] = categoryId;
     data["service_id"] = serviceId;
+    data["service"] = service;
     data["quantity"] = qty;
     data["uploaded_img"] = uploadedImg;
     data["price"] = price;

@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:stylizeit/localization/language_constants.dart';
-import 'package:stylizeit/main.dart';
+import 'package:giftme/localization/language_constants.dart';
+import 'package:giftme/main.dart';
 
 class NetworkInfo {
   final Connectivity? connectivity;
@@ -33,6 +33,10 @@ class NetworkInfo {
             ? const SizedBox()
             : ScaffoldMessenger.of(Get.context!).hideCurrentSnackBar();
         ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
           backgroundColor: isNotConnected ? Colors.red : Colors.green,
           duration: Duration(seconds: isNotConnected ? 6000 : 3),
           content: Text(

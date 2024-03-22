@@ -2,16 +2,19 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 import 'package:provider/provider.dart';
-import 'package:stylizeit/localization/language_constants.dart';
-import 'package:stylizeit/provider/order_provider.dart';
-import 'package:stylizeit/provider/splash_provider.dart';
-import 'package:stylizeit/provider/theme_provider.dart';
-import 'package:stylizeit/util/custom_themes.dart';
-import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/view/basewidgets/button/custom_button.dart';
-import 'package:stylizeit/view/basewidgets/textfield/custom_textfield.dart';
-import 'package:stylizeit/view/screens/auth/widget/code_picker_widget.dart';
-import 'package:stylizeit/view/screens/home/home_screen.dart';
+import 'package:giftme/localization/language_constants.dart';
+import 'package:giftme/provider/auth_provider.dart';
+import 'package:giftme/provider/order_provider.dart';
+import 'package:giftme/provider/splash_provider.dart';
+import 'package:giftme/provider/theme_provider.dart';
+import 'package:giftme/util/custom_themes.dart';
+import 'package:giftme/util/dimensions.dart';
+import 'package:giftme/view/basewidgets/animated_custom_dialog.dart';
+import 'package:giftme/view/basewidgets/button/custom_button.dart';
+import 'package:giftme/view/basewidgets/order_confirmation_dialog.dart';
+import 'package:giftme/view/basewidgets/textfield/custom_textfield.dart';
+import 'package:giftme/view/screens/auth/widget/code_picker_widget.dart';
+import 'package:giftme/view/screens/home/home_screen.dart';
 
 class CreditTransfer extends StatefulWidget {
   const CreditTransfer({Key? key}) : super(key: key);
@@ -126,7 +129,17 @@ class _CreditTransferState extends State<CreditTransfer> {
                     height: 15,
                   ),
                   !orderProvider.isLoading
-                      ? CustomButton(buttonText: "Send")
+                      ? CustomButton(
+                          buttonText: "Send",
+                          onTap: () {
+                            showAnimatedDialog(
+                                context,
+                                OrderConfirmationDialog(
+                                    details:
+                                        "Do you really want to submit this order",
+                                    onConfirm: this.placeOrder));
+                          },
+                        )
                       : Center(
                           child: CircularProgressIndicator(
                               valueColor: AlwaysStoppedAnimation<Color>(
@@ -136,5 +149,12 @@ class _CreditTransferState extends State<CreditTransfer> {
             );
           }),
         ));
+  }
+
+  placeOrder() {
+    Provider.of<OrderProvider>(context, listen: false).placeOrder(
+      '1',
+      Provider.of<AuthProvider>(context, listen: false).getUserToken(),
+    );
   }
 }

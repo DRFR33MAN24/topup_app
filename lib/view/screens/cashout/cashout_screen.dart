@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stylizeit/data/model/response/payment_model.dart';
-import 'package:stylizeit/provider/payment_provider.dart';
-import 'package:stylizeit/provider/splash_provider.dart';
-import 'package:stylizeit/provider/theme_provider.dart';
-import 'package:stylizeit/util/custom_themes.dart';
-import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/util/images.dart';
-import 'package:stylizeit/view/basewidgets/button/custom_button.dart';
-import 'package:stylizeit/view/screens/cashout/widget/custom_check_box.dart';
-import 'package:stylizeit/view/screens/payment/payment_screen.dart';
+import 'package:giftme/data/model/response/payment_model.dart';
+import 'package:giftme/provider/payment_provider.dart';
+import 'package:giftme/provider/splash_provider.dart';
+import 'package:giftme/provider/theme_provider.dart';
+import 'package:giftme/util/custom_themes.dart';
+import 'package:giftme/util/dimensions.dart';
+import 'package:giftme/util/images.dart';
+import 'package:giftme/view/basewidgets/button/custom_button.dart';
+import 'package:giftme/view/screens/cashout/widget/custom_check_box.dart';
+import 'package:giftme/view/screens/payment/payment_screen.dart';
 
 class CashoutScreen extends StatefulWidget {
   final Package package;

@@ -3,15 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
-import 'package:stylizeit/localization/language_constants.dart';
-import 'package:stylizeit/provider/auth_provider.dart';
-import 'package:stylizeit/util/color_resources.dart';
-import 'package:stylizeit/util/custom_themes.dart';
-import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/util/images.dart';
-import 'package:stylizeit/view/basewidgets/button/custom_button.dart';
-import 'package:stylizeit/view/basewidgets/show_custom_snakbar.dart';
-import 'package:stylizeit/view/screens/dashboard/dashboard_screen.dart';
+import 'package:giftme/localization/language_constants.dart';
+import 'package:giftme/provider/auth_provider.dart';
+import 'package:giftme/provider/profile_provider.dart';
+import 'package:giftme/util/color_resources.dart';
+import 'package:giftme/util/custom_themes.dart';
+import 'package:giftme/util/dimensions.dart';
+import 'package:giftme/util/images.dart';
+import 'package:giftme/view/basewidgets/button/custom_button.dart';
+import 'package:giftme/view/basewidgets/show_custom_snakbar.dart';
+import 'package:giftme/view/screens/dashboard/dashboard_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
   final String tempToken;
@@ -61,11 +62,21 @@ class _VerificationScreenState extends State<VerificationScreen> {
             (route) => false);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("phone verify error"), backgroundColor: Colors.red));
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            content: Text("phone verify error"),
+            backgroundColor: Colors.red));
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("phone verify error"), backgroundColor: Colors.red));
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          content: Text("phone verify error"),
+          backgroundColor: Colors.red));
     }
   }
 
@@ -218,7 +229,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                       //       //     (route) => false);
                                       //     } else {
                                       //       ScaffoldMessenger.of(context)
-                                      //           .showSnackBar(SnackBar(
+                                      //           .showSnackBar(SnackBar(        behavior: SnackBarBehavior.floating,
+
                                       //         content: Text(getTranslated(
                                       //             'input_valid_otp', context)!),
                                       //         backgroundColor: Colors.red,
@@ -231,15 +243,26 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                                 listen: false)
                                             .verifyPhone(widget.mobileNumber,
                                                 widget.tempToken, route)
-                                            .then((value) {
+                                            .then((value) async {
                                           if (value.isSuccess) {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(SnackBar(
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(24),
+                                              ),
                                               content: Text(getTranslated(
                                                   'sign_up_successfully_now_login',
                                                   context)!),
                                               backgroundColor: Colors.green,
                                             ));
+                                            await Provider.of<ProfileProvider>(
+                                                    context,
+                                                    listen: false)
+                                                .getUserInfo(context);
+
                                             Navigator.pushAndRemoveUntil(
                                                 context,
                                                 MaterialPageRoute(
@@ -260,7 +283,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                         //       .then((value) {
                                         //     if (value.isSuccess) {
                                         //       ScaffoldMessenger.of(context)
-                                        //           .showSnackBar(SnackBar(
+                                        //           .showSnackBar(SnackBar(        behavior: SnackBarBehavior.floating,
+
                                         //         content: Text(getTranslated(
                                         //             'sign_up_successfully_now_login',
                                         //             context)!),
@@ -274,7 +298,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                         //           (route) => false);
                                         //     } else {
                                         //       ScaffoldMessenger.of(context)
-                                        //           .showSnackBar(SnackBar(
+                                        //           .showSnackBar(SnackBar(        behavior: SnackBarBehavior.floating,
+
                                         //               content:
                                         //                   Text(value.message!),
                                         //               backgroundColor:

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:stylizeit/data/model/response/category_model.dart' as cat;
-import 'package:stylizeit/provider/order_provider.dart';
-import 'package:stylizeit/view/basewidgets/CustomPrice.dart';
-import 'package:stylizeit/view/basewidgets/button/custom_button.dart';
-import 'package:stylizeit/view/basewidgets/service_widget.dart';
+import 'package:giftme/data/model/response/category_model.dart' as cat;
+import 'package:giftme/provider/auth_provider.dart';
+import 'package:giftme/provider/order_provider.dart';
+import 'package:giftme/view/basewidgets/CustomPrice.dart';
+import 'package:giftme/view/basewidgets/animated_custom_dialog.dart';
+import 'package:giftme/view/basewidgets/button/custom_button.dart';
+import 'package:giftme/view/basewidgets/order_confirmation_dialog.dart';
+import 'package:giftme/view/basewidgets/service_widget.dart';
 
 class TelecomCategoryDetailsScreen extends StatefulWidget {
   final cat.Category category;
@@ -160,7 +163,14 @@ class _TelecomCategoryDetailsScreenState
                               ? CustomButton(
                                   radius: 45,
                                   buttonText: "Buy",
-                                  onTap: () {},
+                                  onTap: () {
+                                    showAnimatedDialog(
+                                        context,
+                                        OrderConfirmationDialog(
+                                            details:
+                                                "Do you really want to submit this order",
+                                            onConfirm: this.placeOrder));
+                                  },
                                 )
                               : Center(
                                   child: CircularProgressIndicator(
@@ -177,9 +187,11 @@ class _TelecomCategoryDetailsScreenState
         ));
   }
 
-  placeOrder() async {
-    // Provider.of<OrderProvider>(context, listen: false)
-    //     .placeOrder(selectedService.id, qty.text);
+  placeOrder() {
+    Provider.of<OrderProvider>(context, listen: false).placeOrder(
+      '1',
+      Provider.of<AuthProvider>(context, listen: false).getUserToken(),
+    );
   }
 }
 

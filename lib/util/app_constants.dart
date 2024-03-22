@@ -1,4 +1,4 @@
-import 'package:stylizeit/data/model/response/language_model.dart';
+import 'package:giftme/data/model/response/language_model.dart';
 
 class AppConstants {
   static const String appName = 'GiftMe';
@@ -21,7 +21,7 @@ class AppConstants {
   static const String resendPhoneOtpUri = '/api/v1/auth/resend-otp-check-phone';
   static const String latestStyles = '/api/styles/styles?limit=10&&offset=';
   static const String transaction =
-      '/api/transaction/transaction?limit=10&&offset=';
+      '/api/transactions/transactions?limit=10&&offset=';
   static const String stylesTags = '/api/styles/tags';
 
   static const String customerUri = '/api/customer/info';
@@ -30,6 +30,7 @@ class AppConstants {
 
   static const String latestCategories = '/api/categories/categories?limit=10';
   static const String latestOrders = '/api/orders/orders?limit=10';
+  static const String notificationUri = '/api/notifications';
   static const String categoriesTags = '/api/categories/tags';
   static const String packages = '/api/payment/packages';
 
@@ -40,7 +41,7 @@ class AppConstants {
   static const String countryCode = 'countryCode';
   static const String languageCode = 'languageCode';
   static const String langKey = 'lang';
-  static const String topic = "stylizeit";
+  static const String topic = "giftme";
   static const String user = "user";
   static const String userPassword = "user_password";
   static const String userEmail = "user_email";

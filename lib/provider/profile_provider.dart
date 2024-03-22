@@ -5,12 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-import 'package:stylizeit/data/model/response/base/api_response.dart';
-import 'package:stylizeit/data/model/response/response_model.dart';
-import 'package:stylizeit/data/model/response/user_info_model.dart';
-import 'package:stylizeit/data/repository/profile_repo.dart';
-import 'package:stylizeit/helper/api_checker.dart';
-import 'package:stylizeit/main.dart';
+import 'package:giftme/data/model/response/base/api_response.dart';
+import 'package:giftme/data/model/response/response_model.dart';
+import 'package:giftme/data/model/response/user_info_model.dart';
+import 'package:giftme/data/repository/profile_repo.dart';
+import 'package:giftme/helper/api_checker.dart';
+import 'package:giftme/main.dart';
 
 class ProfileProvider extends ChangeNotifier {
   final ProfileRepo? profileRepo;

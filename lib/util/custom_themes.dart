@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stylizeit/util/dimensions.dart';
+import 'package:giftme/util/dimensions.dart';
 
 const titilliumRegular = TextStyle(
   fontFamily: 'Vazirmatn',

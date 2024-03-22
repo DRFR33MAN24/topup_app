@@ -1,4 +1,4 @@
-package com.codeone.stylizeit
+package com.codeone.giftme
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'package:stylizeit/data/model/response/base/api_response.dart';
-import 'package:stylizeit/data/model/response/style_model.dart';
-import 'package:stylizeit/data/repository/style_repo.dart';
-import 'package:stylizeit/helper/api_checker.dart';
+import 'package:giftme/data/model/response/base/api_response.dart';
+import 'package:giftme/data/model/response/style_model.dart';
+import 'package:giftme/data/repository/style_repo.dart';
+import 'package:giftme/helper/api_checker.dart';
 
 class StyleProvider extends ChangeNotifier {
   final StyleRepo? styleRepo;

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:stylizeit/data/datasource/remote/dio/logging_interceptor.dart';
-import 'package:stylizeit/util/app_constants.dart';
+import 'package:giftme/data/datasource/remote/dio/logging_interceptor.dart';
+import 'package:giftme/util/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DioClient {

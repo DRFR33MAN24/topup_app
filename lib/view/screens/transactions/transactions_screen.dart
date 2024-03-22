@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stylizeit/main.dart';
-import 'package:stylizeit/provider/theme_provider.dart';
-import 'package:stylizeit/provider/tranaction_provider.dart';
-import 'package:stylizeit/util/custom_themes.dart';
-import 'package:stylizeit/util/dimensions.dart';
+import 'package:giftme/data/model/response/transaction_model.dart';
+import 'package:giftme/helper/date.dart';
+import 'package:giftme/main.dart';
+import 'package:giftme/provider/theme_provider.dart';
+import 'package:giftme/provider/tranaction_provider.dart';
+import 'package:giftme/util/custom_themes.dart';
+import 'package:giftme/util/dimensions.dart';
+import 'package:giftme/view/basewidgets/CustomPrice.dart';
 
 class TransactionsScreen extends StatefulWidget {
   const TransactionsScreen({Key? key}) : super(key: key);
@@ -81,7 +84,8 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
             return ListView.builder(
               itemCount: transactionProvider.transactionList.length,
               itemBuilder: (BuildContext context, int index) {
-                return TransactionWidget();
+                return TransactionWidget(
+                    trx: transactionProvider.transactionList[index]);
               },
             );
           }),
@@ -90,42 +94,64 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
 }
 
 class TransactionWidget extends StatelessWidget {
-  const TransactionWidget({
-    super.key,
-  });
+  final Transaction trx;
+  const TransactionWidget({super.key, required this.trx});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
+      // height: 100,
       margin: EdgeInsets.all(5),
       padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: Colors.white,
+        color: Theme.of(context).canvasColor,
         boxShadow: [
           BoxShadow(color: Theme.of(context).disabledColor, spreadRadius: 1),
         ],
       ),
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("Order Type"), Text("amount")],
-          ),
-          Column(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("15/15/21"),
-              Container(
-                color: Theme.of(context).primaryColor,
-                child: Text("Status"),
-              )
+              Text("ID: " + trx.trx_id!, style: robotoBold.copyWith()),
+              Text("Date: " + getDateFormatted(trx.createdAt),
+                  style: robotoBold.copyWith()),
+            ],
+          ),
+          Divider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Amount: ", style: robotoBold.copyWith()),
+              CustomPrice(price: trx.amount!, formatStyle: trx.trx_type)
+            ],
+          ),
+          Divider(),
+          Row(
+            children: [
+              Text("note: " + trx.remarks!),
             ],
           )
         ],
       ),
     );
+  }
+
+  getStatusColor(String s) {
+    switch (s) {
+      case "pending":
+        return Colors.amber;
+        break;
+      case "completed":
+        return Colors.green;
+        break;
+      case "rejected":
+        return Colors.redAccent;
+        break;
+      default:
+    }
   }
 }

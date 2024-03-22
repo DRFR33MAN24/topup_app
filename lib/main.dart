@@ -1,32 +1,64 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:stylizeit/helper/custom_delegate.dart';
-import 'package:stylizeit/localization/app_localization.dart';
-import 'package:stylizeit/provider/auth_provider.dart';
-import 'package:stylizeit/provider/category_provider.dart';
-import 'package:stylizeit/provider/google_sign_in_provider.dart';
-import 'package:stylizeit/provider/localization_provider.dart';
-import 'package:stylizeit/provider/onboarding_provider.dart';
-import 'package:stylizeit/provider/order_provider.dart';
-import 'package:stylizeit/provider/payment_provider.dart';
-import 'package:stylizeit/provider/profile_provider.dart';
-import 'package:stylizeit/provider/splash_provider.dart';
-import 'package:stylizeit/provider/style_provider.dart';
-import 'package:stylizeit/provider/theme_provider.dart';
-import 'package:stylizeit/provider/tranaction_provider.dart';
-import 'package:stylizeit/theme/dark_theme.dart';
-import 'package:stylizeit/theme/light_theme.dart';
-import 'package:stylizeit/util/app_constants.dart';
-import 'package:stylizeit/util/custom_themes.dart';
-import 'package:stylizeit/view/screens/splash/splash_screen.dart';
+import 'package:giftme/helper/custom_delegate.dart';
+import 'package:giftme/localization/app_localization.dart';
+import 'package:giftme/notification/my_notification.dart';
+import 'package:giftme/provider/auth_provider.dart';
+import 'package:giftme/provider/category_provider.dart';
+import 'package:giftme/provider/google_sign_in_provider.dart';
+import 'package:giftme/provider/localization_provider.dart';
+import 'package:giftme/provider/onboarding_provider.dart';
+import 'package:giftme/provider/order_provider.dart';
+import 'package:giftme/provider/payment_provider.dart';
+import 'package:giftme/provider/profile_provider.dart';
+import 'package:giftme/provider/splash_provider.dart';
+import 'package:giftme/provider/style_provider.dart';
+import 'package:giftme/provider/theme_provider.dart';
+import 'package:giftme/provider/tranaction_provider.dart';
+import 'package:giftme/theme/dark_theme.dart';
+import 'package:giftme/theme/light_theme.dart';
+import 'package:giftme/util/app_constants.dart';
+import 'package:giftme/util/custom_themes.dart';
+import 'package:giftme/view/screens/splash/splash_screen.dart';
 
 import 'di_container.dart' as di;
 
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
+
+  // await Firebase.initializeApp();
+
+  // final NotificationAppLaunchDetails? notificationAppLaunchDetails =
+  //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  // int? orderID;
+  // if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
+  //   orderID = (notificationAppLaunchDetails!.payload != null &&
+  //           notificationAppLaunchDetails.payload!.isNotEmpty)
+  //       ? int.parse(notificationAppLaunchDetails.payload!)
+  //       : null;
+  // }
+  // final RemoteMessage? remoteMessage =
+  //     await FirebaseMessaging.instance.getInitialMessage();
+  // if (remoteMessage != null) {
+  //   orderID = remoteMessage.notification?.titleLocKey != null
+  //       ? int.parse(remoteMessage.notification!.titleLocKey!)
+  //       : null;
+  // }
+  // if (kDebugMode) {
+  //   print('========-notification-----$orderID----===========');
+  // }
+  // await MyNotification.initialize(flutterLocalNotificationsPlugin);
+  // FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
+
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => di.sl<StyleProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<CategoryProvider>()),

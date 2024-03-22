@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stylizeit/data/model/response/base/api_response.dart';
-import 'package:stylizeit/data/model/response/payment_model.dart';
-import 'package:stylizeit/data/repository/payment_repo.dart';
-import 'package:stylizeit/helper/api_checker.dart';
+import 'package:giftme/data/model/response/base/api_response.dart';
+import 'package:giftme/data/model/response/payment_model.dart';
+import 'package:giftme/data/repository/payment_repo.dart';
+import 'package:giftme/helper/api_checker.dart';
 
 class PyamentProvider extends ChangeNotifier {
   final PaymentRepo? paymentRepo;

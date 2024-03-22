@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:stylizeit/data/model/response/category_model.dart' as cat;
-import 'package:stylizeit/provider/order_provider.dart';
-import 'package:stylizeit/view/basewidgets/CustomPrice.dart';
-import 'package:stylizeit/view/basewidgets/button/custom_button.dart';
-import 'package:stylizeit/view/basewidgets/service_widget.dart';
+import 'package:giftme/data/model/response/category_model.dart' as cat;
+import 'package:giftme/provider/auth_provider.dart';
+import 'package:giftme/provider/order_provider.dart';
+import 'package:giftme/view/basewidgets/CustomPrice.dart';
+import 'package:giftme/view/basewidgets/animated_custom_dialog.dart';
+import 'package:giftme/view/basewidgets/button/custom_button.dart';
+import 'package:giftme/view/basewidgets/order_confirmation_dialog.dart';
+import 'package:giftme/view/basewidgets/service_widget.dart';
 
 class GiftCardCategoryDetailsScreen extends StatefulWidget {
   final cat.Category category;
@@ -94,22 +97,27 @@ class _GiftCardCategoryDetailsScreenState
                 SizedBox(
                   height: 20,
                 ),
-                Card(
+                Container(
                   margin: EdgeInsets.all(20),
-                  // padding: EdgeInsets.all(10),
-                  // width: double.infinity,
-                  // decoration: BoxDecoration(
-                  //   borderRadius: BorderRadius.circular(10),
-                  //   color: Colors.white,
-                  //   boxShadow: [
-                  //     BoxShadow(
-                  //         color: Theme.of(context).highlightColor,
-                  //         spreadRadius: 2),
-                  //   ],
-                  // ),
+                  padding: EdgeInsets.all(10),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Theme.of(context).cardColor,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Theme.of(context).highlightColor,
+                          spreadRadius: 2),
+                    ],
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text("Description:"),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(selectedService.description!),
                       Text("Quantity"),
                       SizedBox(
                         height: 10,
@@ -133,7 +141,7 @@ class _GiftCardCategoryDetailsScreenState
                         controller: player_id,
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 15,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,7 +149,7 @@ class _GiftCardCategoryDetailsScreenState
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("total price"),
+                              Text("Total price"),
                               CustomPrice(price: selectedService.price!),
                             ],
                           ),
@@ -152,7 +160,14 @@ class _GiftCardCategoryDetailsScreenState
                               ? CustomButton(
                                   radius: 45,
                                   buttonText: "Buy",
-                                  onTap: () {},
+                                  onTap: () {
+                                    showAnimatedDialog(
+                                        context,
+                                        OrderConfirmationDialog(
+                                            details:
+                                                "Do you really want to submit this order",
+                                            onConfirm: this.placeOrder));
+                                  },
                                 )
                               : Center(
                                   child: CircularProgressIndicator(
@@ -169,9 +184,11 @@ class _GiftCardCategoryDetailsScreenState
         ));
   }
 
-  placeOrder() async {
-    // Provider.of<OrderProvider>(context, listen: false)
-    //     .placeOrder(selectedService.id, qty.text);
+  placeOrder() {
+    Provider.of<OrderProvider>(context, listen: false).placeOrder(
+      '1',
+      Provider.of<AuthProvider>(context, listen: false).getUserToken(),
+    );
   }
 }
 

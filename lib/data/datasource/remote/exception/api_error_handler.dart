@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:stylizeit/data/model/response/base/error_response.dart';
-import 'package:stylizeit/main.dart';
-import 'package:stylizeit/view/basewidgets/show_custom_snakbar.dart';
+import 'package:giftme/data/model/response/base/error_response.dart';
+import 'package:giftme/main.dart';
+import 'package:giftme/view/basewidgets/show_custom_snakbar.dart';
 
 class ApiErrorHandler {
   static dynamic getMessage(error) {

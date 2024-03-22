@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'package:stylizeit/data/model/response/base/api_response.dart';
-import 'package:stylizeit/data/model/response/category_model.dart' as cat;
-import 'package:stylizeit/data/repository/category_repo.dart';
-import 'package:stylizeit/helper/api_checker.dart';
+import 'package:giftme/data/model/response/base/api_response.dart';
+import 'package:giftme/data/model/response/category_model.dart' as cat;
+import 'package:giftme/data/repository/category_repo.dart';
+import 'package:giftme/helper/api_checker.dart';
 
 class CategoryProvider extends ChangeNotifier {
   final CategoryRepo? categoryRepo;

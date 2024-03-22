@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stylizeit/util/custom_themes.dart';
+import 'package:giftme/util/custom_themes.dart';
 
 class CustomPasswordTextField extends StatefulWidget {
   final TextEditingController? controller;

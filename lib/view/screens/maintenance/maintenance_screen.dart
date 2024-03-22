@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stylizeit/localization/language_constants.dart';
-import 'package:stylizeit/util/custom_themes.dart';
-import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/util/images.dart';
+import 'package:giftme/localization/language_constants.dart';
+import 'package:giftme/util/custom_themes.dart';
+import 'package:giftme/util/dimensions.dart';
+import 'package:giftme/util/images.dart';
 
 class MaintenanceScreen extends StatelessWidget {
   const MaintenanceScreen({Key? key}) : super(key: key);

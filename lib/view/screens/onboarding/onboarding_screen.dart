@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-// import 'package:stylizeit/view/screens/auth/auth_screen.dart';
+// import 'package:giftme/view/screens/auth/auth_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:stylizeit/localization/language_constants.dart';
-import 'package:stylizeit/provider/onboarding_provider.dart';
-import 'package:stylizeit/provider/splash_provider.dart';
-import 'package:stylizeit/provider/theme_provider.dart';
-import 'package:stylizeit/util/custom_themes.dart';
-import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/util/images.dart';
-import 'package:stylizeit/view/screens/auth/widget/mobile_verify_screen.dart';
+import 'package:giftme/localization/language_constants.dart';
+import 'package:giftme/provider/onboarding_provider.dart';
+import 'package:giftme/provider/splash_provider.dart';
+import 'package:giftme/provider/theme_provider.dart';
+import 'package:giftme/util/custom_themes.dart';
+import 'package:giftme/util/dimensions.dart';
+import 'package:giftme/util/images.dart';
+import 'package:giftme/view/screens/auth/widget/mobile_verify_screen.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   final Color indicatorColor;

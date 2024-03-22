@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:stylizeit/data/model/response/category_model.dart' as cat;
-import 'package:stylizeit/util/app_constants.dart';
-import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/util/images.dart';
-import 'package:stylizeit/view/screens/category/giftcard_category_details_screen.dart';
-import 'package:stylizeit/view/screens/category/telecom_category_details_screen.dart';
+import 'package:giftme/data/model/response/category_model.dart' as cat;
+import 'package:giftme/util/app_constants.dart';
+import 'package:giftme/util/dimensions.dart';
+import 'package:giftme/util/images.dart';
+import 'package:giftme/view/screens/category/giftcard_category_details_screen.dart';
+import 'package:giftme/view/screens/category/telecom_category_details_screen.dart';
 
 class CategoryWidget extends StatefulWidget {
   final cat.Category category;

@@ -4,18 +4,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:stylizeit/data/model/response/user_info_model.dart';
-import 'package:stylizeit/localization/language_constants.dart';
-import 'package:stylizeit/provider/auth_provider.dart';
-import 'package:stylizeit/provider/profile_provider.dart';
-import 'package:stylizeit/provider/theme_provider.dart';
-import 'package:stylizeit/util/app_constants.dart';
-import 'package:stylizeit/util/color_resources.dart';
-import 'package:stylizeit/util/custom_themes.dart';
-import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/util/images.dart';
-import 'package:stylizeit/view/basewidgets/button/custom_button.dart';
-import 'package:stylizeit/view/basewidgets/textfield/custom_textfield.dart';
+import 'package:giftme/data/model/response/user_info_model.dart';
+import 'package:giftme/localization/language_constants.dart';
+import 'package:giftme/provider/auth_provider.dart';
+import 'package:giftme/provider/profile_provider.dart';
+import 'package:giftme/provider/theme_provider.dart';
+import 'package:giftme/util/app_constants.dart';
+import 'package:giftme/util/color_resources.dart';
+import 'package:giftme/util/custom_themes.dart';
+import 'package:giftme/util/dimensions.dart';
+import 'package:giftme/util/images.dart';
+import 'package:giftme/view/basewidgets/button/custom_button.dart';
+import 'package:giftme/view/basewidgets/textfield/custom_textfield.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -81,19 +81,35 @@ class ProfileScreenState extends State<ProfileScreen> {
                 .phone ==
             _phoneController.text &&
         file == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
           content: Text('Change something to update'),
           backgroundColor: ColorResources.red));
     } else if (firstName.isEmpty || lastName.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
           content: Text(getTranslated('NAME_FIELD_MUST_BE_REQUIRED', context)!),
           backgroundColor: ColorResources.red));
     } else if (email.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
           content: Text(getTranslated('EMAIL_MUST_BE_REQUIRED', context)!),
           backgroundColor: ColorResources.red));
     } else if (phoneNumber.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
           content: Text(getTranslated('PHONE_MUST_BE_REQUIRED', context)!),
           backgroundColor: ColorResources.red));
     } else {
@@ -116,14 +132,23 @@ class ProfileScreenState extends State<ProfileScreen> {
         if (response.isSuccess) {
           Provider.of<ProfileProvider>(context, listen: false)
               .getUserInfo(context);
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
               content: Text('Updated Successfully'),
               backgroundColor: Colors.green));
 
           setState(() {});
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(response.message!), backgroundColor: Colors.red));
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
+              content: Text(response.message!),
+              backgroundColor: Colors.red));
         }
       });
     }

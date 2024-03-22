@@ -1,11 +1,11 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:stylizeit/localization/language_constants.dart';
-import 'package:stylizeit/main.dart';
-import 'package:stylizeit/util/color_resources.dart';
-import 'package:stylizeit/util/custom_themes.dart';
-import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/util/images.dart';
+import 'package:giftme/localization/language_constants.dart';
+import 'package:giftme/main.dart';
+import 'package:giftme/util/color_resources.dart';
+import 'package:giftme/util/custom_themes.dart';
+import 'package:giftme/util/dimensions.dart';
+import 'package:giftme/util/images.dart';
 
 class NoInternetOrDataScreen extends StatelessWidget {
   final bool isNoInternet;

@@ -1,4 +1,4 @@
-import 'package:stylizeit/data/model/response/base/api_response.dart';
+import 'package:giftme/data/model/response/base/api_response.dart';
 
 class ApiChecker {
   static void checkApi(ApiResponse apiResponse) {

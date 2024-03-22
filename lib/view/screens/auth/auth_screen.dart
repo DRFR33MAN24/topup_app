@@ -1,13 +1,13 @@
 // import 'package:country_code_picker/country_code_picker.dart';
 // import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
-// import 'package:stylizeit/localization/language_constants.dart';
-// import 'package:stylizeit/provider/auth_provider.dart';
-// import 'package:stylizeit/util/dimensions.dart';
-// import 'package:stylizeit/view/basewidgets/button/custom_button.dart';
-// import 'package:stylizeit/view/basewidgets/textfield/custom_textfield.dart';
-// import 'package:stylizeit/view/screens/auth/widget/code_picker_widget.dart';
-// import 'package:stylizeit/view/screens/auth/widget/social_login_widget.dart';
+// import 'package:giftme/localization/language_constants.dart';
+// import 'package:giftme/provider/auth_provider.dart';
+// import 'package:giftme/util/dimensions.dart';
+// import 'package:giftme/view/basewidgets/button/custom_button.dart';
+// import 'package:giftme/view/basewidgets/textfield/custom_textfield.dart';
+// import 'package:giftme/view/screens/auth/widget/code_picker_widget.dart';
+// import 'package:giftme/view/screens/auth/widget/social_login_widget.dart';
 
 // class AuthScreen extends StatefulWidget {
 //   const AuthScreen({Key? key}) : super(key: key);

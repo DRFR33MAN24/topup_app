@@ -1,13 +1,13 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:stylizeit/localization/language_constants.dart';
-import 'package:stylizeit/provider/auth_provider.dart';
-import 'package:stylizeit/provider/splash_provider.dart';
-import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/util/images.dart';
-import 'package:stylizeit/view/basewidgets/button/custom_button.dart';
-import 'package:stylizeit/view/basewidgets/show_custom_snakbar.dart';
-import 'package:stylizeit/view/basewidgets/textfield/custom_textfield.dart';
+import 'package:giftme/localization/language_constants.dart';
+import 'package:giftme/provider/auth_provider.dart';
+import 'package:giftme/provider/splash_provider.dart';
+import 'package:giftme/util/dimensions.dart';
+import 'package:giftme/util/images.dart';
+import 'package:giftme/view/basewidgets/button/custom_button.dart';
+import 'package:giftme/view/basewidgets/show_custom_snakbar.dart';
+import 'package:giftme/view/basewidgets/textfield/custom_textfield.dart';
 import 'package:provider/provider.dart';
 import 'code_picker_widget.dart';
 import 'otp_verification_screen.dart';
@@ -150,6 +150,11 @@ class MobileVerificationScreenState extends State<MobileVerificationScreen> {
                                       }
                                     } else {
                                       final snackBar = SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(24),
+                                        ),
                                         content: Text(getTranslated(
                                             'phone_number_already_exist',
                                             context)!),

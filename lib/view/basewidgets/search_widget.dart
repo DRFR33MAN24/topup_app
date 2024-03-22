@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stylizeit/util/custom_themes.dart';
-import 'package:stylizeit/util/dimensions.dart';
+import 'package:giftme/util/custom_themes.dart';
+import 'package:giftme/util/dimensions.dart';
 
 class SearchWidget extends StatefulWidget {
   final String? hintText;

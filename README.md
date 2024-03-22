@@ -1,4 +1,4 @@
-# stylizeit
+# giftme
 
 A new Flutter project.
 

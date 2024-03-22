@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:stylizeit/localization/language_constants.dart';
-import 'package:stylizeit/provider/auth_provider.dart';
-import 'package:stylizeit/provider/profile_provider.dart';
-import 'package:stylizeit/util/color_resources.dart';
-import 'package:stylizeit/util/custom_themes.dart';
-import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/util/images.dart';
+import 'package:giftme/localization/language_constants.dart';
+import 'package:giftme/provider/auth_provider.dart';
+import 'package:giftme/provider/profile_provider.dart';
+import 'package:giftme/util/color_resources.dart';
+import 'package:giftme/util/custom_themes.dart';
+import 'package:giftme/util/dimensions.dart';
+import 'package:giftme/util/images.dart';
 
 import 'package:provider/provider.dart';
-import 'package:stylizeit/view/screens/auth/widget/mobile_verify_screen.dart';
+import 'package:giftme/view/screens/auth/widget/mobile_verify_screen.dart';
 
 class SignOutConfirmationDialog extends StatelessWidget {
   final bool isDelete;
@@ -71,16 +71,13 @@ class SignOutConfirmationDialog extends StatelessWidget {
                         Provider.of<AuthProvider>(context, listen: false)
                             .clearSharedData()
                             .then((condition) {
-                          Navigator.pop(context);
-
-                          Provider.of<AuthProvider>(context, listen: false)
-                              .clearSharedData();
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const MobileVerificationScreen("")),
-                              (route) => false);
+                          print("logged out");
                         });
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const MobileVerificationScreen("")),
+                            (route) => false);
                       }
                     },
                     child: Container(

@@ -3,18 +3,18 @@ import 'dart:async';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stylizeit/localization/language_constants.dart';
-import 'package:stylizeit/provider/auth_provider.dart';
-import 'package:stylizeit/provider/profile_provider.dart';
-import 'package:stylizeit/provider/splash_provider.dart';
-import 'package:stylizeit/util/color_resources.dart';
-import 'package:stylizeit/util/images.dart';
-import 'package:stylizeit/view/basewidgets/no_internet_screen.dart';
-import 'package:stylizeit/view/screens/auth/widget/mobile_verify_screen.dart';
-//import 'package:stylizeit/view/screens/auth/auth_screen.dart';
-import 'package:stylizeit/view/screens/dashboard/dashboard_screen.dart';
-import 'package:stylizeit/view/screens/maintenance/maintenance_screen.dart';
-import 'package:stylizeit/view/screens/onboarding/onboarding_screen.dart';
+import 'package:giftme/localization/language_constants.dart';
+import 'package:giftme/provider/auth_provider.dart';
+import 'package:giftme/provider/profile_provider.dart';
+import 'package:giftme/provider/splash_provider.dart';
+import 'package:giftme/util/color_resources.dart';
+import 'package:giftme/util/images.dart';
+import 'package:giftme/view/basewidgets/no_internet_screen.dart';
+import 'package:giftme/view/screens/auth/widget/mobile_verify_screen.dart';
+//import 'package:giftme/view/screens/auth/auth_screen.dart';
+import 'package:giftme/view/screens/dashboard/dashboard_screen.dart';
+import 'package:giftme/view/screens/maintenance/maintenance_screen.dart';
+import 'package:giftme/view/screens/onboarding/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -42,6 +42,10 @@ class SplashScreenState extends State<SplashScreen> {
             ? const SizedBox()
             : ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
           backgroundColor: isNotConnected ? Colors.red : Colors.green,
           duration: Duration(seconds: isNotConnected ? 6000 : 3),
           content: Text(

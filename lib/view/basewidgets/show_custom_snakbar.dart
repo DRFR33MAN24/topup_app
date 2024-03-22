@@ -15,8 +15,11 @@ void showCustomSnackBar(String? message, BuildContext context,
         fontSize: 16.0);
   } else {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: isError ? Colors.red : Colors.green,
-      content: Text(message!),
-    ));
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        content: Text(message!),
+        backgroundColor: isError ? Colors.red : Colors.green));
   }
 }

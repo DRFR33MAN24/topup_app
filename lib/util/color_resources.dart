@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stylizeit/provider/theme_provider.dart';
+import 'package:giftme/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 class ColorResources {

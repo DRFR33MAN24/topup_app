@@ -1,25 +1,27 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:giftme/provider/localization_provider.dart';
+import 'package:giftme/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:stylizeit/data/model/response/category_model.dart' as cat;
-import 'package:stylizeit/main.dart';
-import 'package:stylizeit/provider/category_provider.dart';
-import 'package:stylizeit/provider/profile_provider.dart';
-import 'package:stylizeit/provider/splash_provider.dart';
-import 'package:stylizeit/util/app_constants.dart';
-import 'package:stylizeit/util/custom_themes.dart';
-import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/util/images.dart';
-import 'package:stylizeit/view/basewidgets/CustomPrice.dart';
-import 'package:stylizeit/view/basewidgets/animated_custom_dialog.dart';
-import 'package:stylizeit/view/basewidgets/category_widget.dart';
-import 'package:stylizeit/view/basewidgets/sign_out_confirmation_dialog.dart';
-import 'package:stylizeit/view/basewidgets/tag_widget.dart';
-import 'package:stylizeit/view/screens/contact_us/contact_us_screen.dart';
-import 'package:stylizeit/view/screens/profile/profile_screen.dart';
-import 'package:stylizeit/view/screens/transactions/transactions_screen.dart';
-import 'package:stylizeit/view/screens/transfer_balance/transfer_balance.dart';
+import 'package:giftme/data/model/response/category_model.dart' as cat;
+import 'package:giftme/main.dart';
+import 'package:giftme/provider/category_provider.dart';
+import 'package:giftme/provider/profile_provider.dart';
+import 'package:giftme/provider/splash_provider.dart';
+import 'package:giftme/util/app_constants.dart';
+import 'package:giftme/util/custom_themes.dart';
+import 'package:giftme/util/dimensions.dart';
+import 'package:giftme/util/images.dart';
+import 'package:giftme/view/basewidgets/CustomPrice.dart';
+import 'package:giftme/view/basewidgets/animated_custom_dialog.dart';
+import 'package:giftme/view/basewidgets/category_widget.dart';
+import 'package:giftme/view/basewidgets/sign_out_confirmation_dialog.dart';
+import 'package:giftme/view/basewidgets/tag_widget.dart';
+import 'package:giftme/view/screens/contact_us/contact_us_screen.dart';
+import 'package:giftme/view/screens/profile/profile_screen.dart';
+import 'package:giftme/view/screens/transactions/transactions_screen.dart';
+import 'package:giftme/view/screens/transfer_balance/transfer_balance.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -208,6 +210,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                               topLeft: Radius.circular(
                                                   Dimensions.paddingSizeSmall),
                                               bottomLeft: Radius.circular(
+                                                  Dimensions.paddingSizeSmall),
+                                              bottomRight: Radius.circular(
+                                                  Dimensions.paddingSizeSmall),
+                                              topRight: Radius.circular(
                                                   Dimensions
                                                       .paddingSizeSmall))),
                                       child: Padding(
@@ -321,7 +327,7 @@ class BalanceWidget extends StatefulWidget {
 }
 
 class _BalanceWidgetState extends State<BalanceWidget> {
-  bool isSwitched = false;
+  bool isSwitched = true;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -335,49 +341,52 @@ class _BalanceWidgetState extends State<BalanceWidget> {
         borderRadius: const BorderRadius.all(Radius.circular(10.0) //
             ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: const [
-              Text(
-                "Current Balance",
-                style: robotoRegular,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              CustomPrice(price: "0.0")
-            ],
-          ),
-          Column(
-            children: [
-              Text(
-                "LBP",
-                style: robotoBold,
-              ),
-              RotatedBox(
-                  quarterTurns: 1,
-                  child: Switch(
-                      activeColor: Theme.of(context).primaryColor,
-                      value: isSwitched,
-                      onChanged: (value) {
-                        if (value) {
-                          Provider.of<SplashProvider>(context, listen: false)
-                              .changeCurrency("USD");
-                        } else {
-                          Provider.of<SplashProvider>(context, listen: false)
-                              .changeCurrency("LBP");
-                        }
-                        setState(() {
-                          isSwitched = value;
-                        });
-                      })),
-              Text("USD", style: robotoBold)
-            ],
-          )
-        ],
-      ),
+      child: Consumer<ProfileProvider>(builder: (context, profile, child) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                Text(
+                  "Current Balance",
+                  style: robotoRegular,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                profile.balance != null
+                    ? CustomPrice(price: profile.balance!.toString())
+                    : CustomPrice(price: "0.0")
+              ],
+            ),
+            Column(
+              children: [
+                Text(
+                  "LBP",
+                  style: robotoBold,
+                ),
+                RotatedBox(
+                    quarterTurns: 1,
+                    child: Switch(
+                        value: isSwitched,
+                        onChanged: (value) {
+                          if (value) {
+                            Provider.of<SplashProvider>(context, listen: false)
+                                .changeCurrency("USD");
+                          } else {
+                            Provider.of<SplashProvider>(context, listen: false)
+                                .changeCurrency("LBP");
+                          }
+                          setState(() {
+                            isSwitched = value;
+                          });
+                        })),
+                Text("USD", style: robotoBold)
+              ],
+            )
+          ],
+        );
+      }),
     );
   }
 }
@@ -412,9 +421,11 @@ class AppDrawer extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(profile.userInfoModel!.fName! +
-                  " " +
-                  profile.userInfoModel!.lName!),
+              child: profile.userInfoModel!.fName != null
+                  ? Text(profile.userInfoModel!.fName! +
+                      " " +
+                      profile.userInfoModel!.lName!)
+                  : null,
             )
           ],
         )),
@@ -478,7 +489,53 @@ class AppDrawer extends StatelessWidget {
                 customerId: profile.userInfoModel!.id,
               ),
               isFlip: true),
-        )
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.language,
+            color: Theme.of(context).primaryColor,
+          ),
+          title:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text(
+              "Language",
+            ),
+            Switch(
+                value: Provider.of<LocalizationProvider>(Get.context!,
+                        listen: false)
+                    .isLtr,
+                onChanged: (value) {
+                  if (value) {
+                    Provider.of<LocalizationProvider>(Get.context!,
+                            listen: false)
+                        .setLanguage(Locale("ar"));
+                  } else {
+                    Provider.of<LocalizationProvider>(Get.context!,
+                            listen: false)
+                        .setLanguage(Locale("en"));
+                  }
+                })
+          ]),
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.dark_mode,
+            color: Theme.of(context).primaryColor,
+          ),
+          title:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Text(
+              "Dark Mode",
+            ),
+            Switch(
+                value: Provider.of<ThemeProvider>(Get.context!, listen: false)
+                    .darkTheme,
+                onChanged: (value) {
+                  Provider.of<ThemeProvider>(Get.context!, listen: false)
+                      .toggleTheme();
+                })
+          ]),
+        ),
       ]);
     }));
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:stylizeit/localization/language_constants.dart';
-import 'package:stylizeit/util/color_resources.dart';
-import 'package:stylizeit/util/custom_themes.dart';
-import 'package:stylizeit/util/dimensions.dart';
-import 'package:stylizeit/view/basewidgets/button/custom_button.dart';
+import 'package:giftme/localization/language_constants.dart';
+import 'package:giftme/util/color_resources.dart';
+import 'package:giftme/util/custom_themes.dart';
+import 'package:giftme/util/dimensions.dart';
+import 'package:giftme/view/basewidgets/button/custom_button.dart';
 
 class MyDialog extends StatelessWidget {
   final bool isFailed;

@@ -4,12 +4,12 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:stylizeit/localization/language_constants.dart';
-import 'package:stylizeit/util/app_constants.dart';
-import 'package:stylizeit/view/basewidgets/animated_custom_dialog.dart';
-import 'package:stylizeit/view/basewidgets/my_dialog.dart';
+import 'package:giftme/localization/language_constants.dart';
+import 'package:giftme/util/app_constants.dart';
+import 'package:giftme/view/basewidgets/animated_custom_dialog.dart';
+import 'package:giftme/view/basewidgets/my_dialog.dart';
 
-import 'package:stylizeit/view/screens/dashboard/dashboard_screen.dart';
+import 'package:giftme/view/screens/dashboard/dashboard_screen.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PaymentScreen extends StatefulWidget {

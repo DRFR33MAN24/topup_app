@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:stylizeit/data/datasource/remote/dio/dio_client.dart';
-import 'package:stylizeit/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:stylizeit/data/model/response/base/api_response.dart';
-import 'package:stylizeit/util/app_constants.dart';
+import 'package:giftme/data/datasource/remote/dio/dio_client.dart';
+import 'package:giftme/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:giftme/data/model/response/base/api_response.dart';
+import 'package:giftme/util/app_constants.dart';
 
 class OrderRepo {
   final DioClient dioClient;

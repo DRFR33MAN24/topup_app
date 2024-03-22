@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:stylizeit/data/model/response/base/api_response.dart';
-import 'package:stylizeit/data/model/response/order_model.dart';
-import 'package:stylizeit/data/model/response/response_model.dart';
-import 'package:stylizeit/data/repository/order_repo.dart';
-import 'package:stylizeit/helper/api_checker.dart';
+import 'package:giftme/data/model/response/base/api_response.dart';
+import 'package:giftme/data/model/response/order_model.dart';
+import 'package:giftme/data/model/response/response_model.dart';
+import 'package:giftme/data/repository/order_repo.dart';
+import 'package:giftme/helper/api_checker.dart';
 
 class OrderProvider with ChangeNotifier {
   final OrderRepo? orderRepo;
@@ -57,6 +57,7 @@ class OrderProvider with ChangeNotifier {
   Future<ResponseModel> placeOrder(String serviceId, String token) async {
     _isLoading = true;
     notifyListeners();
+
 //check if user have enough credits!
     ResponseModel responseModel;
     http.StreamedResponse response =

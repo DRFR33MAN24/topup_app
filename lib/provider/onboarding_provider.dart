@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stylizeit/data/model/response/base/api_response.dart';
-import 'package:stylizeit/data/model/response/onboarding_model.dart';
-import 'package:stylizeit/data/repository/onboarding_repo.dart';
-import 'package:stylizeit/helper/api_checker.dart';
+import 'package:giftme/data/model/response/base/api_response.dart';
+import 'package:giftme/data/model/response/onboarding_model.dart';
+import 'package:giftme/data/repository/onboarding_repo.dart';
+import 'package:giftme/helper/api_checker.dart';
 
 class OnBoardingProvider with ChangeNotifier {
   final OnBoardingRepo? onboardingRepo;

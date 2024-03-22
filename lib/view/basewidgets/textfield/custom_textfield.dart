@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:stylizeit/util/custom_themes.dart';
+import 'package:giftme/util/custom_themes.dart';
 
 extension EmailValidator on String {
   bool isValidEmail() {

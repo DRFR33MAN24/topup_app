@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:stylizeit/data/model/body/login_model.dart';
-import 'package:stylizeit/data/model/body/register_model.dart';
-import 'package:stylizeit/data/model/response/base/api_response.dart';
-import 'package:stylizeit/data/model/response/base/error_response.dart';
-import 'package:stylizeit/data/model/response/response_model.dart';
-import 'package:stylizeit/data/model/response/social_login_model.dart';
-import 'package:stylizeit/data/repository/auth_repo.dart';
-import 'package:stylizeit/helper/api_checker.dart';
+import 'package:giftme/data/model/body/login_model.dart';
+import 'package:giftme/data/model/body/register_model.dart';
+import 'package:giftme/data/model/response/base/api_response.dart';
+import 'package:giftme/data/model/response/base/error_response.dart';
+import 'package:giftme/data/model/response/response_model.dart';
+import 'package:giftme/data/model/response/social_login_model.dart';
+import 'package:giftme/data/repository/auth_repo.dart';
+import 'package:giftme/helper/api_checker.dart';
 
 class AuthProvider with ChangeNotifier {
   final AuthRepo? authRepo;

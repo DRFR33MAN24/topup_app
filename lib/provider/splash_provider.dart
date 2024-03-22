@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stylizeit/data/model/response/base/api_response.dart';
-import 'package:stylizeit/data/model/response/config_model.dart';
-import 'package:stylizeit/data/repository/splash_repo.dart';
-import 'package:stylizeit/helper/api_checker.dart';
+import 'package:giftme/data/model/response/base/api_response.dart';
+import 'package:giftme/data/model/response/config_model.dart';
+import 'package:giftme/data/repository/splash_repo.dart';
+import 'package:giftme/helper/api_checker.dart';
 
 class SplashProvider extends ChangeNotifier {
   final SplashRepo? splashRepo;

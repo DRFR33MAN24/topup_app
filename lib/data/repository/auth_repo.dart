@@ -3,13 +3,13 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:stylizeit/data/datasource/remote/dio/dio_client.dart';
-import 'package:stylizeit/data/datasource/remote/exception/api_error_handler.dart';
-import 'package:stylizeit/data/model/body/login_model.dart';
-import 'package:stylizeit/data/model/body/register_model.dart';
-import 'package:stylizeit/data/model/response/base/api_response.dart';
-import 'package:stylizeit/data/model/response/social_login_model.dart';
-import 'package:stylizeit/util/app_constants.dart';
+import 'package:giftme/data/datasource/remote/dio/dio_client.dart';
+import 'package:giftme/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:giftme/data/model/body/login_model.dart';
+import 'package:giftme/data/model/body/register_model.dart';
+import 'package:giftme/data/model/response/base/api_response.dart';
+import 'package:giftme/data/model/response/social_login_model.dart';
+import 'package:giftme/util/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepo {

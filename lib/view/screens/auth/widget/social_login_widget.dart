@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:provider/provider.dart';
-import 'package:stylizeit/data/model/response/social_login_model.dart';
-import 'package:stylizeit/provider/auth_provider.dart';
-import 'package:stylizeit/provider/google_sign_in_provider.dart';
-import 'package:stylizeit/provider/splash_provider.dart';
-import 'package:stylizeit/provider/theme_provider.dart';
-import 'package:stylizeit/view/screens/dashboard/dashboard_screen.dart';
+import 'package:giftme/data/model/response/social_login_model.dart';
+import 'package:giftme/provider/auth_provider.dart';
+import 'package:giftme/provider/google_sign_in_provider.dart';
+import 'package:giftme/provider/splash_provider.dart';
+import 'package:giftme/provider/theme_provider.dart';
+import 'package:giftme/view/screens/dashboard/dashboard_screen.dart';
 
 //import 'otp_verification_screen.dart';
 
@@ -55,11 +55,21 @@ class SocialLoginWidgetState extends State<SocialLoginWidget> {
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(errorMessage!), backgroundColor: Colors.red));
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            content: Text(errorMessage!),
+            backgroundColor: Colors.red));
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(errorMessage!), backgroundColor: Colors.red));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          content: Text(errorMessage!),
+          backgroundColor: Colors.red));
     }
   }
 

@@ -1,33 +1,36 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
-import 'package:stylizeit/data/datasource/remote/dio/dio_client.dart';
-import 'package:stylizeit/data/datasource/remote/dio/logging_interceptor.dart';
-import 'package:stylizeit/data/repository/auth_repo.dart';
-import 'package:stylizeit/data/repository/category_repo.dart';
-import 'package:stylizeit/data/repository/onboarding_repo.dart';
-import 'package:stylizeit/data/repository/order_repo.dart';
-import 'package:stylizeit/data/repository/payment_repo.dart';
-import 'package:stylizeit/data/repository/profile_repo.dart';
-import 'package:stylizeit/data/repository/splash_repo.dart';
-import 'package:stylizeit/data/repository/style_repo.dart';
-import 'package:stylizeit/data/repository/transaction_repo.dart';
-import 'package:stylizeit/helper/network_info.dart';
-import 'package:stylizeit/provider/auth_provider.dart';
-import 'package:stylizeit/provider/category_provider.dart';
-import 'package:stylizeit/provider/google_sign_in_provider.dart';
-import 'package:stylizeit/provider/localization_provider.dart';
-import 'package:stylizeit/provider/onboarding_provider.dart';
-import 'package:stylizeit/provider/order_provider.dart';
-import 'package:stylizeit/provider/payment_provider.dart';
-import 'package:stylizeit/provider/profile_provider.dart';
-import 'package:stylizeit/provider/splash_provider.dart';
-import 'package:stylizeit/provider/style_provider.dart';
-import 'package:stylizeit/provider/theme_provider.dart';
-import 'package:stylizeit/provider/tranaction_provider.dart';
+import 'package:giftme/data/datasource/remote/dio/dio_client.dart';
+import 'package:giftme/data/datasource/remote/dio/logging_interceptor.dart';
+import 'package:giftme/data/repository/auth_repo.dart';
+import 'package:giftme/data/repository/category_repo.dart';
+import 'package:giftme/data/repository/notification_repo.dart';
+import 'package:giftme/data/repository/onboarding_repo.dart';
+import 'package:giftme/data/repository/order_repo.dart';
+import 'package:giftme/data/repository/payment_repo.dart';
+import 'package:giftme/data/repository/profile_repo.dart';
+import 'package:giftme/data/repository/splash_repo.dart';
+import 'package:giftme/data/repository/style_repo.dart';
+import 'package:giftme/data/repository/transaction_repo.dart';
+import 'package:giftme/helper/network_info.dart';
+import 'package:giftme/provider/auth_provider.dart';
+import 'package:giftme/provider/category_provider.dart';
+import 'package:giftme/provider/google_sign_in_provider.dart';
+import 'package:giftme/provider/localization_provider.dart';
+import 'package:giftme/provider/onboarding_provider.dart';
+import 'package:giftme/provider/order_provider.dart';
+import 'package:giftme/provider/payment_provider.dart';
+import 'package:giftme/provider/profile_provider.dart';
+import 'package:giftme/provider/splash_provider.dart';
+import 'package:giftme/provider/style_provider.dart';
+import 'package:giftme/provider/theme_provider.dart';
+import 'package:giftme/provider/tranaction_provider.dart';
 
-import 'package:stylizeit/util/app_constants.dart';
+import 'package:giftme/util/app_constants.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'provider/notification_provider.dart';
 
 final sl = GetIt.instance;
 
@@ -54,9 +57,10 @@ Future<void> init() async {
 
   sl.registerLazySingleton(
       () => SplashRepo(sharedPreferences: sl(), dioClient: sl()));
+  sl.registerLazySingleton(() => NotificationRepo(dioClient: sl()));
 
   // Provider
-
+  sl.registerFactory(() => NotificationProvider(notificationRepo: sl()));
   sl.registerFactory(() => StyleProvider(styleRepo: sl()));
   sl.registerFactory(() => CategoryProvider(categoryRepo: sl()));
   sl.registerFactory(() => ProfileProvider(profileRepo: sl()));

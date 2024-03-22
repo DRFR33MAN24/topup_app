@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:stylizeit/data/datasource/remote/dio/dio_client.dart';
-import 'package:stylizeit/data/datasource/remote/exception/api_error_handler.dart';
+import 'package:giftme/data/datasource/remote/dio/dio_client.dart';
+import 'package:giftme/data/datasource/remote/exception/api_error_handler.dart';
 
-import 'package:stylizeit/data/model/response/base/api_response.dart';
-import 'package:stylizeit/data/model/response/user_info_model.dart';
-import 'package:stylizeit/util/app_constants.dart';
+import 'package:giftme/data/model/response/base/api_response.dart';
+import 'package:giftme/data/model/response/user_info_model.dart';
+import 'package:giftme/util/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 

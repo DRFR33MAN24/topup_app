@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stylizeit/data/datasource/remote/dio/dio_client.dart';
-import 'package:stylizeit/util/app_constants.dart';
+import 'package:giftme/data/datasource/remote/dio/dio_client.dart';
+import 'package:giftme/util/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalizationProvider extends ChangeNotifier {
