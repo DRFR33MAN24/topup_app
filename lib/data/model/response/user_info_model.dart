@@ -12,21 +12,24 @@ class UserInfoModel {
   String? updatedAt;
   double? walletBalance;
   double? loyaltyPoint;
+  int? isReseller;
 
-  UserInfoModel(
-      {this.id,
-      this.name,
-      this.method,
-      this.fName,
-      this.lName,
-      this.phone,
-      this.image,
-      this.email,
-      this.emailVerifiedAt,
-      this.createdAt,
-      this.updatedAt,
-      this.walletBalance,
-      this.loyaltyPoint});
+  UserInfoModel({
+    this.id,
+    this.name,
+    this.method,
+    this.fName,
+    this.lName,
+    this.phone,
+    this.image,
+    this.email,
+    this.emailVerifiedAt,
+    this.createdAt,
+    this.updatedAt,
+    this.walletBalance,
+    this.loyaltyPoint,
+    this.isReseller,
+  });
 
   UserInfoModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -48,6 +51,8 @@ class UserInfoModel {
     } else {
       // walletBalance = 0.0;
     }
+
+    isReseller = json['is_reseller'];
   }
 
   Map<String, dynamic> toJson() {
@@ -65,6 +70,7 @@ class UserInfoModel {
     data['updated_at'] = updatedAt;
     data['wallet_balance'] = walletBalance;
     data['loyalty_point'] = loyaltyPoint;
+    data['is_reseller'] = isReseller;
     return data;
   }
 }

@@ -20,7 +20,7 @@ class OrderRepo {
   }
 
   Future<http.StreamedResponse> placeOrder(
-      String serviceId, String token) async {
+      String serviceId, Map<String, String> data, String token) async {
     // File file = File.fromRawPath(img!);
     http.MultipartRequest request = http.MultipartRequest(
         'POST', Uri.parse('${AppConstants.baseUrl}${AppConstants.placeOrder}'));
@@ -30,10 +30,11 @@ class OrderRepo {
 
     fields.addAll(<String, String>{
       '_method': 'post',
-      'style_id': serviceId,
+      'service_id': serviceId,
     });
 
     request.fields.addAll(fields);
+    request.fields.addAll(data);
     if (kDebugMode) {
       print('========>${fields.toString()}');
     }

@@ -5,6 +5,7 @@ class AppConstants {
   static const String appVersion = '14.0';
   static const String baseUrl = 'http://192.168.1.9:8000';
   static const String socketUri = 'ws://192.168.1.9:6001';
+  static const String categories_url = '/assets/uploads/categories/';
   static const String socialLoginUri = "/api/auth/social-login";
   static const String registrationUri = "/api/auth/register";
   static const String loginUri = "/api/auth/login";

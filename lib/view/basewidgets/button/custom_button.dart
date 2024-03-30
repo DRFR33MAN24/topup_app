@@ -49,7 +49,7 @@ class CustomButton extends StatelessWidget {
           padding: const EdgeInsets.only(left: 8.0, right: 8.0),
           child: Text(buttonText!,
               style: titilliumSemiBold.copyWith(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.onPrimary,
                 fontSize: 16,
                 //  color: Theme.of(context).cardColor
               )),

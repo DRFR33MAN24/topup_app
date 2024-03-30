@@ -1,9 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:giftme/firebase_options.dart';
+import 'package:giftme/provider/notification_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:giftme/helper/custom_delegate.dart';
 import 'package:giftme/localization/app_localization.dart';
@@ -35,29 +38,31 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
 
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
-  // final NotificationAppLaunchDetails? notificationAppLaunchDetails =
-  //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-  // int? orderID;
-  // if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
-  //   orderID = (notificationAppLaunchDetails!.payload != null &&
-  //           notificationAppLaunchDetails.payload!.isNotEmpty)
-  //       ? int.parse(notificationAppLaunchDetails.payload!)
-  //       : null;
-  // }
-  // final RemoteMessage? remoteMessage =
-  //     await FirebaseMessaging.instance.getInitialMessage();
-  // if (remoteMessage != null) {
-  //   orderID = remoteMessage.notification?.titleLocKey != null
-  //       ? int.parse(remoteMessage.notification!.titleLocKey!)
-  //       : null;
-  // }
-  // if (kDebugMode) {
-  //   print('========-notification-----$orderID----===========');
-  // }
-  // await MyNotification.initialize(flutterLocalNotificationsPlugin);
-  // FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
+  final NotificationAppLaunchDetails? notificationAppLaunchDetails =
+      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  int? orderID;
+  if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
+    orderID = (notificationAppLaunchDetails!.payload != null &&
+            notificationAppLaunchDetails.payload!.isNotEmpty)
+        ? int.parse(notificationAppLaunchDetails.payload!)
+        : null;
+  }
+  final RemoteMessage? remoteMessage =
+      await FirebaseMessaging.instance.getInitialMessage();
+  if (remoteMessage != null) {
+    orderID = remoteMessage.notification?.titleLocKey != null
+        ? int.parse(remoteMessage.notification!.titleLocKey!)
+        : null;
+  }
+  if (kDebugMode) {
+    print('========-notification-----$orderID----===========');
+  }
+  await MyNotification.initialize(flutterLocalNotificationsPlugin);
+  FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => di.sl<StyleProvider>()),
@@ -72,6 +77,7 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (context) => di.sl<LocalizationProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<ThemeProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<GoogleSignInProvider>()),
+    ChangeNotifierProvider(create: (context) => di.sl<NotificationProvider>()),
   ], child: const MyApp()));
 }
 

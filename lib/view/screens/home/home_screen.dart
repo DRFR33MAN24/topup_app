@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:giftme/provider/localization_provider.dart';
 import 'package:giftme/provider/theme_provider.dart';
+import 'package:giftme/view/screens/notification/notification_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:giftme/data/model/response/category_model.dart' as cat;
 import 'package:giftme/main.dart';
@@ -101,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 elevation: 0,
                 centerTitle: false,
                 automaticallyImplyLeading: false,
-                backgroundColor: Theme.of(context).cardColor,
+                backgroundColor: Theme.of(context).colorScheme.background,
                 title: IconButton(
                   onPressed: () => _scaffoldKey.currentState!.openDrawer(),
                   icon: Row(children: [
@@ -115,8 +116,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => const ContactUs()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const NotificationScreen()));
                     },
                     icon: Row(children: [
                       Icon(
@@ -205,7 +208,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Expanded(
                                     child: Container(
                                       decoration: BoxDecoration(
-                                          color: Theme.of(context).cardColor,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background,
                                           borderRadius: const BorderRadius.only(
                                               topLeft: Radius.circular(
                                                   Dimensions.paddingSizeSmall),
@@ -333,10 +338,10 @@ class _BalanceWidgetState extends State<BalanceWidget> {
     return Container(
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
+        color: Theme.of(context).colorScheme.background,
         border: Border.all(
           width: 1.0,
-          color: Theme.of(context).cardColor,
+          color: Theme.of(context).colorScheme.background,
         ),
         borderRadius: const BorderRadius.all(Radius.circular(10.0) //
             ),
@@ -355,8 +360,10 @@ class _BalanceWidgetState extends State<BalanceWidget> {
                   height: 10,
                 ),
                 profile.balance != null
-                    ? CustomPrice(price: profile.balance!.toString())
-                    : CustomPrice(price: "0.0")
+                    ? CustomPrice(
+                        price: num.parse(profile.balance!.toString())
+                            .toStringAsFixed(2))
+                    : CustomPrice(price: "0.00")
               ],
             ),
             Column(
@@ -502,17 +509,23 @@ class AppDrawer extends StatelessWidget {
             ),
             Switch(
                 value: Provider.of<LocalizationProvider>(Get.context!,
-                        listen: false)
-                    .isLtr,
+                            listen: false)
+                        .locale
+                        .languageCode ==
+                    "ar",
                 onChanged: (value) {
-                  if (value) {
+                  if (Provider.of<LocalizationProvider>(Get.context!,
+                              listen: false)
+                          .locale
+                          .languageCode ==
+                      "ar") {
                     Provider.of<LocalizationProvider>(Get.context!,
                             listen: false)
-                        .setLanguage(Locale("ar"));
+                        .setLanguage(Locale("en", "US"));
                   } else {
                     Provider.of<LocalizationProvider>(Get.context!,
                             listen: false)
-                        .setLanguage(Locale("en"));
+                        .setLanguage(Locale("ar", "SA"));
                   }
                 })
           ]),

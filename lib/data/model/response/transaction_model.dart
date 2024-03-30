@@ -91,7 +91,7 @@ class Transaction {
     _id = json["id"];
     _userId = json["user_id"];
     _trx_type = json["trx_type"];
-    _amount = json["amount"];
+    _amount = num.parse(json["amount"].toString()).toStringAsFixed(2);
     _charge = json["charge"];
     _remarks = json["remarks"];
     _trx_id = json["trx_id"];

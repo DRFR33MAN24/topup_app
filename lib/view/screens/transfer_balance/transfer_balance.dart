@@ -51,16 +51,14 @@ class _TransferBalanceState extends State<TransferBalance> {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Row(children: [
-              const SizedBox(width: Dimensions.paddingSizeSmall),
-              Text('Balance Transfer',
-                  style: robotoRegular.copyWith(
-                      fontSize: 20, color: Theme.of(context).cardColor)),
-            ]),
-            backgroundColor: Provider.of<ThemeProvider>(context).darkTheme
-                ? Colors.black
-                : Theme.of(context).primaryColor,
-          ),
+              title: Row(children: [
+                const SizedBox(width: Dimensions.paddingSizeSmall),
+                Text('Balance Transfer',
+                    style: robotoRegular.copyWith(
+                        fontSize: 20,
+                        color: Theme.of(context).colorScheme.onSurface)),
+              ]),
+              backgroundColor: Theme.of(context).colorScheme.background),
           body:
               Consumer<OrderProvider>(builder: (context, orderProvider, child) {
             return Container(
@@ -200,9 +198,9 @@ class _TransferBalanceState extends State<TransferBalance> {
   }
 
   placeOrder() {
-    Provider.of<OrderProvider>(context, listen: false).placeOrder(
-      '1',
-      Provider.of<AuthProvider>(context, listen: false).getUserToken(),
-    );
+    // Provider.of<OrderProvider>(context, listen: false).placeOrder(
+    //   '1',
+    //   Provider.of<AuthProvider>(context, listen: false).getUserToken(),
+    // );
   }
 }

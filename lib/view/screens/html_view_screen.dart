@@ -10,7 +10,6 @@ class HtmlViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).cardColor,
       body: Column(
         children: [
           Expanded(

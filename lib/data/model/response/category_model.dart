@@ -270,9 +270,10 @@ class Service {
   String? _title;
   String? _link;
   String? _price;
+  String? _reseller_price;
   String? _description;
   String? _type;
-  String? _params;
+  List<String>? _params;
   String? _createdAt;
   String? _updatedAt;
 
@@ -285,8 +286,9 @@ class Service {
       String? image,
       String? title,
       String? link,
-      String? params,
+      List<String>? params,
       String? price,
+      String? reseller_price,
       String? description,
       String? type,
       String? updated_at,
@@ -303,6 +305,7 @@ class Service {
     _link = link;
     _params = params;
     _price = price;
+    _reseller_price = reseller_price;
     _description = description;
     _type = type;
     _createdAt = created_at;
@@ -312,8 +315,9 @@ class Service {
   String? get title => _title;
   String? get image => _image;
   String? get link => _link;
-  String? get params => _params;
+  List<String>? get params => _params;
   String? get price => _price;
+  String? get reseller_price => _reseller_price;
   String? get type => _type;
   String? get description => _description;
   String? get createdAt => _createdAt;
@@ -329,8 +333,16 @@ class Service {
   Service.fromJson(Map<String, dynamic> json) {
     _title = json['service_title'];
     _link = json['link'];
-    _params = json["params"];
-    _price = json['price'];
+
+    if (json['custom_fields'] != null) {
+      _params = json['custom_fields'].toString().split(',');
+    } else {
+      _params = [];
+    }
+    _price = num.parse(json["price"].toString()).toStringAsFixed(2);
+    _reseller_price =
+        num.parse(json["reseller_price"].toString()).toStringAsFixed(2);
+
     _description = json['description'];
     _type = json['service_type'];
     _image = json['image'];
@@ -357,6 +369,7 @@ class Service {
     data["link"] = _link;
     data["params"] = _params;
     data["price"] = _price;
+    data["reseller_price"] = _reseller_price;
     data["description"] = _description;
     data["service_type"] = _type;
     data["created_at"] = _createdAt;

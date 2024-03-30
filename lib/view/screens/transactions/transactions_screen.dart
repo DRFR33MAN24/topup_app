@@ -48,11 +48,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
               const SizedBox(width: Dimensions.paddingSizeSmall),
               Text('Transactions',
                   style: robotoRegular.copyWith(
-                      fontSize: 20, color: Theme.of(context).cardColor)),
+                      fontSize: 20,
+                      color: Theme.of(context).colorScheme.onBackground)),
             ]),
-            backgroundColor: Provider.of<ThemeProvider>(context).darkTheme
-                ? Colors.black
-                : Theme.of(context).primaryColor,
             actions: [
               GestureDetector(
                 onTap: () async {
@@ -74,7 +72,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                     child: Icon(
                       Icons.date_range,
                       size: 32,
-                      color: Theme.of(context).canvasColor,
+                      color: Theme.of(context).colorScheme.onSurface,
                     )),
               )
             ],
@@ -105,7 +103,7 @@ class TransactionWidget extends StatelessWidget {
       padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: Theme.of(context).canvasColor,
+        color: Theme.of(context).colorScheme.background,
         boxShadow: [
           BoxShadow(color: Theme.of(context).disabledColor, spreadRadius: 1),
         ],

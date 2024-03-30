@@ -49,11 +49,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
               const SizedBox(width: Dimensions.paddingSizeSmall),
               Text('Orders',
                   style: robotoRegular.copyWith(
-                      fontSize: 20, color: Theme.of(context).cardColor)),
+                      fontSize: 20,
+                      color: Theme.of(context).colorScheme.onSurface)),
             ]),
-            backgroundColor: Provider.of<ThemeProvider>(context).darkTheme
-                ? Colors.black
-                : Theme.of(context).primaryColor,
+            backgroundColor: Theme.of(context).colorScheme.background,
             actions: [
               GestureDetector(
                 onTap: () async {
@@ -75,7 +74,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     child: Icon(
                       Icons.date_range,
                       size: 32,
-                      color: Theme.of(context).canvasColor,
+                      color: Theme.of(context).colorScheme.onSurface,
                     )),
               )
             ],
@@ -111,7 +110,7 @@ class OrderWidget extends StatelessWidget {
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: Theme.of(context).canvasColor,
+          color: Theme.of(context).colorScheme.background,
           boxShadow: [
             BoxShadow(color: Theme.of(context).disabledColor, spreadRadius: 1),
           ],

@@ -41,11 +41,9 @@ class _ContactUsState extends State<ContactUs> {
               const SizedBox(width: Dimensions.paddingSizeSmall),
               Text('Contact Us',
                   style: robotoRegular.copyWith(
-                      fontSize: 20, color: Theme.of(context).cardColor)),
+                      fontSize: 20,
+                      color: Theme.of(context).colorScheme.onBackground)),
             ]),
-            backgroundColor: Provider.of<ThemeProvider>(context).darkTheme
-                ? Colors.black
-                : Theme.of(context).primaryColor,
           ),
           body: Consumer<SplashProvider>(
               builder: (context, splashProvider, child) {

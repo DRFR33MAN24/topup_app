@@ -35,16 +35,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Row(children: [
-              const SizedBox(width: Dimensions.paddingSizeSmall),
-              Text('Order Details',
-                  style: robotoRegular.copyWith(
-                      fontSize: 20, color: Theme.of(context).cardColor)),
-            ]),
-            backgroundColor: Provider.of<ThemeProvider>(context).darkTheme
-                ? Colors.black
-                : Theme.of(context).primaryColor,
-          ),
+              title: Row(children: [
+                const SizedBox(width: Dimensions.paddingSizeSmall),
+                Text('Order Details',
+                    style: robotoRegular.copyWith(
+                        fontSize: 20,
+                        color: Theme.of(context).colorScheme.onSurface)),
+              ]),
+              backgroundColor: Theme.of(context).colorScheme.background),
           body: Center(
             child: Container(
               margin: EdgeInsets.all(20),

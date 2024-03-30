@@ -110,7 +110,7 @@ class Order {
     _service = Service.fromJson(json["service"]);
     _qty = json["quantity"];
     _uploadedImg = json["uploaded_img"];
-    _price = json["price"].toString();
+    _price = num.parse(json["price"].toString()).toStringAsFixed(2);
     _status = json["status"];
     _description = json["status_description"];
     _reason = json["reason"];

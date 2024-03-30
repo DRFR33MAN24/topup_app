@@ -31,7 +31,7 @@ class _CustomPriceState extends State<CustomPrice> {
             style: robotoBold.copyWith(
                 fontSize: 18,
                 fontStyle: FontStyle.italic,
-                color: Colors.black));
+                color: getPriceColor(widget.formatStyle)));
       }
     });
   }
@@ -39,7 +39,7 @@ class _CustomPriceState extends State<CustomPrice> {
   getPriceColor(String? s) {
     switch (s) {
       case null:
-        return Colors.black;
+        return Theme.of(context).colorScheme.onSurface;
         break;
       case "charge":
         return Colors.green;
@@ -49,7 +49,7 @@ class _CustomPriceState extends State<CustomPrice> {
         break;
 
       default:
-        return Colors.black;
+        return Theme.of(context).colorScheme.onSurface;
     }
   }
 

@@ -54,14 +54,15 @@ class OrderProvider with ChangeNotifier {
     }
   }
 
-  Future<ResponseModel> placeOrder(String serviceId, String token) async {
+  Future<ResponseModel> placeOrder(
+      String serviceId, Map<String, String> fields, String token) async {
     _isLoading = true;
     notifyListeners();
 
 //check if user have enough credits!
     ResponseModel responseModel;
     http.StreamedResponse response =
-        await orderRepo!.placeOrder(serviceId, token);
+        await orderRepo!.placeOrder(serviceId, fields, token);
     _isLoading = false;
 
     if (response.statusCode == 200) {

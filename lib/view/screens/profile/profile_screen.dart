@@ -158,16 +158,14 @@ class ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(children: [
-          const SizedBox(width: Dimensions.paddingSizeSmall),
-          Text('Profile',
-              style: robotoRegular.copyWith(
-                  fontSize: 20, color: Theme.of(context).cardColor)),
-        ]),
-        backgroundColor: Provider.of<ThemeProvider>(context).darkTheme
-            ? Colors.black
-            : Theme.of(context).primaryColor,
-      ),
+          title: Row(children: [
+            const SizedBox(width: Dimensions.paddingSizeSmall),
+            Text('Profile',
+                style: robotoRegular.copyWith(
+                    fontSize: 20,
+                    color: Theme.of(context).colorScheme.onSurface)),
+          ]),
+          backgroundColor: Theme.of(context).colorScheme.background),
       key: _scaffoldKey,
       body: Consumer<ProfileProvider>(
         builder: (context, profile, child) {
@@ -244,7 +242,19 @@ class ProfileScreenState extends State<ProfileScreen> {
                         Text(
                           '${profile.userInfoModel!.fName ?? ""} ${profile.userInfoModel!.lName ?? ''}',
                           style: titilliumSemiBold.copyWith(fontSize: 20.0),
-                        )
+                        ),
+                        Provider.of<ProfileProvider>(context)
+                                    .userInfoModel!
+                                    .isReseller ==
+                                1
+                            ? Text(
+                                "Reseller Account",
+                                style:
+                                    titilliumSemiBold.copyWith(fontSize: 20.0),
+                              )
+                            : Text("Normal User",
+                                style:
+                                    titilliumSemiBold.copyWith(fontSize: 20.0))
                       ],
                     ),
                     const SizedBox(height: Dimensions.marginSizeDefault),

@@ -17,20 +17,18 @@ import 'package:giftme/view/basewidgets/textfield/custom_textfield.dart';
 import 'package:giftme/view/screens/auth/widget/code_picker_widget.dart';
 import 'package:giftme/view/screens/home/home_screen.dart';
 
-class CreditTransfer extends StatefulWidget {
-  final Category category;
-
-  const CreditTransfer({Key? key, required this.category}) : super(key: key);
+class TelecomCardDetials extends StatefulWidget {
+  final Service service;
+  const TelecomCardDetials({Key? key, required this.service}) : super(key: key);
 
   @override
-  _CreditTransferState createState() => _CreditTransferState();
+  _TelecomCardDetialsState createState() => _TelecomCardDetialsState();
 }
 
-class _CreditTransferState extends State<CreditTransfer> {
+class _TelecomCardDetialsState extends State<TelecomCardDetials> {
   TextEditingController amount = TextEditingController();
   TextEditingController note = TextEditingController();
   TextEditingController? _numberController;
-  late Service service;
 
   String? _countryDialCode = '+961';
   @override
@@ -43,7 +41,6 @@ class _CreditTransferState extends State<CreditTransfer> {
                 .configModel!
                 .countryCode!)
         .dialCode;
-    service = widget.category.services!.first;
   }
 
   @override
@@ -58,7 +55,7 @@ class _CreditTransferState extends State<CreditTransfer> {
           appBar: AppBar(
             title: Row(children: [
               const SizedBox(width: Dimensions.paddingSizeSmall),
-              Text(service.title!,
+              Text(widget.service.title!,
                   style: robotoRegular.copyWith(
                       fontSize: 20,
                       color: Theme.of(context).colorScheme.background)),

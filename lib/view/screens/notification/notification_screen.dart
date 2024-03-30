@@ -26,6 +26,16 @@ class NotificationScreen extends StatelessWidget {
         .initNotificationList(context);
 
     return Scaffold(
+      appBar: AppBar(
+        title: Row(children: [
+          const SizedBox(width: Dimensions.paddingSizeSmall),
+          Text('Notifications',
+              style: robotoRegular.copyWith(
+                  fontSize: 20,
+                  color: Theme.of(context).colorScheme.onSurface)),
+        ]),
+        backgroundColor: Theme.of(context).colorScheme.background,
+      ),
       body: Column(children: [
         Expanded(
           child: Consumer<NotificationProvider>(

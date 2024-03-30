@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:giftme/data/model/response/category_model.dart' as cat;
+import 'package:giftme/provider/profile_provider.dart';
 import 'package:giftme/util/app_constants.dart';
 import 'package:giftme/util/dimensions.dart';
 import 'package:giftme/util/images.dart';
 import 'package:giftme/view/basewidgets/CustomPrice.dart';
+import 'package:giftme/view/screens/category/telecom_category_details_screen.dart';
+import 'package:giftme/view/screens/telecom_card/telecom_card_details.dart';
+import 'package:giftme/view/screens/transfer_balance/transfer_balance.dart';
+import 'package:provider/provider.dart';
 
 class ServiceWidget extends StatefulWidget {
   final cat.Service service;
   final bool? isSelected;
+  final bool isTelecom;
   const ServiceWidget(
-      {Key? key, required this.service, required this.isSelected})
+      {Key? key,
+      required this.service,
+      required this.isSelected,
+      required this.isTelecom})
       : super(key: key);
 
   @override
@@ -34,11 +43,17 @@ class _ServiceWidgetState extends State<ServiceWidget>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        if (widget.isTelecom) {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  TelecomCardDetials(service: widget.service)));
+        }
+      },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.background,
           boxShadow: [
             BoxShadow(
                 color: widget.isSelected!
@@ -71,24 +86,50 @@ class _ServiceWidgetState extends State<ServiceWidget>
                         fit: BoxFit.cover),
                   ),
                 ),
+                Positioned(
+                    top: 5,
+                    right: 5,
+                    child: Container(
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.green),
+                      child: Text(
+                        "-5.00%",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary),
+                      ),
+                    ))
               ],
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 width: 100,
-                height: 50,
+                height: 100,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: false,
-                      widget.service.title!,
-                      style: const TextStyle(color: Colors.black, fontSize: 16),
+                    Flexible(
+                      child: Text(
+                        // overflow: TextOverflow.ellipsis,
+                        // maxLines: 1,
+                        // softWrap: false,
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
+                        widget.service.title!,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                            fontSize: 16),
+                      ),
                     ),
-                    CustomPrice(price: widget.service.price!)
+                    CustomPrice(
+                        price: Provider.of<ProfileProvider>(context)
+                                    .userInfoModel!
+                                    .isReseller ==
+                                1
+                            ? widget.service.reseller_price!
+                            : widget.service.price!)
                   ],
                 ),
               ),

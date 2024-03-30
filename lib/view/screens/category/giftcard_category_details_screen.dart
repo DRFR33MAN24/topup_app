@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
 import 'package:giftme/data/model/response/category_model.dart' as cat;
 import 'package:giftme/provider/auth_provider.dart';
@@ -9,6 +10,8 @@ import 'package:giftme/view/basewidgets/animated_custom_dialog.dart';
 import 'package:giftme/view/basewidgets/button/custom_button.dart';
 import 'package:giftme/view/basewidgets/order_confirmation_dialog.dart';
 import 'package:giftme/view/basewidgets/service_widget.dart';
+
+import '../../../provider/profile_provider.dart';
 
 class GiftCardCategoryDetailsScreen extends StatefulWidget {
   final cat.Category category;
@@ -25,9 +28,13 @@ class _GiftCardCategoryDetailsScreenState
     extends State<GiftCardCategoryDetailsScreen> {
   late Map<cat.Service, bool> servicesMap;
   late cat.Service selectedService;
+  late num? qty;
 
-  TextEditingController qty = TextEditingController();
-  TextEditingController player_id = TextEditingController();
+  TextEditingController qtyController = TextEditingController(text: "1");
+
+  late List<String>? stringListReturnedFromApiCall;
+  // This list of controllers can be used to set and get the text from/to the TextFields
+  Map<String, TextEditingController> textEditingControllers = {};
 
   @override
   void initState() {
@@ -38,10 +45,27 @@ class _GiftCardCategoryDetailsScreenState
 
     servicesMap.update(servicesMap.keys.first, (value) => true);
     selectedService = servicesMap.keys.first;
+    if (selectedService.min_amount != null) {
+      qty = selectedService.min_amount;
+      qtyController.text = qty.toString();
+    } else {
+      qty = 1;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    stringListReturnedFromApiCall = selectedService.params;
+
+    var textFields = <Widget>[];
+    stringListReturnedFromApiCall!.forEach((str) {
+      var textEditingController = new TextEditingController(text: str);
+      textEditingControllers.putIfAbsent(str, () => textEditingController);
+      textFields.add(TextField(controller: textEditingController));
+      textFields.add(SizedBox(
+        height: 10,
+      ));
+    });
     return WillPopScope(
         onWillPop: () async {
           Navigator.of(context).pop();
@@ -51,7 +75,7 @@ class _GiftCardCategoryDetailsScreenState
         child: Scaffold(
           appBar: AppBar(
               title: Text(widget.category.title!),
-              backgroundColor: Theme.of(context).primaryColor),
+              backgroundColor: Theme.of(context).colorScheme.background),
           body: SingleChildScrollView(
             child: SafeArea(
                 child: Column(
@@ -88,8 +112,10 @@ class _GiftCardCategoryDetailsScreenState
                                   padding: const EdgeInsets.all(8.0),
                                   child: IgnorePointer(
                                       child: ServiceWidget(
-                                          service: e,
-                                          isSelected: servicesMap[e])),
+                                    service: e,
+                                    isSelected: servicesMap[e],
+                                    isTelecom: false,
+                                  )),
                                 ))
                             .toList()),
                   ),
@@ -103,7 +129,7 @@ class _GiftCardCategoryDetailsScreenState
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).cardColor,
+                    color: Theme.of(context).colorScheme.background,
                     boxShadow: [
                       BoxShadow(
                           color: Theme.of(context).highlightColor,
@@ -117,29 +143,37 @@ class _GiftCardCategoryDetailsScreenState
                       SizedBox(
                         height: 10,
                       ),
-                      Text(selectedService.description!),
-                      Text("Quantity"),
+
+                      Html(data: selectedService.description!),
+
+                      selectedService.min_amount != null
+                          ? TextField(
+                              controller: qtyController,
+                              onChanged: (value) {
+                                setState(() {
+                                  if (value.isNotEmpty) {
+                                    qty = num.parse(value);
+                                  }
+                                });
+                              },
+                              inputFormatters: [
+                                CustomRangeTextInputFormatter(
+                                    selectedService.min_amount!,
+                                    selectedService.max_amount!),
+                              ],
+                            )
+                          : SizedBox(),
                       SizedBox(
                         height: 10,
                       ),
-                      TextField(
-                        controller: qty,
-                        inputFormatters: [
-                          CustomRangeTextInputFormatter(
-                              selectedService.min_amount!,
-                              selectedService.max_amount!),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("Player ID"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        controller: player_id,
-                      ),
+                      // Text("Player ID"),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      // TextField(
+                      //   controller: player_id,
+                      // ),
+                      ...textFields,
                       SizedBox(
                         height: 15,
                       ),
@@ -150,7 +184,7 @@ class _GiftCardCategoryDetailsScreenState
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Total price"),
-                              CustomPrice(price: selectedService.price!),
+                              CustomPrice(price: calcPrice()),
                             ],
                           ),
                           SizedBox(
@@ -166,6 +200,7 @@ class _GiftCardCategoryDetailsScreenState
                                         OrderConfirmationDialog(
                                             details:
                                                 "Do you really want to submit this order",
+                                            totalPrice: calcPrice(),
                                             onConfirm: this.placeOrder));
                                   },
                                 )
@@ -185,10 +220,24 @@ class _GiftCardCategoryDetailsScreenState
   }
 
   placeOrder() {
+    Map<String, String> fields = {};
+    selectedService.params!.forEach((str) {
+      fields.addEntries({str: textEditingControllers[str]!.text}.entries);
+    });
     Provider.of<OrderProvider>(context, listen: false).placeOrder(
-      '1',
+      selectedService.id.toString(),
+      fields,
       Provider.of<AuthProvider>(context, listen: false).getUserToken(),
     );
+  }
+
+  String calcPrice() {
+    if (Provider.of<ProfileProvider>(context).userInfoModel!.isReseller == 1) {
+      return (qty! * num.parse(selectedService.reseller_price!))
+          .toStringAsFixed(2);
+    } else {
+      return (qty! * num.parse(selectedService.price!)).toStringAsFixed(2);
+    }
   }
 }
 

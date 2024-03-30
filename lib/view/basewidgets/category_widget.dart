@@ -5,6 +5,7 @@ import 'package:giftme/util/dimensions.dart';
 import 'package:giftme/util/images.dart';
 import 'package:giftme/view/screens/category/giftcard_category_details_screen.dart';
 import 'package:giftme/view/screens/category/telecom_category_details_screen.dart';
+import 'package:giftme/view/screens/credit_transfer/credit_transfer.dart';
 
 class CategoryWidget extends StatefulWidget {
   final cat.Category category;
@@ -37,10 +38,17 @@ class _CategoryWidgetState extends State<CategoryWidget>
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) =>
                   GiftCardCategoryDetailsScreen(category: widget.category)));
-        } else {
+        } else if (widget.category.type == "telecom") {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) =>
                   TelecomCategoryDetailsScreen(category: widget.category)));
+        } else if (widget.category.type == "utility") {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  GiftCardCategoryDetailsScreen(category: widget.category)));
+          // Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (BuildContext context) =>
+          //         CreditTransfer(category: widget.category)));
         }
       },
       child: Container(
@@ -59,7 +67,7 @@ class _CategoryWidgetState extends State<CategoryWidget>
                     height: Dimensions.profileImageSize,
                     fit: BoxFit.cover,
                     image: AppConstants.baseUrl +
-                        "/storage/" +
+                        AppConstants.categories_url +
                         widget.category.image!,
                     imageErrorBuilder: (c, o, s) => Image.asset(
                         Images.placeholder,
@@ -74,8 +82,7 @@ class _CategoryWidgetState extends State<CategoryWidget>
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 widget.category.title!,
-                style: const TextStyle(
-                    color: Color.fromARGB(255, 2, 2, 2), fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
             )
           ],

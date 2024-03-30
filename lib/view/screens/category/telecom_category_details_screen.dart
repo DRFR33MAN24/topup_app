@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:giftme/util/dimensions.dart';
 import 'package:provider/provider.dart';
 import 'package:giftme/data/model/response/category_model.dart' as cat;
 import 'package:giftme/provider/auth_provider.dart';
@@ -56,131 +58,32 @@ class _TelecomCategoryDetailsScreenState
             child: SafeArea(
                 child: Column(
               children: [
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ToggleButtons(
-                        isSelected: servicesMap.values.toList(),
-                        renderBorder: false,
-                        fillColor: Colors.transparent,
-                        borderColor: Theme.of(context).primaryColor,
-                        onPressed: (int index) {
-                          setState(() {
-                            for (int buttonIndex = 0;
-                                buttonIndex < servicesMap.length;
-                                buttonIndex++) {
-                              cat.Service buttonIndexServ =
-                                  servicesMap.keys.toList()[buttonIndex];
-                              if (buttonIndex == index) {
-                                servicesMap.update(
-                                    buttonIndexServ, (value) => true);
-                                selectedService = buttonIndexServ;
-                              } else {
-                                servicesMap.update(
-                                    buttonIndexServ, (value) => false);
-                              }
-                            }
-                          });
+                SizedBox(
+                    height: Dimensions.cardHeight * 3,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: StaggeredGridView.countBuilder(
+                        // controller: _scrollController,
+                        itemCount: widget.category.services!.length,
+                        crossAxisCount: 2,
+                        padding: const EdgeInsets.all(0),
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: false,
+                        staggeredTileBuilder: (int index) =>
+                            const StaggeredTile.fit(1),
+                        itemBuilder: (BuildContext context, int index) {
+                          return ServiceWidget(
+                            service: widget.category.services![index],
+                            isSelected: false,
+                            isTelecom: true,
+                          );
+                          // return SizedBox();
                         },
-                        children: widget.category.services!
-                            .map((e) => Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: IgnorePointer(
-                                      child: ServiceWidget(
-                                          service: e,
-                                          isSelected: servicesMap[e])),
-                                ))
-                            .toList()),
-                  ),
-                ),
+                      ),
+                    )),
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  margin: EdgeInsets.all(20),
-                  padding: EdgeInsets.all(10),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).cardColor,
-                    boxShadow: [
-                      BoxShadow(
-                          color: Theme.of(context).highlightColor,
-                          spreadRadius: 2),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Description:"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(selectedService.description!),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("Quantity"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        controller: qty,
-                        inputFormatters: [
-                          CustomRangeTextInputFormatter(
-                              selectedService.min_amount!,
-                              selectedService.max_amount!),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("Player ID"),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        controller: player_id,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Total price"),
-                              CustomPrice(price: selectedService.price!),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          !Provider.of<OrderProvider>(context).isLoading
-                              ? CustomButton(
-                                  radius: 45,
-                                  buttonText: "Buy",
-                                  onTap: () {
-                                    showAnimatedDialog(
-                                        context,
-                                        OrderConfirmationDialog(
-                                            details:
-                                                "Do you really want to submit this order",
-                                            onConfirm: this.placeOrder));
-                                  },
-                                )
-                              : Center(
-                                  child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                          Theme.of(context).primaryColor)))
-                        ],
-                      )
-                    ],
-                  ),
-                )
               ],
             )),
           ),
@@ -188,10 +91,10 @@ class _TelecomCategoryDetailsScreenState
   }
 
   placeOrder() {
-    Provider.of<OrderProvider>(context, listen: false).placeOrder(
-      '1',
-      Provider.of<AuthProvider>(context, listen: false).getUserToken(),
-    );
+    // Provider.of<OrderProvider>(context, listen: false).placeOrder(
+    //   '1',
+    //   Provider.of<AuthProvider>(context, listen: false).getUserToken(),
+    // );
   }
 }
 
