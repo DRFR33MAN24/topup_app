@@ -91,6 +91,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
           child: RefreshIndicator(
         onRefresh: () async {
+          Provider.of<ProfileProvider>(context, listen: false)
+              .getUserInfo(context);
           await _loadData(true);
         },
         child: Stack(children: [

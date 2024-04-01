@@ -6,6 +6,7 @@ import 'package:giftme/provider/splash_provider.dart';
 import 'package:giftme/provider/theme_provider.dart';
 import 'package:giftme/util/custom_themes.dart';
 import 'package:giftme/util/dimensions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactUs extends StatefulWidget {
   const ContactUs({Key? key}) : super(key: key);
@@ -19,12 +20,6 @@ class _ContactUsState extends State<ContactUs> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadData();
-  }
-
-  loadData() async {
-    await Provider.of<PyamentProvider>(Get.context!, listen: false)
-        .getPackages();
   }
 
   @override
@@ -55,7 +50,11 @@ class _ContactUsState extends State<ContactUs> {
                     color: Theme.of(context).primaryColor,
                   ),
                   title: Text("Support: ${splashProvider.configModel!.phone!}"),
-                  onTap: () {},
+                  onTap: () async {
+                    Uri uri = Uri(
+                        scheme: 'tel', path: splashProvider.configModel!.phone);
+                    await launchUrl(uri);
+                  },
                 ),
                 ListTile(
                   leading: Icon(
@@ -64,7 +63,12 @@ class _ContactUsState extends State<ContactUs> {
                   ),
                   title:
                       Text("Whatsapp: ${splashProvider.configModel!.phone!}"),
-                  onTap: () {},
+                  onTap: () async {
+                    Uri uri = Uri(
+                        scheme: 'https',
+                        path: 'wa.me/${splashProvider.configModel!.phone}');
+                    await launchUrl(uri);
+                  },
                 ),
                 ListTile(
                   leading: Icon(
@@ -72,7 +76,12 @@ class _ContactUsState extends State<ContactUs> {
                     color: Theme.of(context).primaryColor,
                   ),
                   title: Text("Email: ${splashProvider.configModel!.email!}"),
-                  onTap: () {},
+                  onTap: () async {
+                    Uri uri = Uri(
+                        scheme: 'mailto',
+                        path: splashProvider.configModel!.email);
+                    await launchUrl(uri);
+                  },
                 ),
               ],
             );

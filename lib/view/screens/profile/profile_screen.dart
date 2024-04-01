@@ -249,12 +249,10 @@ class ProfileScreenState extends State<ProfileScreen> {
                                 1
                             ? Text(
                                 "Reseller Account",
-                                style:
-                                    titilliumSemiBold.copyWith(fontSize: 20.0),
+                                style: titilliumItalic.copyWith(fontSize: 14.0),
                               )
                             : Text("Normal User",
-                                style:
-                                    titilliumSemiBold.copyWith(fontSize: 20.0))
+                                style: titilliumItalic.copyWith(fontSize: 14.0))
                       ],
                     ),
                     const SizedBox(height: Dimensions.marginSizeDefault),

@@ -86,20 +86,20 @@ class _ServiceWidgetState extends State<ServiceWidget>
                         fit: BoxFit.cover),
                   ),
                 ),
-                Positioned(
-                    top: 5,
-                    right: 5,
-                    child: Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.green),
-                      child: Text(
-                        "-5.00%",
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.onPrimary),
-                      ),
-                    ))
+                // Positioned(
+                //     top: 5,
+                //     right: 5,
+                //     child: Container(
+                //       padding: EdgeInsets.all(5),
+                //       decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(10),
+                //           color: Colors.green),
+                //       child: Text(
+                //         "-5.00%",
+                //         style: TextStyle(
+                //             color: Theme.of(context).colorScheme.onPrimary),
+                //       ),
+                //     ))
               ],
             ),
             Padding(

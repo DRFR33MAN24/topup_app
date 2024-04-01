@@ -79,15 +79,20 @@ class _OrdersScreenState extends State<OrdersScreen> {
               )
             ],
           ),
-          body:
-              Consumer<OrderProvider>(builder: (context, orderProvider, child) {
-            return ListView.builder(
-              itemCount: orderProvider.ordersList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return OrderWidget(order: orderProvider.ordersList[index]);
-              },
-            );
-          }),
+          body: RefreshIndicator(
+            onRefresh: () async {
+              await loadData(true);
+            },
+            child: Consumer<OrderProvider>(
+                builder: (context, orderProvider, child) {
+              return ListView.builder(
+                itemCount: orderProvider.ordersList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return OrderWidget(order: orderProvider.ordersList[index]);
+                },
+              );
+            }),
+          ),
         ));
   }
 }

@@ -35,6 +35,7 @@ class _GiftCardCategoryDetailsScreenState
   late List<String>? stringListReturnedFromApiCall;
   // This list of controllers can be used to set and get the text from/to the TextFields
   Map<String, TextEditingController> textEditingControllers = {};
+  var textFields = <Widget>[];
 
   @override
   void initState() {
@@ -51,21 +52,27 @@ class _GiftCardCategoryDetailsScreenState
     } else {
       qty = 1;
     }
-  }
 
-  @override
-  Widget build(BuildContext context) {
     stringListReturnedFromApiCall = selectedService.params;
 
-    var textFields = <Widget>[];
     stringListReturnedFromApiCall!.forEach((str) {
-      var textEditingController = new TextEditingController(text: str);
+      var textEditingController = new TextEditingController();
       textEditingControllers.putIfAbsent(str, () => textEditingController);
-      textFields.add(TextField(controller: textEditingController));
+      textFields.add(Text(str));
+      textFields.add(SizedBox(
+        height: 10,
+      ));
+      textFields.add(TextField(
+        controller: textEditingController,
+      ));
       textFields.add(SizedBox(
         height: 10,
       ));
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
           Navigator.of(context).pop();
@@ -201,7 +208,7 @@ class _GiftCardCategoryDetailsScreenState
                                             details:
                                                 "Do you really want to submit this order",
                                             totalPrice: calcPrice(),
-                                            onConfirm: this.placeOrder));
+                                            onConfirm: placeOrder));
                                   },
                                 )
                               : Center(
@@ -224,19 +231,44 @@ class _GiftCardCategoryDetailsScreenState
     selectedService.params!.forEach((str) {
       fields.addEntries({str: textEditingControllers[str]!.text}.entries);
     });
+    fields.addEntries({'quantity': qty.toString()}.entries);
     Provider.of<OrderProvider>(context, listen: false).placeOrder(
-      selectedService.id.toString(),
-      fields,
-      Provider.of<AuthProvider>(context, listen: false).getUserToken(),
-    );
+        selectedService.id.toString(),
+        selectedService.categoryId.toString(),
+        fields,
+        Provider.of<AuthProvider>(context, listen: false).getUserToken(),
+        route);
   }
 
   String calcPrice() {
-    if (Provider.of<ProfileProvider>(context).userInfoModel!.isReseller == 1) {
+    if (Provider.of<ProfileProvider>(context, listen: false)
+            .userInfoModel!
+            .isReseller ==
+        1) {
       return (qty! * num.parse(selectedService.reseller_price!))
           .toStringAsFixed(2);
     } else {
       return (qty! * num.parse(selectedService.price!)).toStringAsFixed(2);
+    }
+  }
+
+  route(String message, bool error) async {
+    if (error) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          content: Text(message),
+          backgroundColor: Colors.red));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          content: Text(message),
+          backgroundColor: Colors.green));
     }
   }
 }

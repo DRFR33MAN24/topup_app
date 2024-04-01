@@ -54,15 +54,15 @@ class OrderProvider with ChangeNotifier {
     }
   }
 
-  Future<ResponseModel> placeOrder(
-      String serviceId, Map<String, String> fields, String token) async {
+  Future<ResponseModel> placeOrder(String serviceId, String categoryId,
+      Map<String, String> fields, String token, Function callback) async {
     _isLoading = true;
     notifyListeners();
 
 //check if user have enough credits!
     ResponseModel responseModel;
     http.StreamedResponse response =
-        await orderRepo!.placeOrder(serviceId, fields, token);
+        await orderRepo!.placeOrder(serviceId, categoryId, fields, token);
     _isLoading = false;
 
     if (response.statusCode == 200) {
@@ -73,14 +73,14 @@ class OrderProvider with ChangeNotifier {
       if (kDebugMode) {
         print(message);
       }
-
+      callback(message, false);
       //start socket connection to server and subscribe to order status update channel
       notifyListeners();
     } else {
       if (kDebugMode) {
         print('${response.statusCode} ${response.reasonPhrase}');
       }
-
+      callback(response.reasonPhrase, true);
       responseModel = ResponseModel(
           '${response.statusCode} ${response.reasonPhrase}', false);
     }

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:giftme/provider/auth_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:giftme/data/model/response/base/api_response.dart';
 import 'package:giftme/data/model/response/response_model.dart';
@@ -11,6 +12,9 @@ import 'package:giftme/data/model/response/user_info_model.dart';
 import 'package:giftme/data/repository/profile_repo.dart';
 import 'package:giftme/helper/api_checker.dart';
 import 'package:giftme/main.dart';
+import 'package:provider/provider.dart';
+
+import '../view/screens/auth/widget/mobile_verify_screen.dart';
 
 class ProfileProvider extends ChangeNotifier {
   final ProfileRepo? profileRepo;
@@ -79,7 +83,35 @@ class ProfileProvider extends ChangeNotifier {
       _userInfoModel = UserInfoModel.fromJson(apiResponse.response!.data);
       userID = _userInfoModel!.id.toString();
       _balance = _userInfoModel!.walletBalance;
+      if (_userInfoModel!.status == 0) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          content: Text("Account Banned"),
+          backgroundColor: Colors.red,
+        ));
+        Provider.of<AuthProvider>(context, listen: false)
+            .clearSharedData()
+            .then((condition) {
+          print("logged out");
+        });
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) => const MobileVerificationScreen("")),
+            (route) => false);
+      }
     } else {
+      Provider.of<AuthProvider>(context, listen: false)
+          .clearSharedData()
+          .then((condition) {
+        print("logged out");
+      });
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => const MobileVerificationScreen("")),
+          (route) => false);
       ApiChecker.checkApi(apiResponse);
     }
     notifyListeners();

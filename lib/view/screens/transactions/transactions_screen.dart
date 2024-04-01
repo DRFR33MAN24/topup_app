@@ -77,16 +77,21 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
               )
             ],
           ),
-          body: Consumer<TransactionProvider>(
-              builder: (context, transactionProvider, child) {
-            return ListView.builder(
-              itemCount: transactionProvider.transactionList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return TransactionWidget(
-                    trx: transactionProvider.transactionList[index]);
-              },
-            );
-          }),
+          body: RefreshIndicator(
+            onRefresh: () async {
+              await loadData(true);
+            },
+            child: Consumer<TransactionProvider>(
+                builder: (context, transactionProvider, child) {
+              return ListView.builder(
+                itemCount: transactionProvider.transactionList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return TransactionWidget(
+                      trx: transactionProvider.transactionList[index]);
+                },
+              );
+            }),
+          ),
         ));
   }
 }

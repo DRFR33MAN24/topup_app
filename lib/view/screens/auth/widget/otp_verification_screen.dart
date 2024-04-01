@@ -245,19 +245,19 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                                 widget.tempToken, route)
                                             .then((value) async {
                                           if (value.isSuccess) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                              behavior:
-                                                  SnackBarBehavior.floating,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(24),
-                                              ),
-                                              content: Text(getTranslated(
-                                                  'sign_up_successfully_now_login',
-                                                  context)!),
-                                              backgroundColor: Colors.green,
-                                            ));
+                                            // ScaffoldMessenger.of(context)
+                                            //     .showSnackBar(SnackBar(
+                                            //   behavior:
+                                            //       SnackBarBehavior.floating,
+                                            //   shape: RoundedRectangleBorder(
+                                            //     borderRadius:
+                                            //         BorderRadius.circular(24),
+                                            //   ),
+                                            //   content: Text(getTranslated(
+                                            //       'sign_up_successfully_now_login',
+                                            //       context)!),
+                                            //   backgroundColor: Colors.green,
+                                            // ));
                                             await Provider.of<ProfileProvider>(
                                                     context,
                                                     listen: false)
