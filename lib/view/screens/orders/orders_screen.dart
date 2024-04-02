@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giftme/view/basewidgets/no_data.dart';
 import 'package:provider/provider.dart';
 import 'package:giftme/data/model/response/order_model.dart';
 import 'package:giftme/helper/date.dart';
@@ -85,12 +86,17 @@ class _OrdersScreenState extends State<OrdersScreen> {
             },
             child: Consumer<OrderProvider>(
                 builder: (context, orderProvider, child) {
-              return ListView.builder(
-                itemCount: orderProvider.ordersList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return OrderWidget(order: orderProvider.ordersList[index]);
-                },
-              );
+              return orderProvider.ordersList.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: orderProvider.ordersList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return OrderWidget(
+                            order: orderProvider.ordersList[index]);
+                      },
+                    )
+                  : NoDataWidget(onRefresh: () async {
+                      await loadData(true);
+                    });
             }),
           ),
         ));

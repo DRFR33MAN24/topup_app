@@ -107,7 +107,9 @@ class Order {
     _userId = json["user_id"];
     _categoryId = json["category_id"];
     _serviceId = json["service_id"];
-    _service = Service.fromJson(json["service"]);
+    if (json["service"] != null) {
+      _service = Service.fromJson(json["service"]);
+    }
     _qty = json["quantity"];
     _uploadedImg = json["uploaded_img"];
     _price = num.parse(json["price"].toString()).toStringAsFixed(2);

@@ -9,6 +9,8 @@ import 'package:giftme/util/custom_themes.dart';
 import 'package:giftme/util/dimensions.dart';
 import 'package:giftme/view/basewidgets/CustomPrice.dart';
 
+import '../../basewidgets/no_data.dart';
+
 class TransactionsScreen extends StatefulWidget {
   const TransactionsScreen({Key? key}) : super(key: key);
 
@@ -83,13 +85,17 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
             },
             child: Consumer<TransactionProvider>(
                 builder: (context, transactionProvider, child) {
-              return ListView.builder(
-                itemCount: transactionProvider.transactionList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return TransactionWidget(
-                      trx: transactionProvider.transactionList[index]);
-                },
-              );
+              return transactionProvider.transactionList.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: transactionProvider.transactionList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return TransactionWidget(
+                            trx: transactionProvider.transactionList[index]);
+                      },
+                    )
+                  : NoDataWidget(onRefresh: () async {
+                      await loadData(true);
+                    });
             }),
           ),
         ));

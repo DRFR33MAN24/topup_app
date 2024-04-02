@@ -8,6 +8,8 @@ import 'package:giftme/util/images.dart';
 import 'package:giftme/view/basewidgets/button/custom_button.dart';
 import 'package:giftme/view/basewidgets/show_custom_snakbar.dart';
 import 'package:giftme/view/basewidgets/textfield/custom_textfield.dart';
+import 'package:giftme/view/screens/Html/privacy_policy_screen.dart';
+import 'package:giftme/view/screens/Html/terms_conditions.dart';
 import 'package:provider/provider.dart';
 import 'code_picker_widget.dart';
 import 'otp_verification_screen.dart';
@@ -50,9 +52,8 @@ class MobileVerificationScreenState extends State<MobileVerificationScreen> {
     return Scaffold(
       body: SafeArea(
         child: Scrollbar(
-          child: SingleChildScrollView(
+          child: Padding(
             padding: const EdgeInsets.all(Dimensions.paddingSizeLarge),
-            physics: const BouncingScrollPhysics(),
             child: Center(
               child: SizedBox(
                 width: 1170,
@@ -172,6 +173,38 @@ class MobileVerificationScreenState extends State<MobileVerificationScreen> {
                               valueColor: AlwaysStoppedAnimation<Color>(
                                   Theme.of(context).primaryColor),
                             )),
+                      Spacer(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const PrivacyPolicyScreen()));
+                            },
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("Privacy Policy"),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const TermsAndConditonsScreen()));
+                            },
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("Terms and Conditions"),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

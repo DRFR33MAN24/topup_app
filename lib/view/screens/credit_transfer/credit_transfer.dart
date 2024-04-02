@@ -56,17 +56,14 @@ class _CreditTransferState extends State<CreditTransfer> {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Row(children: [
-              const SizedBox(width: Dimensions.paddingSizeSmall),
-              Text(service.title!,
-                  style: robotoRegular.copyWith(
-                      fontSize: 20,
-                      color: Theme.of(context).colorScheme.background)),
-            ]),
-            backgroundColor: Provider.of<ThemeProvider>(context).darkTheme
-                ? Colors.black
-                : Theme.of(context).primaryColor,
-          ),
+              title: Row(children: [
+                const SizedBox(width: Dimensions.paddingSizeSmall),
+                Text(service.title!,
+                    style: robotoRegular.copyWith(
+                        fontSize: 20,
+                        color: Theme.of(context).colorScheme.onBackground)),
+              ]),
+              backgroundColor: Theme.of(context).colorScheme.background),
           body:
               Consumer<OrderProvider>(builder: (context, orderProvider, child) {
             return Container(

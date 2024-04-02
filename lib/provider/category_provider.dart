@@ -25,6 +25,8 @@ class CategoryProvider extends ChangeNotifier {
   Future<void> getCategoryList(String offset, String? tag, String? search,
       {bool reload = false}) async {
     _isLoading = true;
+    notifyListeners();
+
     if (reload) {
       _offsetList = [];
       _categoryList = [];
@@ -55,10 +57,11 @@ class CategoryProvider extends ChangeNotifier {
 
   Future<void> getTagsList({bool reload = false}) async {
     _isLoading = true;
+
     ApiResponse apiResponse = await categoryRepo!.getTagsList();
     if (apiResponse.response != null &&
         apiResponse.response!.statusCode == 200) {
-      _tagsList.addAll(cat.TagModel.fromJson(apiResponse.response!.data).tags!);
+      _tagsList = cat.TagModel.fromJson(apiResponse.response!.data).tags!;
 
       _tagsToggleMap =
           Map.fromEntries(_tagsList.map((e) => MapEntry(e, false)));

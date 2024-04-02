@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:giftme/provider/localization_provider.dart';
 import 'package:giftme/provider/theme_provider.dart';
+import 'package:giftme/view/basewidgets/category_shimmer.dart';
 import 'package:giftme/view/screens/notification/notification_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:giftme/data/model/response/category_model.dart' as cat;
@@ -42,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (reload) {
       offset = 1;
     }
+
     await Provider.of<CategoryProvider>(Get.context!, listen: false)
         .getCategoryList('1', '', "", reload: reload);
     await Provider.of<CategoryProvider>(Get.context!, listen: false)
@@ -303,15 +305,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )
                                 : const SizedBox.shrink(),
                             categoryProvider.isLoading
-                                ? Center(
-                                    child: Padding(
-                                    padding: const EdgeInsets.all(
-                                        Dimensions.iconSizeExtraSmall),
-                                    child: CircularProgressIndicator(
-                                        valueColor: AlwaysStoppedAnimation<
-                                                Color>(
-                                            Theme.of(context).primaryColor)),
-                                  ))
+                                ? CategoryShimmer(isEnabled: true)
+                                // Center(
+                                //     child: Padding(
+                                //     padding: const EdgeInsets.all(
+                                //         Dimensions.iconSizeExtraSmall),
+                                //     child: CircularProgressIndicator(
+                                //         valueColor: AlwaysStoppedAnimation<
+                                //                 Color>(
+                                //             Theme.of(context).primaryColor)),
+                                //   ))
                                 : const SizedBox.shrink(),
                           ]);
                         },
