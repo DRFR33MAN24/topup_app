@@ -168,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         cat.Tag buttonIndexTag =
                                             tagsMap.keys.toList()[buttonIndex];
                                         if (buttonIndex == index) {
-                                          if (buttonIndexTag.tag == "Finance") {
+                                          if (buttonIndexTag.tag == "Balance") {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (BuildContext

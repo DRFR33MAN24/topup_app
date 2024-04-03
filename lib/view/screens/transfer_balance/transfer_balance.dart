@@ -24,8 +24,8 @@ class TransferBalance extends StatefulWidget {
 }
 
 class _TransferBalanceState extends State<TransferBalance> {
-  TextEditingController amount = TextEditingController();
-  TextEditingController note = TextEditingController();
+  TextEditingController _amountController = TextEditingController();
+  // TextEditingController note = TextEditingController();
   TextEditingController? _numberController;
 
   String? _countryDialCode = '+961';
@@ -128,20 +128,20 @@ class _TransferBalanceState extends State<TransferBalance> {
                         height: 15,
                       ),
                       CustomTextField(
-                        hintText: "Amount",
-                        controller: amount,
+                        hintText: "Amount (USD)",
+                        controller: _amountController,
                         textInputAction: TextInputAction.done,
                         textInputType: TextInputType.number,
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      CustomTextField(
-                        hintText: "Note",
-                        controller: note,
-                        textInputAction: TextInputAction.done,
-                        textInputType: TextInputType.text,
-                      ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // CustomTextField(
+                      //   hintText: "Note",
+                      //   controller: note,
+                      //   textInputAction: TextInputAction.done,
+                      //   textInputType: TextInputType.text,
+                      // ),
                       SizedBox(
                         height: 15,
                       ),
@@ -149,12 +149,28 @@ class _TransferBalanceState extends State<TransferBalance> {
                           ? CustomButton(
                               buttonText: "Send",
                               onTap: () {
-                                showAnimatedDialog(
-                                    context,
-                                    OrderConfirmationDialog(
-                                        details:
-                                            "Do you really want to submit this order",
-                                        onConfirm: this.placeOrder));
+                                String phone = _numberController!.text.trim();
+                                String amount = _amountController.text.trim();
+                                if (phone.isEmpty || amount.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          behavior: SnackBarBehavior.floating,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(24),
+                                          ),
+                                          content: Text(getTranslated(
+                                              'Please enter both fields to continue',
+                                              context)!),
+                                          backgroundColor: Colors.red));
+                                } else {
+                                  showAnimatedDialog(
+                                      context,
+                                      OrderConfirmationDialog(
+                                          totalPrice: _amountController.text,
+                                          details: "Confirm balance transfer?",
+                                          onConfirm: placeOrder));
+                                }
                               },
                             )
                           : Center(
@@ -198,9 +214,30 @@ class _TransferBalanceState extends State<TransferBalance> {
   }
 
   placeOrder() {
-    // Provider.of<OrderProvider>(context, listen: false).placeOrder(
-    //   '1',
-    //   Provider.of<AuthProvider>(context, listen: false).getUserToken(),
-    // );
+    Provider.of<OrderProvider>(context, listen: false).placeTransferOrder(
+        _numberController!.text.trim(),
+        _amountController.text,
+        Provider.of<AuthProvider>(context, listen: false).getUserToken(),
+        route);
+  }
+
+  route(String message, bool error) async {
+    if (error) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          content: Text(message),
+          backgroundColor: Colors.red));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          content: Text(message),
+          backgroundColor: Colors.green));
+    }
   }
 }

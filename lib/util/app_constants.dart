@@ -9,7 +9,7 @@ class AppConstants {
   static const String socialLoginUri = "/api/auth/social-login";
   static const String registrationUri = "/api/auth/register";
   static const String loginUri = "/api/auth/login";
-  static const String tokenUri = "/api/user/cm-firebase-token";
+  static const String tokenUri = "/api/customer/cm-firebase-token";
   static const String checkEmailUri = "/api/auth/check-email";
   static const String resendEmailOtpUri = "/api/auth/resend-otp-check-email";
   static const String verifyEmailUri = "/api/auth/verify-email";
@@ -36,6 +36,7 @@ class AppConstants {
   static const String packages = '/api/payment/packages';
 
   static const String placeOrder = '/api/orders/place-order';
+  static const String placeTransferOrder = '/api/orders/place-transfer-order';
 
   static const String intro = "intro";
   static const String token = 'token';

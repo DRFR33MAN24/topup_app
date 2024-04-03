@@ -42,4 +42,28 @@ class OrderRepo {
     http.StreamedResponse response = await request.send();
     return response;
   }
+
+  Future<http.StreamedResponse> placeTransferOrder(
+      String phone, String amount, String token) async {
+    // File file = File.fromRawPath(img!);
+    http.MultipartRequest request = http.MultipartRequest('POST',
+        Uri.parse('${AppConstants.baseUrl}${AppConstants.placeTransferOrder}'));
+    request.headers.addAll(<String, String>{'Authorization': 'Bearer $token'});
+
+    Map<String, String> fields = {};
+
+    fields.addAll(<String, String>{
+      '_method': 'post',
+      'phone': phone,
+      'amount': amount,
+    });
+
+    request.fields.addAll(fields);
+
+    if (kDebugMode) {
+      print('========>${fields.toString()}');
+    }
+    http.StreamedResponse response = await request.send();
+    return response;
+  }
 }

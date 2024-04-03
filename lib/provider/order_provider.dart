@@ -87,4 +87,38 @@ class OrderProvider with ChangeNotifier {
     notifyListeners();
     return responseModel;
   }
+
+  Future<ResponseModel> placeTransferOrder(
+      String phone, String amount, String token, Function callback) async {
+    _isLoading = true;
+    notifyListeners();
+
+//check if user have enough credits!
+    ResponseModel responseModel;
+    http.StreamedResponse response =
+        await orderRepo!.placeTransferOrder(phone, amount, token);
+    _isLoading = false;
+
+    if (response.statusCode == 200) {
+      Map map = jsonDecode(await response.stream.bytesToString());
+      String? message = map["message"];
+
+      responseModel = ResponseModel(message, true);
+      if (kDebugMode) {
+        print(message);
+      }
+      callback(message, false);
+      //start socket connection to server and subscribe to order status update channel
+      notifyListeners();
+    } else {
+      if (kDebugMode) {
+        print('${response.statusCode} ${response.reasonPhrase}');
+      }
+      callback(response.reasonPhrase, true);
+      responseModel = ResponseModel(
+          '${response.statusCode} ${response.reasonPhrase}', false);
+    }
+    notifyListeners();
+    return responseModel;
+  }
 }

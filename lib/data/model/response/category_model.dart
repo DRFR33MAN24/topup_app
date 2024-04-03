@@ -120,9 +120,10 @@ class Category {
           _services!.add(Service.fromJson(v));
         });
       } catch (e) {
-        jsonDecode(json['services']).forEach((v) {
-          _services!.add(Service.fromJson(v));
-        });
+        print(e);
+        // jsonDecode(json['services']).forEach((v) {
+        //   _services!.add(Service.fromJson(v));
+        // });
       }
     }
 

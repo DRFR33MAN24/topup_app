@@ -73,7 +73,7 @@ class MyNotification {
               message.data['image'].isNotEmpty)
           ? message.data['image'].startsWith('http')
               ? message.data['image']
-              : '${AppConstants.baseUrl}/storage/app/public/notification/${message.data['image']}'
+              : '${AppConstants.baseUrl}/assets/uploads/notification/${message.data['image']}'
           : null;
     } else {
       title = message.notification!.title;
@@ -84,14 +84,14 @@ class MyNotification {
                 message.notification!.android!.imageUrl!.isNotEmpty)
             ? message.notification!.android!.imageUrl!.startsWith('http')
                 ? message.notification!.android!.imageUrl
-                : '${AppConstants.baseUrl}/storage/app/public/notification/${message.notification!.android!.imageUrl}'
+                : '${AppConstants.baseUrl}/assets/uploads/notification/${message.notification!.android!.imageUrl}'
             : null;
       } else if (Platform.isIOS) {
         image = (message.notification!.apple!.imageUrl != null &&
                 message.notification!.apple!.imageUrl!.isNotEmpty)
             ? message.notification!.apple!.imageUrl!.startsWith('http')
                 ? message.notification!.apple!.imageUrl
-                : '${AppConstants.baseUrl}/storage/app/public/notification/${message.notification!.apple!.imageUrl}'
+                : '${AppConstants.baseUrl}/assets/uploads/notification/${message.notification!.apple!.imageUrl}'
             : null;
       }
     }

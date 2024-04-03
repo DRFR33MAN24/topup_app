@@ -44,7 +44,7 @@ class OnBoardingScreen extends StatelessWidget {
             builder: (context, onBoardingList, child) => ListView(
               children: [
                 SizedBox(
-                  height: height * 0.7,
+                  height: height * 0.72,
                   child: PageView.builder(
                     itemCount: onBoardingList.onBoardingList.length,
                     controller: _pageController,
@@ -61,12 +61,15 @@ class OnBoardingScreen extends StatelessWidget {
                                 style: titilliumBold.copyWith(
                                     fontSize: height * 0.035),
                                 textAlign: TextAlign.center),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Text(
                                 onBoardingList
                                     .onBoardingList[index].description,
                                 textAlign: TextAlign.center,
                                 style: titilliumRegular.copyWith(
-                                  fontSize: height * 0.015,
+                                  fontSize: height * 0.020,
                                 )),
                           ],
                         ),
