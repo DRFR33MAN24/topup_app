@@ -6,6 +6,10 @@ class AppConstants {
   static const String baseUrl = 'http://192.168.1.9:8000';
   static const String socketUri = 'ws://192.168.1.9:6001';
   static const String categories_url = '/assets/uploads/categories/';
+  static const String services_url = '/assets/uploads/services/';
+  static const String notification_url = '/assets/uploads/notification/';
+  static const String tags_url = '/assets/uploads/tags/';
+  static const String profile_url = '/assets/uploads/profile/';
   static const String socialLoginUri = "/api/auth/social-login";
   static const String registrationUri = "/api/auth/register";
   static const String loginUri = "/api/auth/login";
@@ -37,6 +41,7 @@ class AppConstants {
 
   static const String placeOrder = '/api/orders/place-order';
   static const String placeTransferOrder = '/api/orders/place-transfer-order';
+  static const String placeTelecomOrder = '/api/orders/place-telecom-order';
 
   static const String intro = "intro";
   static const String token = 'token';

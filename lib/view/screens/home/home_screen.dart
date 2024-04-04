@@ -305,7 +305,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )
                                 : const SizedBox.shrink(),
                             categoryProvider.isLoading
-                                ? CategoryShimmer(isEnabled: true)
+                                ? Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: CategoryShimmer(isEnabled: true),
+                                  )
                                 // Center(
                                 //     child: Padding(
                                 //     padding: const EdgeInsets.all(
@@ -424,7 +427,7 @@ class AppDrawer extends StatelessWidget {
                 height: Dimensions.profileImageSize,
                 fit: BoxFit.cover,
                 image:
-                    '${AppConstants.baseUrl}\\storage\\profile\\${profile.userInfoModel!.image}',
+                    '${AppConstants.baseUrl}${AppConstants.profile_url}${profile.userInfoModel!.image}',
                 imageErrorBuilder: (c, o, s) => Image.asset(Images.placeholder,
                     width: Dimensions.profileImageSize,
                     height: Dimensions.profileImageSize,
@@ -502,39 +505,39 @@ class AppDrawer extends StatelessWidget {
               ),
               isFlip: true),
         ),
-        ListTile(
-          leading: Icon(
-            Icons.language,
-            color: Theme.of(context).primaryColor,
-          ),
-          title:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text(
-              "Language",
-            ),
-            Switch(
-                value: Provider.of<LocalizationProvider>(Get.context!,
-                            listen: false)
-                        .locale
-                        .languageCode ==
-                    "ar",
-                onChanged: (value) {
-                  if (Provider.of<LocalizationProvider>(Get.context!,
-                              listen: false)
-                          .locale
-                          .languageCode ==
-                      "ar") {
-                    Provider.of<LocalizationProvider>(Get.context!,
-                            listen: false)
-                        .setLanguage(Locale("en", "US"));
-                  } else {
-                    Provider.of<LocalizationProvider>(Get.context!,
-                            listen: false)
-                        .setLanguage(Locale("ar", "SA"));
-                  }
-                })
-          ]),
-        ),
+        // ListTile(
+        //   leading: Icon(
+        //     Icons.language,
+        //     color: Theme.of(context).primaryColor,
+        //   ),
+        //   title:
+        //       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        //     Text(
+        //       "Language",
+        //     ),
+        //     Switch(
+        //         value: Provider.of<LocalizationProvider>(Get.context!,
+        //                     listen: false)
+        //                 .locale
+        //                 .languageCode ==
+        //             "ar",
+        //         onChanged: (value) {
+        //           if (Provider.of<LocalizationProvider>(Get.context!,
+        //                       listen: false)
+        //                   .locale
+        //                   .languageCode ==
+        //               "ar") {
+        //             Provider.of<LocalizationProvider>(Get.context!,
+        //                     listen: false)
+        //                 .setLanguage(Locale("en", "US"));
+        //           } else {
+        //             Provider.of<LocalizationProvider>(Get.context!,
+        //                     listen: false)
+        //                 .setLanguage(Locale("ar", "SA"));
+        //           }
+        //         })
+        //   ]),
+        // ),
         ListTile(
           leading: Icon(
             Icons.dark_mode,

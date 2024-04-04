@@ -107,19 +107,24 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Result: ", style: robotoBold.copyWith()),
-                      Text(widget.order.reason!, style: robotoBold.copyWith())
+                      Text("Amount: ", style: robotoBold.copyWith()),
+                      CustomPrice(price: widget.order.price!)
                     ],
                   ),
                   Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Amount: ", style: robotoBold.copyWith()),
-                      CustomPrice(price: widget.order.price!)
+                      Text("Result: ", style: robotoBold.copyWith()),
+                      Text(
+                        widget.order.reason!.replaceAll(',', '\n'),
+                        style: robotoBold.copyWith(),
+                        maxLines: 50,
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
+                      )
                     ],
                   ),
-                  Divider(),
                 ],
               ),
             ),

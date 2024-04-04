@@ -164,6 +164,8 @@ class _GiftCardCategoryDetailsScreenState
                                 });
                               },
                               inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r"[0-9.]")),
                                 CustomRangeTextInputFormatter(
                                     selectedService.min_amount!,
                                     selectedService.max_amount!),
@@ -226,18 +228,19 @@ class _GiftCardCategoryDetailsScreenState
         ));
   }
 
-  placeOrder() {
+  placeOrder() async {
     Map<String, String> fields = {};
     selectedService.params!.forEach((str) {
       fields.addEntries({str: textEditingControllers[str]!.text}.entries);
     });
     fields.addEntries({'quantity': qty.toString()}.entries);
-    Provider.of<OrderProvider>(context, listen: false).placeOrder(
+    await Provider.of<OrderProvider>(context, listen: false).placeOrder(
         selectedService.id.toString(),
         selectedService.categoryId.toString(),
         fields,
         Provider.of<AuthProvider>(context, listen: false).getUserToken(),
         route);
+    Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
   }
 
   String calcPrice() {

@@ -66,4 +66,29 @@ class OrderRepo {
     http.StreamedResponse response = await request.send();
     return response;
   }
+
+  Future<http.StreamedResponse> placeTelecomOrder(String serviceId,
+      String categoryId, String quantity, String token) async {
+    // File file = File.fromRawPath(img!);
+    http.MultipartRequest request = http.MultipartRequest('POST',
+        Uri.parse('${AppConstants.baseUrl}${AppConstants.placeTelecomOrder}'));
+    request.headers.addAll(<String, String>{'Authorization': 'Bearer $token'});
+
+    Map<String, String> fields = {};
+
+    fields.addAll(<String, String>{
+      '_method': 'post',
+      'service': serviceId,
+      'category': categoryId,
+      'quantity': quantity
+    });
+
+    request.fields.addAll(fields);
+
+    if (kDebugMode) {
+      print('========>${fields.toString()}');
+    }
+    http.StreamedResponse response = await request.send();
+    return response;
+  }
 }

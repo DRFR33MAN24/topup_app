@@ -5,7 +5,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 //     FlexThemeData.dark(scheme: FlexScheme.deepBlue, useMaterial3: false);
 
 ThemeData dark = FlexThemeData.dark(
-  scheme: FlexScheme.blue,
+  scheme: FlexScheme.indigoM3,
   surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
   blendLevel: 15,
   appBarStyle: FlexAppBarStyle.background,

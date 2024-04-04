@@ -19,7 +19,7 @@ class CategoryShimmer extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
         return Shimmer.fromColors(
-          baseColor: Colors.grey[300]!,
+          baseColor: Theme.of(context).colorScheme.background,
           highlightColor: Colors.grey[100]!,
           enabled: isEnabled,
           child: Column(

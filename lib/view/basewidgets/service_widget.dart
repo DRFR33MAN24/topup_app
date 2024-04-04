@@ -77,7 +77,7 @@ class _ServiceWidgetState extends State<ServiceWidget>
                     height: 150,
                     fit: BoxFit.cover,
                     image: AppConstants.baseUrl +
-                        "/storage/" +
+                        AppConstants.services_url +
                         widget.service.image!,
                     imageErrorBuilder: (c, o, s) => Image.asset(
                         Images.placeholder,
@@ -120,7 +120,7 @@ class _ServiceWidgetState extends State<ServiceWidget>
                         widget.service.title!,
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.onSurface,
-                            fontSize: 16),
+                            fontSize: 13),
                       ),
                     ),
                     CustomPrice(

@@ -25,21 +25,10 @@ class TelecomCategoryDetailsScreen extends StatefulWidget {
 
 class _TelecomCategoryDetailsScreenState
     extends State<TelecomCategoryDetailsScreen> {
-  late Map<cat.Service, bool> servicesMap;
-  late cat.Service selectedService;
-
-  TextEditingController qty = TextEditingController();
-  TextEditingController player_id = TextEditingController();
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    servicesMap = Map.fromEntries(
-        widget.category.services!.map((e) => MapEntry(e, false)));
-
-    servicesMap.update(servicesMap.keys.first, (value) => true);
-    selectedService = servicesMap.keys.first;
   }
 
   @override
@@ -53,7 +42,7 @@ class _TelecomCategoryDetailsScreenState
         child: Scaffold(
           appBar: AppBar(
               title: Text(widget.category.title!),
-              backgroundColor: Theme.of(context).primaryColor),
+              backgroundColor: Theme.of(context).colorScheme.background),
           body: SingleChildScrollView(
             child: SafeArea(
                 child: Column(
@@ -88,33 +77,5 @@ class _TelecomCategoryDetailsScreenState
             )),
           ),
         ));
-  }
-
-  placeOrder() {
-    // Provider.of<OrderProvider>(context, listen: false).placeOrder(
-    //   '1',
-    //   Provider.of<AuthProvider>(context, listen: false).getUserToken(),
-    // );
-  }
-}
-
-class CustomRangeTextInputFormatter extends TextInputFormatter {
-  late final int min;
-  late final int max;
-
-  CustomRangeTextInputFormatter(int this.min, int this.max);
-  @override
-  TextEditingValue formatEditUpdate(
-    TextEditingValue oldValue,
-    TextEditingValue newValue,
-  ) {
-    if (newValue.text == '')
-      return TextEditingValue();
-    else if (int.parse(newValue.text) < min)
-      return TextEditingValue().copyWith(text: min.toString());
-
-    return int.parse(newValue.text) > max
-        ? TextEditingValue().copyWith(text: max.toString())
-        : newValue;
   }
 }

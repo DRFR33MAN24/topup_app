@@ -75,7 +75,7 @@ class NotificationScreen extends StatelessWidget {
                                       width: 50,
                                       fit: BoxFit.cover,
                                       image:
-                                          '${AppConstants.baseUrl + "/storage/"}${notification.notificationList![index].image}',
+                                          '${AppConstants.baseUrl + AppConstants.notification_url}${notification.notificationList![index].image}',
                                       imageErrorBuilder: (c, o, s) =>
                                           Image.asset(Images.placeholder,
                                               height: 50,

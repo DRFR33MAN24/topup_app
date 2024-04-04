@@ -70,7 +70,7 @@ class _TagWidgetState extends State<TagWidget>
                             height: Dimensions.profileImageSize,
                             fit: BoxFit.cover,
                             image: AppConstants.baseUrl +
-                                "/storage/" +
+                                AppConstants.tags_url +
                                 widget.tag.image!,
                             imageErrorBuilder: (c, o, s) => Image.asset(
                                 Images.placeholder,

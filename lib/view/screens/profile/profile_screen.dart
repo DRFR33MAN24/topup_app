@@ -208,7 +208,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                         height: Dimensions.profileImageSize,
                                         fit: BoxFit.cover,
                                         image:
-                                            '${AppConstants.baseUrl}\\storage\\profile\\${profile.userInfoModel!.image}',
+                                            '${AppConstants.baseUrl}${AppConstants.profile_url}${profile.userInfoModel!.image}',
                                         imageErrorBuilder: (c, o, s) =>
                                             Image.asset(Images.placeholder,
                                                 width:

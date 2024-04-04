@@ -41,7 +41,7 @@ class NotificationDialog extends StatelessWidget {
                     child: FadeInImage.assetNetwork(
                       placeholder: Images.placeholder,
                       image:
-                          '${AppConstants.baseUrl + "/storage/"}${notificationModel.image}',
+                          '${AppConstants.baseUrl + AppConstants.notification_url}${notificationModel.image}',
                       height: MediaQuery.of(context).size.width - 130,
                       width: MediaQuery.of(context).size.width,
                       fit: BoxFit.cover,

@@ -16,6 +16,8 @@ import 'package:giftme/view/basewidgets/textfield/custom_textfield.dart';
 import 'package:giftme/view/screens/auth/widget/code_picker_widget.dart';
 import 'package:giftme/view/screens/home/home_screen.dart';
 
+import '../../../provider/profile_provider.dart';
+
 class TransferBalance extends StatefulWidget {
   const TransferBalance({Key? key}) : super(key: key);
 
@@ -213,12 +215,14 @@ class _TransferBalanceState extends State<TransferBalance> {
         ));
   }
 
-  placeOrder() {
-    Provider.of<OrderProvider>(context, listen: false).placeTransferOrder(
+  placeOrder() async {
+    await Provider.of<OrderProvider>(context, listen: false).placeTransferOrder(
         _numberController!.text.trim(),
         _amountController.text,
         Provider.of<AuthProvider>(context, listen: false).getUserToken(),
         route);
+
+    Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
   }
 
   route(String message, bool error) async {
