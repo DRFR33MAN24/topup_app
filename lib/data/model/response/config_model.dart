@@ -107,7 +107,7 @@ class ConfigModel {
     _phone = json['company_phone'];
     _currencyConversionFactor = json['currency_conversion_factor'];
 
-    _termsConditions = json['terms_&_conditions'];
+    _termsConditions = json['terms_and_conditions'];
     _refundPolicy = json['refund_policy'] != null
         ? RefundPolicy.fromJson(json['refund_policy'])
         : null;

@@ -41,10 +41,10 @@ class _CustomPriceState extends State<CustomPrice> {
       case null:
         return Theme.of(context).colorScheme.onSurface;
         break;
-      case "charge":
+      case "+":
         return Colors.green;
         break;
-      case "decharge":
+      case "-":
         return Colors.red;
         break;
 

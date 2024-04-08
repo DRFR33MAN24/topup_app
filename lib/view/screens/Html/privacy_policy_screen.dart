@@ -27,9 +27,11 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       color: Theme.of(context).colorScheme.onBackground)),
             ]),
             backgroundColor: Theme.of(context).colorScheme.background),
-        body: Html(
-            data: Provider.of<SplashProvider>(context, listen: false)
-                .configModel!
-                .privacyPolicy!));
+        body: SingleChildScrollView(
+          child: Html(
+              data: Provider.of<SplashProvider>(context, listen: false)
+                  .configModel!
+                  .privacyPolicy!),
+        ));
   }
 }

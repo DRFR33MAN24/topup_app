@@ -28,9 +28,11 @@ class _TermsAndConditonsScreenState extends State<TermsAndConditonsScreen> {
                       color: Theme.of(context).colorScheme.onBackground)),
             ]),
             backgroundColor: Theme.of(context).colorScheme.background),
-        body: Html(
-            data: Provider.of<SplashProvider>(context, listen: false)
-                .configModel!
-                .termsConditions!));
+        body: SingleChildScrollView(
+          child: Html(
+              data: Provider.of<SplashProvider>(context, listen: false)
+                  .configModel!
+                  .termsConditions!),
+        ));
   }
 }

@@ -36,6 +36,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
   await di.init();
 
   await Firebase.initializeApp(
