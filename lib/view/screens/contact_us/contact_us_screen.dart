@@ -56,6 +56,7 @@ class _ContactUsState extends State<ContactUs> {
                     await launchUrl(uri);
                   },
                 ),
+                Divider(),
                 ListTile(
                   leading: Icon(
                     Icons.chat,
@@ -70,6 +71,7 @@ class _ContactUsState extends State<ContactUs> {
                     await launchUrl(uri);
                   },
                 ),
+                Divider(),
                 ListTile(
                   leading: Icon(
                     Icons.email,

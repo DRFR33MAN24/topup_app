@@ -112,7 +112,7 @@ class Order {
     }
     _qty = json["quantity"];
     _uploadedImg = json["uploaded_img"];
-    _price = num.parse(json["price"].toString()).toStringAsFixed(2);
+    _price = num.parse(json["price"].toString()).toStringAsFixed(5);
     _status = json["status"];
     _description = json["status_description"];
     _reason = json["reason"];

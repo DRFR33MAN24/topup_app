@@ -195,9 +195,9 @@ class _TelecomCardDetialsState extends State<TelecomCardDetials> {
             .isReseller ==
         1) {
       return (qty! * num.parse(widget.service.reseller_price!))
-          .toStringAsFixed(2);
+          .toStringAsFixed(5);
     } else {
-      return (qty! * num.parse(widget.service.price!)).toStringAsFixed(2);
+      return (qty! * num.parse(widget.service.price!)).toStringAsFixed(5);
     }
   }
 

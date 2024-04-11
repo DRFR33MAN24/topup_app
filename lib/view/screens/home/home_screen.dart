@@ -225,52 +225,44 @@ class _HomeScreenState extends State<HomeScreen> {
                                               topRight: Radius.circular(
                                                   Dimensions
                                                       .paddingSizeSmall))),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: Dimensions.paddingSizeSmall,
-                                          horizontal:
-                                              Dimensions.paddingSizeSmall,
-                                        ),
-                                        child: TextFormField(
-                                          controller: controller,
-                                          onFieldSubmitted: (query) {},
-                                          onChanged: (query) {
-                                            Provider.of<CategoryProvider>(
-                                                    Get.context!,
-                                                    listen: false)
-                                                .getCategoryList('1', '', query,
-                                                    reload: true);
-                                          },
-                                          textInputAction:
-                                              TextInputAction.search,
-                                          maxLines: 1,
-                                          textAlignVertical:
-                                              TextAlignVertical.center,
-                                          decoration: InputDecoration(
-                                              hintText: "Search here...",
-                                              isDense: true,
-                                              hintStyle: robotoRegular.copyWith(
-                                                  color: Theme.of(context)
-                                                      .hintColor),
-                                              border: InputBorder.none,
-                                              suffixIcon: controller
-                                                      .text.isNotEmpty
-                                                  ? IconButton(
-                                                      icon: const Icon(
-                                                          Icons.clear,
-                                                          color: Colors.black),
-                                                      onPressed: () {
-                                                        controller.clear();
-                                                        Provider.of<CategoryProvider>(
-                                                                Get.context!,
-                                                                listen: false)
-                                                            .getCategoryList(
-                                                                '1', "", "",
-                                                                reload: true);
-                                                      },
-                                                    )
-                                                  : null),
-                                        ),
+                                      child: TextFormField(
+                                        controller: controller,
+                                        onFieldSubmitted: (query) {},
+                                        onChanged: (query) {
+                                          Provider.of<CategoryProvider>(
+                                                  Get.context!,
+                                                  listen: false)
+                                              .getCategoryList('1', '', query,
+                                                  reload: true);
+                                        },
+                                        textInputAction: TextInputAction.search,
+                                        maxLines: 1,
+                                        textAlignVertical:
+                                            TextAlignVertical.center,
+                                        decoration: InputDecoration(
+                                            hintText: "Search here...",
+                                            isDense: true,
+                                            hintStyle: robotoRegular.copyWith(
+                                                color: Theme.of(context)
+                                                    .hintColor),
+                                            border: InputBorder.none,
+                                            suffixIcon: controller
+                                                    .text.isNotEmpty
+                                                ? IconButton(
+                                                    icon: const Icon(
+                                                        Icons.clear,
+                                                        color: Colors.black),
+                                                    onPressed: () {
+                                                      controller.clear();
+                                                      Provider.of<CategoryProvider>(
+                                                              Get.context!,
+                                                              listen: false)
+                                                          .getCategoryList(
+                                                              '1', "", "",
+                                                              reload: true);
+                                                    },
+                                                  )
+                                                : null),
                                       ),
                                     ),
                                   ),
@@ -370,7 +362,7 @@ class _BalanceWidgetState extends State<BalanceWidget> {
                 profile.balance != null
                     ? CustomPrice(
                         price: num.parse(profile.balance!.toString())
-                            .toStringAsFixed(2))
+                            .toStringAsFixed(5))
                     : CustomPrice(price: "0.00")
               ],
             ),

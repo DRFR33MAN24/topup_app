@@ -34,7 +34,7 @@ class _CategoryWidgetState extends State<CategoryWidget>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (widget.category.type == "giftcard") {
+        if (widget.category.type == "gift cards") {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) =>
                   GiftCardCategoryDetailsScreen(category: widget.category)));
@@ -42,7 +42,7 @@ class _CategoryWidgetState extends State<CategoryWidget>
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) =>
                   TelecomCategoryDetailsScreen(category: widget.category)));
-        } else if (widget.category.type == "utility") {
+        } else {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) =>
                   GiftCardCategoryDetailsScreen(category: widget.category)));
@@ -80,9 +80,15 @@ class _CategoryWidgetState extends State<CategoryWidget>
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                widget.category.title!,
-                style: const TextStyle(fontSize: 16),
+              child: SizedBox(
+                height: 40,
+                child: Text(
+                  softWrap: true,
+                  overflow: TextOverflow.visible,
+                  maxLines: 3,
+                  widget.category.title!,
+                  style: const TextStyle(fontSize: 14),
+                ),
               ),
             )
           ],

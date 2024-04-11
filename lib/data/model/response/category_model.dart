@@ -340,9 +340,9 @@ class Service {
     } else {
       _params = [];
     }
-    _price = num.parse(json["price"].toString()).toStringAsFixed(2);
+    _price = num.parse(json["price"].toString()).toStringAsFixed(5);
     _reseller_price =
-        num.parse(json["reseller_price"].toString()).toStringAsFixed(2);
+        num.parse(json["reseller_price"].toString()).toStringAsFixed(5);
 
     _description = json['description'];
     _type = json['service_type'];

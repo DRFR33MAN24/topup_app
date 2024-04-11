@@ -52,27 +52,11 @@ class _GiftCardCategoryDetailsScreenState
     } else {
       qty = 1;
     }
-
-    stringListReturnedFromApiCall = selectedService.params;
-
-    stringListReturnedFromApiCall!.forEach((str) {
-      var textEditingController = new TextEditingController();
-      textEditingControllers.putIfAbsent(str, () => textEditingController);
-      textFields.add(Text(str));
-      textFields.add(SizedBox(
-        height: 10,
-      ));
-      textFields.add(TextField(
-        controller: textEditingController,
-      ));
-      textFields.add(SizedBox(
-        height: 10,
-      ));
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    buildDynamicFields();
     return WillPopScope(
         onWillPop: () async {
           Navigator.of(context).pop();
@@ -150,27 +134,31 @@ class _GiftCardCategoryDetailsScreenState
                       SizedBox(
                         height: 10,
                       ),
-
-                      Html(data: selectedService.description!),
+                      selectedService.description != null
+                          ? Html(data: selectedService.description!)
+                          : SizedBox(),
 
                       selectedService.min_amount != null
-                          ? TextField(
-                              controller: qtyController,
-                              onChanged: (value) {
-                                setState(() {
-                                  if (value.isNotEmpty) {
-                                    qty = num.parse(value);
-                                  }
-                                });
-                              },
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(
-                                    RegExp(r"[0-9.]")),
-                                CustomRangeTextInputFormatter(
-                                    selectedService.min_amount!,
-                                    selectedService.max_amount!),
-                              ],
-                            )
+                          ? (selectedService.min_amount != 0 &&
+                                  selectedService.max_amount != 0)
+                              ? TextField(
+                                  controller: qtyController,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      if (value.isNotEmpty) {
+                                        qty = num.parse(value);
+                                      }
+                                    });
+                                  },
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r"[0-9.]")),
+                                    CustomRangeTextInputFormatter(
+                                        selectedService.min_amount!,
+                                        selectedService.max_amount!),
+                                  ],
+                                )
+                              : SizedBox()
                           : SizedBox(),
                       SizedBox(
                         height: 10,
@@ -228,10 +216,34 @@ class _GiftCardCategoryDetailsScreenState
         ));
   }
 
+  void buildDynamicFields() {
+    stringListReturnedFromApiCall = selectedService.params;
+    textFields = <Widget>[];
+    textEditingControllers = {};
+    stringListReturnedFromApiCall!.forEach((str) {
+      if (str.isNotEmpty) {
+        var textEditingController = new TextEditingController();
+        textEditingControllers.putIfAbsent(str, () => textEditingController);
+        textFields.add(Text(str));
+        textFields.add(SizedBox(
+          height: 10,
+        ));
+        textFields.add(TextField(
+          controller: textEditingController,
+        ));
+        textFields.add(SizedBox(
+          height: 10,
+        ));
+      }
+    });
+  }
+
   placeOrder() async {
     Map<String, String> fields = {};
     selectedService.params!.forEach((str) {
-      fields.addEntries({str: textEditingControllers[str]!.text}.entries);
+      if (str.isNotEmpty) {
+        fields.addEntries({str: textEditingControllers[str]!.text}.entries);
+      }
     });
     fields.addEntries({'quantity': qty.toString()}.entries);
     await Provider.of<OrderProvider>(context, listen: false).placeOrder(
@@ -251,7 +263,7 @@ class _GiftCardCategoryDetailsScreenState
       return (qty! * num.parse(selectedService.reseller_price!))
           .toStringAsFixed(2);
     } else {
-      return (qty! * num.parse(selectedService.price!)).toStringAsFixed(2);
+      return (qty! * num.parse(selectedService.price!)).toStringAsFixed(5);
     }
   }
 

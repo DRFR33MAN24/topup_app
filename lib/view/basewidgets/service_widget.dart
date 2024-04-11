@@ -106,14 +106,14 @@ class _ServiceWidgetState extends State<ServiceWidget>
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 width: 100,
-                height: 100,
+                height: 105,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
                       child: Text(
                         // overflow: TextOverflow.ellipsis,
-                        // maxLines: 1,
+                        maxLines: 4,
                         // softWrap: false,
                         softWrap: true,
                         overflow: TextOverflow.visible,

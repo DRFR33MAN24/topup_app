@@ -8,7 +8,9 @@ import 'package:giftme/provider/tranaction_provider.dart';
 import 'package:giftme/util/custom_themes.dart';
 import 'package:giftme/util/dimensions.dart';
 import 'package:giftme/view/basewidgets/CustomPrice.dart';
+import 'package:shimmer/shimmer.dart';
 
+import '../../../util/color_resources.dart';
 import '../../basewidgets/no_data.dart';
 
 class TransactionsScreen extends StatefulWidget {
@@ -85,17 +87,20 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
             },
             child: Consumer<TransactionProvider>(
                 builder: (context, transactionProvider, child) {
-              return transactionProvider.transactionList.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: transactionProvider.transactionList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return TransactionWidget(
-                            trx: transactionProvider.transactionList[index]);
-                      },
-                    )
-                  : NoDataWidget(onRefresh: () async {
-                      await loadData(true);
-                    });
+              return !transactionProvider.isLoading
+                  ? transactionProvider.transactionList.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: transactionProvider.transactionList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return TransactionWidget(
+                                trx:
+                                    transactionProvider.transactionList[index]);
+                          },
+                        )
+                      : NoDataWidget(onRefresh: () async {
+                          await loadData(true);
+                        })
+                  : TransactionsShimmer();
             }),
           ),
         ));
@@ -141,7 +146,7 @@ class TransactionWidget extends StatelessWidget {
           Divider(),
           Row(
             children: [
-              Text("note: " + trx.remarks!),
+              Text("Note: " + trx.remarks!),
             ],
           )
         ],
@@ -162,5 +167,36 @@ class TransactionWidget extends StatelessWidget {
         break;
       default:
     }
+  }
+}
+
+class TransactionsShimmer extends StatelessWidget {
+  const TransactionsShimmer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 10,
+      padding: const EdgeInsets.all(0),
+      itemBuilder: (context, index) {
+        return Container(
+          height: 80,
+          margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
+          color: ColorResources.getGrey(context),
+          alignment: Alignment.center,
+          child: Shimmer.fromColors(
+            baseColor: Theme.of(context).colorScheme.surface,
+            highlightColor: Colors.grey[200]!,
+            enabled: Provider.of<TransactionProvider>(context).isLoading,
+            child: ListTile(
+              leading: const CircleAvatar(child: Icon(Icons.notifications)),
+              title: Container(height: 20, color: ColorResources.white),
+              subtitle:
+                  Container(height: 10, width: 50, color: ColorResources.white),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

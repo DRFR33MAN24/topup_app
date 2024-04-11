@@ -10,6 +10,9 @@ import 'package:giftme/util/custom_themes.dart';
 import 'package:giftme/util/dimensions.dart';
 import 'package:giftme/view/basewidgets/CustomPrice.dart';
 import 'package:giftme/view/screens/orders/order_details_screen.dart';
+import 'package:shimmer/shimmer.dart';
+
+import '../../../util/color_resources.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({Key? key}) : super(key: key);
@@ -86,17 +89,19 @@ class _OrdersScreenState extends State<OrdersScreen> {
             },
             child: Consumer<OrderProvider>(
                 builder: (context, orderProvider, child) {
-              return orderProvider.ordersList.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: orderProvider.ordersList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return OrderWidget(
-                            order: orderProvider.ordersList[index]);
-                      },
-                    )
-                  : NoDataWidget(onRefresh: () async {
-                      await loadData(true);
-                    });
+              return !orderProvider.isLoading
+                  ? orderProvider.ordersList.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: orderProvider.ordersList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return OrderWidget(
+                                order: orderProvider.ordersList[index]);
+                          },
+                        )
+                      : NoDataWidget(onRefresh: () async {
+                          await loadData(true);
+                        })
+                  : OrdersShimmer();
             }),
           ),
         ));
@@ -116,7 +121,7 @@ class OrderWidget extends StatelessWidget {
                 OrderDetailsScreen(order: order)));
       },
       child: Container(
-        height: 80,
+        height: 100,
         margin: EdgeInsets.all(5),
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
@@ -131,8 +136,19 @@ class OrderWidget extends StatelessWidget {
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(order.service!.title!, style: robotoBold.copyWith()),
+                Flexible(
+                  child: SizedBox(
+                    width: 250,
+                    child: Text(
+                      order.service!.title!,
+                      style: robotoBold.copyWith(),
+                      overflow: TextOverflow.visible,
+                      softWrap: true,
+                    ),
+                  ),
+                ),
                 Row(
                   children: [
                     Text("Amount: ", style: robotoBold.copyWith()),
@@ -143,6 +159,7 @@ class OrderWidget extends StatelessWidget {
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(getDateFormatted(order.createdAt),
                     style: robotoBold.copyWith()),
@@ -176,6 +193,39 @@ class OrderWidget extends StatelessWidget {
         return Colors.redAccent;
         break;
       default:
+        return Colors.blue;
+        break;
     }
+  }
+}
+
+class OrdersShimmer extends StatelessWidget {
+  const OrdersShimmer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 10,
+      padding: const EdgeInsets.all(0),
+      itemBuilder: (context, index) {
+        return Container(
+          height: 80,
+          margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
+          color: ColorResources.getGrey(context),
+          alignment: Alignment.center,
+          child: Shimmer.fromColors(
+            baseColor: Theme.of(context).colorScheme.surface,
+            highlightColor: Colors.grey[100]!,
+            enabled: Provider.of<OrderProvider>(context).isLoading,
+            child: ListTile(
+              leading: const CircleAvatar(child: Icon(Icons.notifications)),
+              title: Container(height: 20, color: ColorResources.white),
+              subtitle:
+                  Container(height: 10, width: 50, color: ColorResources.white),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
