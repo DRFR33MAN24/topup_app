@@ -152,7 +152,10 @@ class OrderWidget extends StatelessWidget {
                 Row(
                   children: [
                     Text("Amount: ", style: robotoBold.copyWith()),
-                    CustomPrice(price: order.price!)
+                    CustomPrice(
+                      price: order.price!,
+                      lebanese: order.currency == "LBP",
+                    )
                   ],
                 )
               ],
@@ -191,6 +194,10 @@ class OrderWidget extends StatelessWidget {
         break;
       case "rejected":
         return Colors.redAccent;
+      case "canceled":
+        return Colors.redAccent;
+      case "refunded":
+        return Colors.redAccent;
         break;
       default:
         return Colors.blue;
@@ -218,7 +225,6 @@ class OrdersShimmer extends StatelessWidget {
             highlightColor: Colors.grey[100]!,
             enabled: Provider.of<OrderProvider>(context).isLoading,
             child: ListTile(
-              leading: const CircleAvatar(child: Icon(Icons.notifications)),
               title: Container(height: 20, color: ColorResources.white),
               subtitle:
                   Container(height: 10, width: 50, color: ColorResources.white),

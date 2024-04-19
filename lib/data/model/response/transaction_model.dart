@@ -52,6 +52,7 @@ class Transaction {
   String? _amount;
   String? _charge;
   String? _remarks;
+  String? _currency;
   String? _trx_id;
   String? _createdAt;
   String? _updatedAt;
@@ -63,6 +64,7 @@ class Transaction {
       String? amount,
       String? charge,
       String? remarks,
+      String? currency,
       String? trx_id,
       String? createdAt,
       String? updatedAt}) {
@@ -72,6 +74,7 @@ class Transaction {
     _amount = amount;
     _charge = charge;
     _remarks = remarks;
+    _currency = currency;
     _trx_id = trx_id;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
@@ -83,6 +86,7 @@ class Transaction {
   String? get amount => _amount;
   String? get charge => _charge;
   String? get remarks => _remarks;
+  String? get currency => _currency;
   String? get trx_id => _trx_id;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
@@ -91,9 +95,10 @@ class Transaction {
     _id = json["id"];
     _userId = json["user_id"];
     _trx_type = json["trx_type"];
-    _amount = num.parse(json["amount"].toString()).toStringAsFixed(5);
+    _amount = num.parse(json["amount"].toString()).toStringAsFixed(3);
     _charge = json["charge"];
     _remarks = json["remarks"];
+    _currency = json['currency'];
     _trx_id = json["trx_id"];
     _createdAt = json["created_at"];
     _updatedAt = json["updated_at"];
@@ -107,6 +112,7 @@ class Transaction {
     data["amount"] = amount;
     data["charge"] = charge;
     data["remarks"] = remarks;
+    data['currency'] = currency;
     data["trx_id"] = trx_id;
     data["created_at"] = createdAt;
     data["updated_at"] = updatedAt;

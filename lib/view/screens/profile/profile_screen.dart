@@ -428,4 +428,14 @@ class ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+
+  bool validateMobile(String value) {
+    String pattern = r'(^(?:[+]9)?[0-9]{10,12}$)';
+    RegExp regExp = new RegExp(pattern);
+
+    if (!regExp.hasMatch(value)) {
+      return false;
+    }
+    return true;
+  }
 }

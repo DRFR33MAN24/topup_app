@@ -6,7 +6,9 @@ import 'package:giftme/util/custom_themes.dart';
 class CustomPrice extends StatefulWidget {
   final String price;
   final String? formatStyle;
-  const CustomPrice({Key? key, required this.price, this.formatStyle})
+  final bool lebanese;
+  const CustomPrice(
+      {Key? key, required this.price, this.formatStyle, this.lebanese = false})
       : super(key: key);
 
   @override
@@ -17,7 +19,8 @@ class _CustomPriceState extends State<CustomPrice> {
   @override
   Widget build(BuildContext context) {
     return Consumer<SplashProvider>(builder: (context, splashProvider, child) {
-      if (splashProvider.currentCurrency == "USD") {
+      //  if (splashProvider.currentCurrency == "USD") {
+      if (!widget.lebanese) {
         return Text(
           "${getPricePrefix(widget.formatStyle)}${widget.price} \$",
           style: robotoBold.copyWith(
@@ -27,7 +30,8 @@ class _CustomPriceState extends State<CustomPrice> {
         );
       } else {
         return Text(
-            "${getPricePrefix(widget.formatStyle)}${double.parse(widget.price) * splashProvider.configModel!.currencyConversionFactor!} LBP",
+            // "${getPricePrefix(widget.formatStyle)}${double.parse(widget.price) * splashProvider.configModel!.currencyConversionFactor!} LBP",
+            "${getPricePrefix(widget.formatStyle)}${double.parse(widget.price)} LBP",
             style: robotoBold.copyWith(
                 fontSize: 18,
                 fontStyle: FontStyle.italic,

@@ -70,6 +70,9 @@ dependencies:
   path_provider: ^2.0.1
   flutter_html: ^3.0.0-alpha.3
   url_launcher: ^6.1.14
+  local_auth: ^2.1.8
+  esc_pos_printer: ^4.1.0
+  esc_pos_utils: ^1.1.0
 
 dev_dependencies:
   flutter_test:

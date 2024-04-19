@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:giftme/provider/localization_provider.dart';
 import 'package:giftme/provider/theme_provider.dart';
 import 'package:giftme/view/basewidgets/category_shimmer.dart';
 import 'package:giftme/view/screens/notification/notification_screen.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:giftme/data/model/response/category_model.dart' as cat;
 import 'package:giftme/main.dart';
@@ -25,6 +27,8 @@ import 'package:giftme/view/screens/profile/profile_screen.dart';
 import 'package:giftme/view/screens/transactions/transactions_screen.dart';
 import 'package:giftme/view/screens/transfer_balance/transfer_balance.dart';
 
+import '../printer/printer_settings.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -36,6 +40,85 @@ class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController controller = TextEditingController(text: "");
+
+  bool? _canCheckBiometrics;
+  List<BiometricType>? _availableBiometrics;
+
+  // Future<void> _checkBiometrics() async {
+  //   late bool canCheckBiometrics;
+  //   try {
+  //     canCheckBiometrics = await auth.canCheckBiometrics;
+  //   } on PlatformException catch (e) {
+  //     canCheckBiometrics = false;
+  //     print(e);
+  //   }
+  //   if (!mounted) {
+  //     return;
+  //   }
+
+  //   setState(() {
+  //     _canCheckBiometrics = canCheckBiometrics;
+  //   });
+  // }
+
+  // Future<void> _getAvailableBiometrics() async {
+  //   late List<BiometricType> availableBiometrics;
+  //   try {
+  //     availableBiometrics = await auth.getAvailableBiometrics();
+  //   } on PlatformException catch (e) {
+  //     availableBiometrics = <BiometricType>[];
+  //     print(e);
+  //   }
+  //   if (!mounted) {
+  //     return;
+  //   }
+
+  //   setState(() {
+  //     _availableBiometrics = availableBiometrics;
+  //   });
+  // }
+
+  // Future<void> _authenticateWithBiometrics() async {
+  //   bool authenticated = false;
+  //   try {
+  //     setState(() {
+  //       _isAuthenticating = true;
+  //       _authorized = 'Authenticating';
+  //     });
+  //     authenticated = await auth.authenticate(
+  //       localizedReason:
+  //           'Scan your fingerprint (or face or whatever) to authenticate',
+  //       options: const AuthenticationOptions(
+  //         stickyAuth: true,
+  //         biometricOnly: true,
+  //       ),
+  //     );
+  //     setState(() {
+  //       _isAuthenticating = false;
+  //       _authorized = 'Authenticating';
+  //     });
+  //   } on PlatformException catch (e) {
+  //     print(e);
+  //     setState(() {
+  //       _isAuthenticating = false;
+  //       _authorized = 'Error - ${e.message}';
+  //     });
+  //     return;
+  //   }
+  //   if (!mounted) {
+  //     return;
+  //   }
+
+  //   final String message = authenticated ? 'Authorized' : 'Not Authorized';
+  //   setState(() {
+  //     _authorized = message;
+  //   });
+  // }
+
+  // Future<void> _cancelAuthentication() async {
+  //   await auth.stopAuthentication();
+  //   setState(() => _isAuthenticating = false);
+  // }
 
   late cat.Tag selectedTag;
   int offset = 1;
@@ -54,7 +137,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    _loadData(false);
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      _loadData(false);
+    });
 
     _scrollController.addListener(() {
       if (_scrollController.position.maxScrollExtent ==
@@ -351,6 +436,7 @@ class _BalanceWidgetState extends State<BalanceWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "Current Balance",
@@ -359,11 +445,26 @@ class _BalanceWidgetState extends State<BalanceWidget> {
                 SizedBox(
                   height: 10,
                 ),
-                profile.balance != null
-                    ? CustomPrice(
-                        price: num.parse(profile.balance!.toString())
-                            .toStringAsFixed(5))
-                    : CustomPrice(price: "0.00")
+                // profile.balance != null
+                //     ? CustomPrice(
+                //         price: num.parse(profile.balance!.toString())
+                //             .toStringAsFixed(3))
+                //     : CustomPrice(price: "0.00")
+                Provider.of<SplashProvider>(context, listen: false)
+                            .currentCurrency ==
+                        "USD"
+                    ? Text(
+                        "${num.parse(profile.balance!.toString()).toStringAsFixed(3)} \$",
+                        style: robotoBold.copyWith(
+                          fontSize: 18,
+                          fontStyle: FontStyle.italic,
+                        ))
+                    : Text(
+                        "${num.parse(profile.lbalance!.toString()).toStringAsFixed(3)} \LBP",
+                        style: robotoBold.copyWith(
+                          fontSize: 18,
+                          fontStyle: FontStyle.italic,
+                        ))
               ],
             ),
             Column(
@@ -467,6 +568,17 @@ class AppDrawer extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) => ContactUs()));
+          },
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.print,
+            color: Theme.of(context).primaryColor,
+          ),
+          title: Text("Printer Settings"),
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => PrinterSettings()));
           },
         ),
         ListTile(

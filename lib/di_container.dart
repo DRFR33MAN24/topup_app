@@ -20,6 +20,7 @@ import 'package:giftme/provider/localization_provider.dart';
 import 'package:giftme/provider/onboarding_provider.dart';
 import 'package:giftme/provider/order_provider.dart';
 import 'package:giftme/provider/payment_provider.dart';
+import 'package:giftme/provider/printing_provider.dart';
 import 'package:giftme/provider/profile_provider.dart';
 import 'package:giftme/provider/splash_provider.dart';
 import 'package:giftme/provider/style_provider.dart';
@@ -76,6 +77,7 @@ Future<void> init() async {
 
   sl.registerFactory(
       () => LocalizationProvider(sharedPreferences: sl(), dioClient: sl()));
+  sl.registerFactory(() => PrintingProvider(sharedPreferences: sl()));
   sl.registerFactory(() => ThemeProvider(sharedPreferences: sl()));
   sl.registerFactory(() => GoogleSignInProvider());
 

@@ -37,12 +37,6 @@ class MobileVerificationScreenState extends State<MobileVerificationScreen> {
                 .configModel!
                 .countryCode!)
         .dialCode;
-
-    // _countryDialCode = CountryCode.fromCountryCode(
-    //         Provider.of<SplashProvider>(context, listen: false)
-    //             .configModel!
-    //             .countryCode!)
-    //     .dialCode;
   }
 
   @override
@@ -118,17 +112,27 @@ class MobileVerificationScreenState extends State<MobileVerificationScreen> {
                           ? CustomButton(
                               buttonText: getTranslated('continue', context),
                               onTap: () async {
-                                String number = _countryDialCode! +
+                                String controllerNum =
                                     _numberController!.text.trim();
-                                String numberChk =
-                                    _numberController!.text.trim();
+                                if (controllerNum.length == 10) {
+                                  controllerNum = controllerNum.substring(1);
+                                }
+
+                                String number =
+                                    _countryDialCode! + controllerNum;
+                                String numberChk = controllerNum;
 
                                 if (numberChk.isEmpty) {
                                   showCustomSnackBar(
                                       getTranslated(
                                           'enter_phone_number', context),
                                       context);
-                                } else {
+                                }
+                                //  else if (!validateMobile(number)) {
+                                //   showCustomSnackBar(
+                                //       'enter valid phone number', context);
+                                // }
+                                else {
                                   authProvider
                                       .checkPhone(number, widget.tempToken)
                                       .then((value) async {
@@ -214,5 +218,15 @@ class MobileVerificationScreenState extends State<MobileVerificationScreen> {
         ),
       ),
     );
+  }
+
+  bool validateMobile(String value) {
+    String pattern = r'(^(?:[+]9)?[0-9]{10,12}$)';
+    RegExp regExp = new RegExp(pattern);
+
+    if (!regExp.hasMatch(value)) {
+      return false;
+    }
+    return true;
   }
 }

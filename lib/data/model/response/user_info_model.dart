@@ -12,6 +12,7 @@ class UserInfoModel {
   String? createdAt;
   String? updatedAt;
   double? walletBalance;
+  double? lbalance;
   double? loyaltyPoint;
   int? isReseller;
 
@@ -29,6 +30,7 @@ class UserInfoModel {
     this.createdAt,
     this.updatedAt,
     this.walletBalance,
+    this.lbalance,
     this.loyaltyPoint,
     this.isReseller,
   });
@@ -48,6 +50,9 @@ class UserInfoModel {
     updatedAt = json['updated_at'];
     if (json['balance'] != null) {
       walletBalance = num.parse(json['balance']).toDouble();
+    }
+    if (json['lbalance'] != null) {
+      lbalance = num.parse(json['lbalance']).toDouble();
     }
     if (json['loyalty_point'] != null) {
       loyaltyPoint = json['loyalty_point'].toDouble();
@@ -73,6 +78,7 @@ class UserInfoModel {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['balance'] = walletBalance;
+    data['lbalance'] = lbalance;
     data['loyalty_point'] = loyaltyPoint;
     data['is_reseller'] = isReseller;
     return data;

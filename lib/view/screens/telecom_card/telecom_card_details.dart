@@ -116,6 +116,9 @@ class _TelecomCardDetialsState extends State<TelecomCardDetials> {
                       height: 10,
                     ),
                     TextField(
+                      onTapOutside: (event) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      },
                       controller: qtyController,
                       onChanged: (value) {
                         setState(() {
@@ -138,7 +141,10 @@ class _TelecomCardDetialsState extends State<TelecomCardDetials> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Total price"),
-                        CustomPrice(price: calcPrice()),
+                        CustomPrice(
+                          price: calcPrice(),
+                          lebanese: true,
+                        ),
                       ],
                     ),
                     SizedBox(
@@ -195,9 +201,9 @@ class _TelecomCardDetialsState extends State<TelecomCardDetials> {
             .isReseller ==
         1) {
       return (qty! * num.parse(widget.service.reseller_price!))
-          .toStringAsFixed(5);
+          .toStringAsFixed(3);
     } else {
-      return (qty! * num.parse(widget.service.price!)).toStringAsFixed(5);
+      return (qty! * num.parse(widget.service.price!)).toStringAsFixed(3);
     }
   }
 

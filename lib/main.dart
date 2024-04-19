@@ -7,6 +7,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:giftme/firebase_options.dart';
 import 'package:giftme/provider/notification_provider.dart';
+import 'package:giftme/provider/printing_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:giftme/helper/custom_delegate.dart';
 import 'package:giftme/localization/app_localization.dart';
@@ -76,6 +77,7 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (context) => di.sl<PyamentProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<SplashProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<LocalizationProvider>()),
+    ChangeNotifierProvider(create: (context) => di.sl<PrintingProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<ThemeProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<GoogleSignInProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<NotificationProvider>()),

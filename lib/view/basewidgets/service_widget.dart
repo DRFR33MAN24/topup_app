@@ -129,7 +129,8 @@ class _ServiceWidgetState extends State<ServiceWidget>
                                     .isReseller ==
                                 1
                             ? widget.service.reseller_price!
-                            : widget.service.price!)
+                            : widget.service.price!,
+                        lebanese: widget.isTelecom)
                   ],
                 ),
               ),

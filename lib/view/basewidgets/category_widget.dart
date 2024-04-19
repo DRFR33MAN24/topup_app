@@ -53,6 +53,7 @@ class _CategoryWidgetState extends State<CategoryWidget>
       },
       child: Container(
         margin: const EdgeInsets.all(5),
+        padding: EdgeInsets.only(top: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

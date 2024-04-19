@@ -3,9 +3,11 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  charset_converter
   file_selector_windows
   firebase_core
   flutter_localization
+  local_auth_windows
   url_launcher_windows
 )
 

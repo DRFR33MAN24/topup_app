@@ -140,7 +140,11 @@ class TransactionWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("Amount: ", style: robotoBold.copyWith()),
-              CustomPrice(price: trx.amount!, formatStyle: trx.trx_type)
+              CustomPrice(
+                price: trx.amount!,
+                formatStyle: trx.trx_type,
+                lebanese: trx.currency == "LBP",
+              )
             ],
           ),
           Divider(),
@@ -189,7 +193,6 @@ class TransactionsShimmer extends StatelessWidget {
             highlightColor: Colors.grey[200]!,
             enabled: Provider.of<TransactionProvider>(context).isLoading,
             child: ListTile(
-              leading: const CircleAvatar(child: Icon(Icons.notifications)),
               title: Container(height: 20, color: ColorResources.white),
               subtitle:
                   Container(height: 10, width: 50, color: ColorResources.white),

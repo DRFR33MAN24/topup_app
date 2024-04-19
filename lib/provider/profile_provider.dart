@@ -33,6 +33,9 @@ class ProfileProvider extends ChangeNotifier {
   double? _balance;
   double? get balance => _balance;
 
+  double? _lbalance;
+  double? get lbalance => _lbalance;
+
   List<String> get addressTypeList => _addressTypeList;
   String? get addressType => _addressType;
   UserInfoModel? get userInfoModel => _userInfoModel;
@@ -83,6 +86,7 @@ class ProfileProvider extends ChangeNotifier {
       _userInfoModel = UserInfoModel.fromJson(apiResponse.response!.data);
       userID = _userInfoModel!.id.toString();
       _balance = _userInfoModel!.walletBalance;
+      _lbalance = _userInfoModel!.lbalance;
       if (_userInfoModel!.status == 0) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           behavior: SnackBarBehavior.floating,
@@ -103,15 +107,15 @@ class ProfileProvider extends ChangeNotifier {
             (route) => false);
       }
     } else {
-      Provider.of<AuthProvider>(context, listen: false)
-          .clearSharedData()
-          .then((condition) {
-        print("logged out");
-      });
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-              builder: (context) => const MobileVerificationScreen("")),
-          (route) => false);
+      // Provider.of<AuthProvider>(context, listen: false)
+      //     .clearSharedData()
+      //     .then((condition) {
+      //   print("logged out");
+      // });
+      // Navigator.of(context).pushAndRemoveUntil(
+      //     MaterialPageRoute(
+      //         builder: (context) => const MobileVerificationScreen("")),
+      //     (route) => false);
       ApiChecker.checkApi(apiResponse);
     }
     notifyListeners();

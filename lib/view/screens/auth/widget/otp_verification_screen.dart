@@ -117,6 +117,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             horizontal: 39, vertical: 35),
                         child: PinCodeTextField(
                           length: 4,
+                          autoFocus: true,
                           appContext: context,
                           obscureText: false,
                           showCursor: true,

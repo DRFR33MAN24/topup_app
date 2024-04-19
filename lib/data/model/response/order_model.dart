@@ -55,6 +55,7 @@ class Order {
   String? _status;
   String? _description;
   String? _reason;
+  String? _currency;
   String? _orderStatus;
   String? _createdAt;
   String? _updatedAt;
@@ -71,6 +72,7 @@ class Order {
       String? status,
       String? description,
       String? reason,
+      String? currency,
       String? orderStatus,
       String? createdAt,
       String? updatedAt}) {
@@ -98,6 +100,7 @@ class Order {
   String? get status => _status;
   String? get description => _description;
   String? get reason => _reason;
+  String? get currency => _currency;
   String? get orderStatus => _orderStatus;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
@@ -112,10 +115,11 @@ class Order {
     }
     _qty = json["quantity"];
     _uploadedImg = json["uploaded_img"];
-    _price = num.parse(json["price"].toString()).toStringAsFixed(5);
+    _price = num.parse(json["price"].toString()).toStringAsFixed(3);
     _status = json["status"];
     _description = json["status_description"];
     _reason = json["reason"];
+    _currency = json['currency'];
     _orderStatus = json["order_status"];
     _createdAt = json["created_at"];
     _updatedAt = json["updated_at"];
@@ -134,6 +138,7 @@ class Order {
     data["status"] = status;
     data["status_description"] = description;
     data["reason"] = reason;
+    data["currency"] = currency;
     data["order_status"] = orderStatus;
     data["created_at"] = createdAt;
     data["updated_at"] = updatedAt;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:giftme/util/custom_themes.dart';
 import 'package:provider/provider.dart';
 import 'package:giftme/data/model/response/category_model.dart' as cat;
 import 'package:giftme/provider/auth_provider.dart';
@@ -46,7 +47,7 @@ class _GiftCardCategoryDetailsScreenState
 
     servicesMap.update(servicesMap.keys.first, (value) => true);
     selectedService = servicesMap.keys.first;
-    if (selectedService.min_amount != null) {
+    if (selectedService.min_amount != null && selectedService.min_amount != 0) {
       qty = selectedService.min_amount;
       qtyController.text = qty.toString();
     } else {
@@ -56,6 +57,7 @@ class _GiftCardCategoryDetailsScreenState
 
   @override
   Widget build(BuildContext context) {
+    print(selectedService.min_amount);
     buildDynamicFields();
     return WillPopScope(
         onWillPop: () async {
@@ -141,23 +143,46 @@ class _GiftCardCategoryDetailsScreenState
                       selectedService.min_amount != null
                           ? (selectedService.min_amount != 0 &&
                                   selectedService.max_amount != 0)
-                              ? TextField(
-                                  controller: qtyController,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      if (value.isNotEmpty) {
-                                        qty = num.parse(value);
-                                      }
-                                    });
-                                  },
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp(r"[0-9.]")),
-                                    CustomRangeTextInputFormatter(
-                                        selectedService.min_amount!,
-                                        selectedService.max_amount!),
-                                  ],
-                                )
+                              ? (selectedService.max_amount != 1)
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text('Quantity'),
+                                            Text(
+                                              '(min:${selectedService.min_amount} max:${selectedService.max_amount})',
+                                              style: robotoBold.copyWith(
+                                                  fontStyle: FontStyle.italic),
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        TextField(
+                                          controller: qtyController,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              if (value.isNotEmpty) {
+                                                qty = num.parse(value);
+                                              }
+                                            });
+                                          },
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter.allow(
+                                                RegExp(r"[0-9.]")),
+                                            CustomRangeTextInputFormatter(
+                                                selectedService.min_amount!,
+                                                selectedService.max_amount!),
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  : SizedBox()
                               : SizedBox()
                           : SizedBox(),
                       SizedBox(
@@ -229,6 +254,9 @@ class _GiftCardCategoryDetailsScreenState
           height: 10,
         ));
         textFields.add(TextField(
+          onTapOutside: (event) {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
           controller: textEditingController,
         ));
         textFields.add(SizedBox(
@@ -239,6 +267,16 @@ class _GiftCardCategoryDetailsScreenState
   }
 
   placeOrder() async {
+    if (!validateOrder()) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          content: Text("Please Enter all fields to continue"),
+          backgroundColor: Colors.red));
+      return;
+    }
     Map<String, String> fields = {};
     selectedService.params!.forEach((str) {
       if (str.isNotEmpty) {
@@ -255,6 +293,19 @@ class _GiftCardCategoryDetailsScreenState
     Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
   }
 
+  bool validateOrder() {
+    bool isValid = true;
+    selectedService.params!.forEach((str) {
+      if (str.isNotEmpty) {
+        String fieldStr = textEditingControllers[str]!.text;
+        if (fieldStr.isEmpty) {
+          isValid = false;
+        }
+      }
+    });
+    return isValid;
+  }
+
   String calcPrice() {
     if (Provider.of<ProfileProvider>(context, listen: false)
             .userInfoModel!
@@ -263,7 +314,7 @@ class _GiftCardCategoryDetailsScreenState
       return (qty! * num.parse(selectedService.reseller_price!))
           .toStringAsFixed(2);
     } else {
-      return (qty! * num.parse(selectedService.price!)).toStringAsFixed(5);
+      return (qty! * num.parse(selectedService.price!)).toStringAsFixed(3);
     }
   }
 
