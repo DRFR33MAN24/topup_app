@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:giftme/provider/printing_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:giftme/data/model/response/order_model.dart';
 import 'package:giftme/helper/date.dart';
@@ -165,6 +166,31 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   color: Theme.of(context).canvasColor,
                                   child: Icon(
                                     Icons.copy,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  Provider.of<PrintingProvider>(context,
+                                          listen: false)
+                                      .printMessage(widget.order);
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                          behavior: SnackBarBehavior.floating,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(24),
+                                          ),
+                                          content: Text("Result Printing!"),
+                                          backgroundColor: Colors.green));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(8),
+                                  margin: EdgeInsets.all(8),
+                                  color: Theme.of(context).canvasColor,
+                                  child: Icon(
+                                    Icons.print,
                                     color: Theme.of(context).primaryColor,
                                   ),
                                 ),

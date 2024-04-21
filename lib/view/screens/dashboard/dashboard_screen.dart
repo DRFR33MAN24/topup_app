@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:giftme/helper/network_info.dart';
@@ -42,6 +44,10 @@ class DashboardScreenState extends State<DashboardScreen>
           stickyAuth: true,
         ),
       );
+      print(authenticated);
+      if (!authenticated) {
+        exit(0);
+      }
 
       setState(() {
         _isAuthenticating = false;
@@ -67,7 +73,7 @@ class DashboardScreenState extends State<DashboardScreen>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.resumed:
-        //  _authenticate();
+        //_authenticate();
         print("app in resumed");
         break;
       case AppLifecycleState.inactive:
@@ -114,40 +120,36 @@ class DashboardScreenState extends State<DashboardScreen>
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        if (_pageIndex != 0) {
-          _setPage(0);
-          return false;
-        } else {
-          return true;
-        }
-      },
-      child: _authorized == "Authorized"
-          ? Scaffold(
-              key: _scaffoldKey,
-              bottomNavigationBar: BottomNavigationBar(
-                selectedItemColor: Theme.of(context).primaryColor,
-                unselectedItemColor:
-                    Theme.of(context).textTheme.bodyLarge!.color,
-                showUnselectedLabels: true,
-                currentIndex: _pageIndex,
-                type: BottomNavigationBarType.fixed,
-                items: _getBottomWidget(singleVendor),
-                onTap: (int index) {
-                  _setPage(index);
-                },
-              ),
-              body: PageView.builder(
-                controller: _pageController,
-                itemCount: _screens.length,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return _screens[index];
-                },
-              ),
-            )
-          : SizedBox(),
-    );
+        onWillPop: () async {
+          if (_pageIndex != 0) {
+            _setPage(0);
+            return false;
+          } else {
+            return true;
+          }
+        },
+        child: Scaffold(
+          key: _scaffoldKey,
+          bottomNavigationBar: BottomNavigationBar(
+            selectedItemColor: Theme.of(context).primaryColor,
+            unselectedItemColor: Theme.of(context).textTheme.bodyLarge!.color,
+            showUnselectedLabels: true,
+            currentIndex: _pageIndex,
+            type: BottomNavigationBarType.fixed,
+            items: _getBottomWidget(singleVendor),
+            onTap: (int index) {
+              _setPage(index);
+            },
+          ),
+          body: PageView.builder(
+            controller: _pageController,
+            itemCount: _screens.length,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return _screens[index];
+            },
+          ),
+        ));
   }
 
   BottomNavigationBarItem _barItem(String icon, String? label, int index) {

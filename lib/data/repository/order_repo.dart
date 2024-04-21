@@ -20,7 +20,7 @@ class OrderRepo {
   }
 
   Future<http.StreamedResponse> placeOrder(String serviceId, String categoryId,
-      Map<String, String> data, String token) async {
+      Map<String, String> data, String currency, String token) async {
     // File file = File.fromRawPath(img!);
     http.MultipartRequest request = http.MultipartRequest(
         'POST', Uri.parse('${AppConstants.baseUrl}${AppConstants.placeOrder}'));
@@ -32,6 +32,7 @@ class OrderRepo {
       '_method': 'post',
       'service': serviceId,
       'category': categoryId,
+      'currency': currency
     });
 
     request.fields.addAll(fields);
@@ -45,7 +46,7 @@ class OrderRepo {
   }
 
   Future<http.StreamedResponse> placeTransferOrder(
-      String phone, String amount, String token) async {
+      String phone, String amount, String amountLBP, String token) async {
     // File file = File.fromRawPath(img!);
     http.MultipartRequest request = http.MultipartRequest('POST',
         Uri.parse('${AppConstants.baseUrl}${AppConstants.placeTransferOrder}'));
@@ -57,6 +58,7 @@ class OrderRepo {
       '_method': 'post',
       'phone': phone,
       'amount': amount,
+      'amountLBP': amountLBP,
     });
 
     request.fields.addAll(fields);

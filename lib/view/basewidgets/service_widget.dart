@@ -106,7 +106,7 @@ class _ServiceWidgetState extends State<ServiceWidget>
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 width: 100,
-                height: 105,
+                height: 120,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

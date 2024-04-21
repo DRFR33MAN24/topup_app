@@ -54,15 +54,20 @@ class OrderProvider with ChangeNotifier {
     }
   }
 
-  Future<ResponseModel> placeOrder(String serviceId, String categoryId,
-      Map<String, String> fields, String token, Function callback) async {
+  Future<ResponseModel> placeOrder(
+      String serviceId,
+      String categoryId,
+      Map<String, String> fields,
+      String currency,
+      String token,
+      Function callback) async {
     _isLoading = true;
     notifyListeners();
 
 //check if user have enough credits!
     ResponseModel responseModel;
-    http.StreamedResponse response =
-        await orderRepo!.placeOrder(serviceId, categoryId, fields, token);
+    http.StreamedResponse response = await orderRepo!
+        .placeOrder(serviceId, categoryId, fields, currency, token);
     _isLoading = false;
 
     if (response.statusCode == 200) {
@@ -88,15 +93,15 @@ class OrderProvider with ChangeNotifier {
     return responseModel;
   }
 
-  Future<ResponseModel> placeTransferOrder(
-      String phone, String amount, String token, Function callback) async {
+  Future<ResponseModel> placeTransferOrder(String phone, String amount,
+      String amountLBP, String token, Function callback) async {
     _isLoading = true;
     notifyListeners();
 
 //check if user have enough credits!
     ResponseModel responseModel;
     http.StreamedResponse response =
-        await orderRepo!.placeTransferOrder(phone, amount, token);
+        await orderRepo!.placeTransferOrder(phone, amount, amountLBP, token);
     _isLoading = false;
 
     if (response.statusCode == 200) {

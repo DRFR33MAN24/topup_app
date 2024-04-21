@@ -27,6 +27,7 @@ class TransferBalance extends StatefulWidget {
 
 class _TransferBalanceState extends State<TransferBalance> {
   TextEditingController _amountController = TextEditingController();
+  TextEditingController _amountLBPController = TextEditingController();
   // TextEditingController note = TextEditingController();
   TextEditingController? _numberController;
 
@@ -135,6 +136,15 @@ class _TransferBalanceState extends State<TransferBalance> {
                         textInputAction: TextInputAction.done,
                         textInputType: TextInputType.number,
                       ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      CustomTextField(
+                        hintText: "Amount (LBP)",
+                        controller: _amountLBPController,
+                        textInputAction: TextInputAction.done,
+                        textInputType: TextInputType.number,
+                      ),
                       // SizedBox(
                       //   height: 15,
                       // ),
@@ -153,7 +163,11 @@ class _TransferBalanceState extends State<TransferBalance> {
                               onTap: () {
                                 String phone = _numberController!.text.trim();
                                 String amount = _amountController.text.trim();
-                                if (phone.isEmpty || amount.isEmpty) {
+                                String amountLBP =
+                                    _amountLBPController.text.trim();
+                                if (phone.isEmpty ||
+                                    amount.isEmpty ||
+                                    amountLBP.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           behavior: SnackBarBehavior.floating,
@@ -218,7 +232,8 @@ class _TransferBalanceState extends State<TransferBalance> {
   placeOrder() async {
     await Provider.of<OrderProvider>(context, listen: false).placeTransferOrder(
         _numberController!.text.trim(),
-        _amountController.text,
+        _amountController.text.trim(),
+        _amountLBPController.text.trim(),
         Provider.of<AuthProvider>(context, listen: false).getUserToken(),
         route);
 

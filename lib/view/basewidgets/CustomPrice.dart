@@ -21,13 +21,23 @@ class _CustomPriceState extends State<CustomPrice> {
     return Consumer<SplashProvider>(builder: (context, splashProvider, child) {
       //  if (splashProvider.currentCurrency == "USD") {
       if (!widget.lebanese) {
-        return Text(
-          "${getPricePrefix(widget.formatStyle)}${widget.price} \$",
-          style: robotoBold.copyWith(
-              fontSize: 18,
-              fontStyle: FontStyle.italic,
-              color: getPriceColor(widget.formatStyle)),
-        );
+        if (splashProvider.currentCurrency == 'USD') {
+          return Text(
+            "${getPricePrefix(widget.formatStyle)}${widget.price} \$",
+            style: robotoBold.copyWith(
+                fontSize: 18,
+                fontStyle: FontStyle.italic,
+                color: getPriceColor(widget.formatStyle)),
+          );
+        } else {
+          return Text(
+            "${getPricePrefix(widget.formatStyle)}${(double.parse(widget.price) * splashProvider.configModel!.currencyConversionFactor!).toStringAsFixed(3)} LBP",
+            style: robotoBold.copyWith(
+                fontSize: 14,
+                fontStyle: FontStyle.italic,
+                color: getPriceColor(widget.formatStyle)),
+          );
+        }
       } else {
         return Text(
             // "${getPricePrefix(widget.formatStyle)}${double.parse(widget.price) * splashProvider.configModel!.currencyConversionFactor!} LBP",

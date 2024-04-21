@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:giftme/provider/splash_provider.dart';
 import 'package:giftme/util/custom_themes.dart';
 import 'package:provider/provider.dart';
 import 'package:giftme/data/model/response/category_model.dart' as cat;
@@ -288,6 +289,7 @@ class _GiftCardCategoryDetailsScreenState
         selectedService.id.toString(),
         selectedService.categoryId.toString(),
         fields,
+        Provider.of<SplashProvider>(context, listen: false).currentCurrency,
         Provider.of<AuthProvider>(context, listen: false).getUserToken(),
         route);
     Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);

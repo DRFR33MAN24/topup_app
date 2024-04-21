@@ -3,6 +3,7 @@ class ConfigModel {
   String? _privacyPolicy;
   String? _email;
   String? _phone;
+  String? _usdtWallet;
 
   num? _currencyConversionFactor;
   String? _termsConditions;
@@ -29,6 +30,7 @@ class ConfigModel {
       String? privacyPolicy,
       String? email,
       String? phone,
+      String? usdtWallet,
       num? currencyConversionFactor,
       String? termsConditions,
       RefundPolicy? refundPolicy,
@@ -48,6 +50,7 @@ class ConfigModel {
     _privacyPolicy = privacyPolicy;
     _email = email;
     _phone = phone;
+    _usdtWallet = usdtWallet;
 
     _termsConditions = termsConditions;
     if (refundPolicy != null) {
@@ -79,6 +82,7 @@ class ConfigModel {
   String? get aboutUs => _aboutUs;
   String? get privacyPolicy => _privacyPolicy;
   String? get phone => _phone;
+  String? get usdtWallet => _usdtWallet;
   String? get email => _email;
   num? get currencyConversionFactor => _currencyConversionFactor;
 
@@ -105,6 +109,7 @@ class ConfigModel {
     _privacyPolicy = json['privacy_policy'];
     _email = json['company_email'];
     _phone = json['company_phone'];
+    _usdtWallet = json['usdt_wallet'];
     _currencyConversionFactor = json['currency_conversion_factor'];
 
     _termsConditions = json['terms_and_conditions'];
@@ -151,6 +156,7 @@ class ConfigModel {
     data['about_us'] = _aboutUs;
     data['privacy_policy'] = _privacyPolicy;
     data['company_phone'] = _phone;
+    data['usdt_wallet'] = _usdtWallet;
     data['company_email'] = _email;
     data["currency_conversion_factor"] = _currencyConversionFactor;
 
