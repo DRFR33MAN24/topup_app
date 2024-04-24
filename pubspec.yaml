@@ -77,6 +77,10 @@ dependencies:
   permission_handler: ^11.0.1
   print_bluetooth_thermal: ^1.1.0
 
+# dependency_overrides:
+#   esc_pos_utils:
+#     path: ./esc_pos_utils
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

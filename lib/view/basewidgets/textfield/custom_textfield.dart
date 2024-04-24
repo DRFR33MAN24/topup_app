@@ -14,6 +14,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? hintText;
   final TextInputType? textInputType;
+  final List<TextInputFormatter>? inputFormatters;
   final int? maxLine;
   final FocusNode? focusNode;
   final FocusNode? nextNode;
@@ -32,6 +33,7 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.hintText,
     this.textInputType,
+    this.inputFormatters,
     this.maxLine,
     this.focusNode,
     this.nextNode,
@@ -68,6 +70,7 @@ class CustomTextField extends StatelessWidget {
         // ],
       ),
       child: TextFormField(
+        inputFormatters: inputFormatters,
         textAlign: textAlign != null
             ? textAlign!
             : isBorder
@@ -87,11 +90,7 @@ class CustomTextField extends StatelessWidget {
           FocusScope.of(context).requestFocus(nextNode);
         },
         //autovalidate: true,
-        inputFormatters: [
-          isPhoneNumber
-              ? FilteringTextInputFormatter.digitsOnly
-              : FilteringTextInputFormatter.singleLineFormatter
-        ],
+
         validator: (input) {
           if (input!.isEmpty) {
             if (isValidator) {

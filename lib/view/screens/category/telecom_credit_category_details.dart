@@ -15,19 +15,24 @@ import 'package:giftme/view/basewidgets/order_confirmation_dialog.dart';
 import 'package:giftme/view/basewidgets/textfield/custom_textfield.dart';
 import 'package:giftme/view/screens/auth/widget/code_picker_widget.dart';
 import 'package:giftme/view/screens/home/home_screen.dart';
+import 'package:giftme/data/model/response/category_model.dart' as cat;
 
 import '../../../provider/profile_provider.dart';
 
-class TransferBalance extends StatefulWidget {
-  const TransferBalance({Key? key}) : super(key: key);
+class TelecomCreditCategoryDetailsScreen extends StatefulWidget {
+  final cat.Category category;
+  const TelecomCreditCategoryDetailsScreen({Key? key, required this.category})
+      : super(key: key);
 
   @override
-  _TransferBalanceState createState() => _TransferBalanceState();
+  _TelecomCreditCategoryDetailsScreenState createState() =>
+      _TelecomCreditCategoryDetailsScreenState();
 }
 
-class _TransferBalanceState extends State<TransferBalance> {
+class _TelecomCreditCategoryDetailsScreenState
+    extends State<TelecomCreditCategoryDetailsScreen> {
   TextEditingController _amountController = TextEditingController();
-  TextEditingController _amountLBPController = TextEditingController();
+
   // TextEditingController note = TextEditingController();
   TextEditingController? _numberController;
 
@@ -56,7 +61,7 @@ class _TransferBalanceState extends State<TransferBalance> {
           appBar: AppBar(
               title: Row(children: [
                 const SizedBox(width: Dimensions.paddingSizeSmall),
-                Text('Balance Transfer',
+                Text(widget.category.title!,
                     style: robotoRegular.copyWith(
                         fontSize: 20,
                         color: Theme.of(context).colorScheme.onSurface)),
@@ -131,29 +136,11 @@ class _TransferBalanceState extends State<TransferBalance> {
                         height: 15,
                       ),
                       CustomTextField(
-                        hintText: "Amount (USD)",
+                        hintText: "Amount (LBP)",
                         controller: _amountController,
                         textInputAction: TextInputAction.done,
                         textInputType: TextInputType.number,
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      CustomTextField(
-                        hintText: "Amount (LBP)",
-                        controller: _amountLBPController,
-                        textInputAction: TextInputAction.done,
-                        textInputType: TextInputType.number,
-                      ),
-                      // SizedBox(
-                      //   height: 15,
-                      // ),
-                      // CustomTextField(
-                      //   hintText: "Note",
-                      //   controller: note,
-                      //   textInputAction: TextInputAction.done,
-                      //   textInputType: TextInputType.text,
-                      // ),
                       SizedBox(
                         height: 15,
                       ),
@@ -163,11 +150,8 @@ class _TransferBalanceState extends State<TransferBalance> {
                               onTap: () {
                                 String phone = _numberController!.text.trim();
                                 String amount = _amountController.text.trim();
-                                String amountLBP =
-                                    _amountLBPController.text.trim();
-                                if (phone.isEmpty ||
-                                    amount.isEmpty ||
-                                    amountLBP.isEmpty) {
+
+                                if (phone.isEmpty || amount.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           behavior: SnackBarBehavior.floating,
@@ -183,9 +167,9 @@ class _TransferBalanceState extends State<TransferBalance> {
                                   showAnimatedDialog(
                                       context,
                                       OrderConfirmationDialog(
-                                          totalPrice: "",
-                                          lebanese: false,
-                                          details: "Confirm balance transfer?",
+                                          totalPrice: _amountController.text,
+                                          lebanese: true,
+                                          details: "Confirm order?",
                                           onConfirm: placeOrder));
                                 }
                               },
@@ -215,9 +199,9 @@ class _TransferBalanceState extends State<TransferBalance> {
                       children: [
                         Flexible(
                           child: Text(
+                            widget.category.services!.first.description!,
                             softWrap: true,
                             overflow: TextOverflow.visible,
-                            "All orders done through this platform are refundable!",
                           ),
                         )
                       ],
@@ -231,12 +215,12 @@ class _TransferBalanceState extends State<TransferBalance> {
   }
 
   placeOrder() async {
-    await Provider.of<OrderProvider>(context, listen: false).placeTransferOrder(
-        _numberController!.text.trim(),
-        _amountController.text.trim(),
-        _amountLBPController.text.trim(),
-        Provider.of<AuthProvider>(context, listen: false).getUserToken(),
-        route);
+    await Provider.of<OrderProvider>(context, listen: false)
+        .placeTelecomCreditTransferOrder(
+            _numberController!.text.trim(),
+            _amountController.text.trim(),
+            Provider.of<AuthProvider>(context, listen: false).getUserToken(),
+            route);
 
     Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
   }

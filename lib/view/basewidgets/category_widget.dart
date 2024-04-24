@@ -7,6 +7,8 @@ import 'package:giftme/view/screens/category/giftcard_category_details_screen.da
 import 'package:giftme/view/screens/category/telecom_category_details_screen.dart';
 import 'package:giftme/view/screens/credit_transfer/credit_transfer.dart';
 
+import '../screens/category/telecom_credit_category_details.dart';
+
 class CategoryWidget extends StatefulWidget {
   final cat.Category category;
   const CategoryWidget({Key? key, required this.category}) : super(key: key);
@@ -42,6 +44,11 @@ class _CategoryWidgetState extends State<CategoryWidget>
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) =>
                   TelecomCategoryDetailsScreen(category: widget.category)));
+        } else if (widget.category.type == "telecom credit") {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  TelecomCreditCategoryDetailsScreen(
+                      category: widget.category)));
         } else {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context) =>

@@ -245,7 +245,31 @@ class _PrinterSettingsState extends State<PrinterSettings> {
                             ),
                           ),
                         )
-                      : SizedBox()
+                      : Container(
+                          padding: EdgeInsets.all(8),
+                          margin: EdgeInsets.all(8),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Theme.of(context).cardColor,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Theme.of(context).highlightColor,
+                                  spreadRadius: 2),
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  softWrap: true,
+                                  overflow: TextOverflow.visible,
+                                  "Make sure to enable Bluetooth and Location services!",
+                                ),
+                              )
+                            ],
+                          ),
+                        )
                 ],
               ),
             );

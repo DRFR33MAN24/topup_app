@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
@@ -27,10 +28,12 @@ class SplashScreen extends StatefulWidget {
 class SplashScreenState extends State<SplashScreen> {
   final GlobalKey<ScaffoldMessengerState> _globalKey = GlobalKey();
   late StreamSubscription<ConnectivityResult> _onConnectivityChanged;
-
+  late int switchValues;
   @override
   void initState() {
     super.initState();
+    var random = Random();
+    switchValues = random.nextInt(2);
 
     bool firstTime = true;
     _onConnectivityChanged = Connectivity()
@@ -125,46 +128,12 @@ class SplashScreenState extends State<SplashScreen> {
       key: _globalKey,
       body: Provider.of<SplashProvider>(context).hasConnection
           ? Image.asset(
-              Images.logo_giftme,
+              switchValues == 0 ? Images.logo_giftme : Images.logo_giftme2,
               fit: BoxFit.cover,
               height: double.infinity,
               width: double.infinity,
               alignment: Alignment.center,
             )
-          // ? Stack(
-          //     clipBehavior: Clip.none,
-          //     children: [
-          //       Container(
-          //         width: MediaQuery.of(context).size.width,
-          //         height: MediaQuery.of(context).size.height,
-          //         // color: Provider.of<ThemeProvider>(context).darkTheme
-          //         //     ? Colors.black
-          //         //     : ColorResources.getPrimary(context),
-          //         // child: CustomPaint(
-          //         //   painter: SplashPainter(),
-          //         // ),
-          //       ),
-          //       Center(
-          //         child: Column(
-          //           mainAxisSize: MainAxisSize.min,
-          //           children: [
-          //             Image.asset(
-          //               Images.logo_giftme,
-          //               height: 250.0,
-          //               fit: BoxFit.scaleDown,
-          //               width: 250.0,
-          //             ),
-          //             // SvgPicture.asset(
-          //             //   Images.splashScreenLogo,
-          //             //   height: 200.0,
-          //             //   fit: BoxFit.scaleDown,
-          //             //   width: 200.0,
-          //             // )
-          //           ],
-          //         ),
-          //       ),
-          //     ],
-          //   )
           : const NoInternetOrDataScreen(
               isNoInternet: true, child: SplashScreen()),
     );

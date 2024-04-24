@@ -158,6 +158,7 @@ class _TelecomCardDetialsState extends State<TelecomCardDetials> {
                                   context,
                                   OrderConfirmationDialog(
                                       totalPrice: calcPrice(),
+                                      lebanese: true,
                                       details:
                                           "Do you really want to submit this order",
                                       onConfirm: this.placeOrder));

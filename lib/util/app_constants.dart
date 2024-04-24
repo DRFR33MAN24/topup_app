@@ -42,6 +42,8 @@ class AppConstants {
 
   static const String placeOrder = '/api/orders/place-order';
   static const String placeTransferOrder = '/api/orders/place-transfer-order';
+  static const String placeTelecomCreditTransferOrder =
+      '/api/orders/place-telecom-credit-transfer-order';
   static const String placeTelecomOrder = '/api/orders/place-telecom-order';
 
   static const String intro = "intro";

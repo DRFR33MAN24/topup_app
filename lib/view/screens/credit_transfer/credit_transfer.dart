@@ -140,6 +140,7 @@ class _CreditTransferState extends State<CreditTransfer> {
                                 OrderConfirmationDialog(
                                     details:
                                         "Do you really want to submit this order",
+                                    lebanese: true,
                                     onConfirm: this.placeOrder));
                           },
                         )

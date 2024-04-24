@@ -117,7 +117,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Amount: ", style: robotoBold.copyWith()),
-                            CustomPrice(price: widget.order.price!)
+                            Text(
+                              "${widget.order.price!}${widget.order.currency}",
+                              style: robotoBold.copyWith(
+                                fontStyle: FontStyle.italic,
+                              ),
+                            )
                           ],
                         ),
                       ],
@@ -146,6 +151,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                 "Result ",
                                 style: robotoBold.copyWith(fontSize: 16),
                               ),
+                              Spacer(),
                               GestureDetector(
                                 onTap: () async {
                                   await Clipboard.setData(ClipboardData(
@@ -170,37 +176,51 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   ),
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: () async {
-                                  Provider.of<PrintingProvider>(context,
-                                          listen: false)
-                                      .printMessage(widget.order);
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          behavior: SnackBarBehavior.floating,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(24),
-                                          ),
-                                          content: Text("Result Printing!"),
-                                          backgroundColor: Colors.green));
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(8),
-                                  margin: EdgeInsets.all(8),
-                                  color: Theme.of(context).canvasColor,
-                                  child: Icon(
-                                    Icons.print,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
-                              ),
+                              widget.order.status == 'completed'
+                                  ? GestureDetector(
+                                      onTap: () async {
+                                        if (widget.order.service!.type ==
+                                            "telecom") {
+                                          Provider.of<PrintingProvider>(context,
+                                                  listen: false)
+                                              .printCardTokens(
+                                                  context, widget.order);
+                                        } else {
+                                          Provider.of<PrintingProvider>(context,
+                                                  listen: false)
+                                              .printOrder(
+                                                  context, widget.order);
+                                        }
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                behavior:
+                                                    SnackBarBehavior.floating,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(24),
+                                                ),
+                                                content:
+                                                    Text("Result Printing!"),
+                                                backgroundColor: Colors.green));
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(8),
+                                        margin: EdgeInsets.all(8),
+                                        color: Theme.of(context).canvasColor,
+                                        child: Icon(
+                                          Icons.print,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox(),
                             ],
                           ),
                           Divider(),
                           widget.order.reason != null
                               ? Html(
-                                  data: widget.order.reason!,
+                                  data: widget.order.reason!
+                                      .replaceAll(',', '<br>'),
                                 )
                               : SizedBox(
                                   height: 100,

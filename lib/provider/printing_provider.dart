@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:esc_pos_utils/esc_pos_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:giftme/data/datasource/remote/dio/dio_client.dart';
 import 'package:giftme/util/app_constants.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -8,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:esc_pos_printer/esc_pos_printer.dart';
 
 import '../data/model/response/order_model.dart';
+import '../helper/date.dart';
 
 class PrintingProvider extends ChangeNotifier {
   final SharedPreferences? sharedPreferences;
@@ -121,23 +125,179 @@ class PrintingProvider extends ChangeNotifier {
     }
   }
 
-  void printMessage(Order? order) async {
+  void printOrder(BuildContext context, Order? order) async {
     PaperSize paper = _pageSize == "58mm" ? PaperSize.mm58 : PaperSize.mm80;
     final profile = await CapabilityProfile.load();
     final Generator ticket = Generator(paper, profile);
     List<int> bytes = [];
-    List<String> test2 = order!.reason!.split(',');
+
     bytes += ticket.hr();
     bytes += ticket!.row([
       PosColumn(
         text: "ID",
         width: 2,
-        styles: PosStyles(align: PosAlign.center, underline: false),
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+      PosColumn(
+        text: order!.id.toString(),
+        width: 10,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+    ]);
+    bytes += ticket!.row([
+      PosColumn(
+        text: "NAME",
+        width: 2,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+      PosColumn(
+        text: order.service!.title!,
+        width: 10,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+    ]);
+    bytes += ticket!.row([
+      PosColumn(
+        text: "DATE",
+        width: 2,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+      PosColumn(
+        text: getDateFormatted(order.createdAt!),
+        width: 10,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+    ]);
+    bytes += ticket!.row([
+      PosColumn(
+        text: "QNT",
+        width: 2,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+      PosColumn(
+        text: order.qty.toString(),
+        width: 10,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+    ]);
+    bytes += ticket.hr();
+
+    bytes += ticket!.row([
+      PosColumn(
+        text: 'Total',
+        width: 2,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: true,
+            fontType: PosFontType.fontB),
+      ),
+      PosColumn(
+        text: order!.price! + order.currency!,
+        width: 10,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: true,
+            fontType: PosFontType.fontB),
+      ),
+    ]);
+    bytes += ticket.hr();
+    bytes += ticket.text("RESULT:");
+    bytes += ticket.text(order.reason!);
+    bytes += ticket.hr();
+    bytes += ticket.text('Thank you!',
+        styles: PosStyles(
+          align: PosAlign.center,
+          height: PosTextSize.size2,
+          width: PosTextSize.size2,
+        ));
+
+    bytes += ticket.feed(2);
+    bytes += ticket.cut();
+    if (_isWifi!) {
+      // await printer!.connect(_printerIP!, port: _printerPort!);
+      if (isWifiPrinterReady) {
+        printer!.rawBytes(bytes);
+
+        // printer!.disconnect();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            content: Text("Connect to printer first!"),
+            backgroundColor: Colors.green));
+      }
+    } else {
+      if (printers.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            content: Text("Connect to printer first!"),
+            backgroundColor: Colors.green));
+        return;
+      }
+
+      final result = await PrintBluetoothThermal.writeBytes(bytes);
+    }
+  }
+
+  void printCardTokens(BuildContext context, Order? order) async {
+    PaperSize paper = _pageSize == "58mm" ? PaperSize.mm58 : PaperSize.mm80;
+    final profile = await CapabilityProfile.load();
+    final Generator ticket = Generator(paper, profile);
+    List<int> bytes = [];
+    List<String> test2 = order!.reason!.split(',');
+
+    // const esc = '\x1B';
+    // const cSizeESCn = '$esc!'; // Select character size [N]
+    // bytes += Uint8List.fromList(
+    //   List.from(cSizeESCn.codeUnits)..add(48),
+    // );
+
+    bytes += ticket.hr();
+    bytes += ticket!.row([
+      PosColumn(
+        text: "ID",
+        width: 2,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
       ),
       PosColumn(
         text: "TOKEN",
         width: 10,
-        styles: PosStyles(align: PosAlign.center, underline: false),
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
       ),
     ]);
     bytes += ticket.hr();
@@ -150,12 +310,18 @@ class PrintingProvider extends ChangeNotifier {
         PosColumn(
           text: id.toString(),
           width: 2,
-          styles: PosStyles(align: PosAlign.center, underline: false),
+          styles: PosStyles(
+              align: PosAlign.center,
+              underline: false,
+              fontType: PosFontType.fontB),
         ),
         PosColumn(
           text: element,
           width: 10,
-          styles: PosStyles(align: PosAlign.center, underline: false),
+          styles: PosStyles(
+              align: PosAlign.center,
+              underline: false,
+              fontType: PosFontType.fontB),
         ),
       ]);
       id++;
@@ -164,23 +330,29 @@ class PrintingProvider extends ChangeNotifier {
     bytes += ticket.hr();
     bytes += ticket!.row([
       PosColumn(
-        text: 'Tot',
+        text: 'Total',
         width: 2,
         styles: PosStyles(
-          align: PosAlign.center,
-          underline: true,
-        ),
+            align: PosAlign.center,
+            underline: true,
+            fontType: PosFontType.fontB),
       ),
       PosColumn(
         text: order!.price! + "LBP",
         width: 10,
         styles: PosStyles(
-          align: PosAlign.center,
-          underline: true,
-        ),
+            align: PosAlign.center,
+            underline: true,
+            fontType: PosFontType.fontB),
       ),
     ]);
     bytes += ticket.hr();
+    bytes += ticket.text('Thank you!',
+        styles: PosStyles(
+          align: PosAlign.center,
+          height: PosTextSize.size2,
+          width: PosTextSize.size2,
+        ));
 
     bytes += ticket.feed(2);
     bytes += ticket.cut();
@@ -190,9 +362,24 @@ class PrintingProvider extends ChangeNotifier {
         printer!.rawBytes(bytes);
 
         // printer!.disconnect();
-      } else {}
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            content: Text("Connect to printer first!"),
+            backgroundColor: Colors.green));
+      }
     } else {
       if (printers.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            content: Text("Connect to printer first!"),
+            backgroundColor: Colors.green));
         return;
       }
 

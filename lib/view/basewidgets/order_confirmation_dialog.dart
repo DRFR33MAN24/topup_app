@@ -8,11 +8,14 @@ import 'package:giftme/view/basewidgets/CustomPrice.dart';
 class OrderConfirmationDialog extends StatelessWidget {
   final String details;
   final String? totalPrice;
+  final bool? lebanese;
+
   final Function onConfirm;
   const OrderConfirmationDialog(
       {Key? key,
       required this.details,
       required this.onConfirm,
+      this.lebanese,
       this.totalPrice})
       : super(key: key);
   @override
@@ -28,17 +31,22 @@ class OrderConfirmationDialog extends StatelessWidget {
               Text(details, style: robotoRegular, textAlign: TextAlign.center),
         ),
         const Divider(height: 0, color: ColorResources.hintTextColor),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: Dimensions.paddingSizeLarge, vertical: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Total Price:"),
-              CustomPrice(price: totalPrice!),
-            ],
-          ),
-        ),
+        totalPrice!.isNotEmpty
+            ? Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: Dimensions.paddingSizeLarge, vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Total Price:"),
+                    CustomPrice(
+                      price: totalPrice!,
+                      lebanese: lebanese!,
+                    ),
+                  ],
+                ),
+              )
+            : SizedBox(),
         const Divider(height: 0, color: ColorResources.hintTextColor),
         Row(children: [
           Expanded(

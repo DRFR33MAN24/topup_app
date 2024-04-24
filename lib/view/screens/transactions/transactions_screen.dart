@@ -140,10 +140,11 @@ class TransactionWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("Amount: ", style: robotoBold.copyWith()),
-              CustomPrice(
-                price: trx.amount!,
-                formatStyle: trx.trx_type,
-                lebanese: trx.currency == "LBP",
+              Text(
+                "${trx.amount!}${trx.currency}",
+                style: robotoBold.copyWith(
+                  fontStyle: FontStyle.italic,
+                ),
               )
             ],
           ),

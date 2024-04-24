@@ -152,10 +152,13 @@ class OrderWidget extends StatelessWidget {
                 Row(
                   children: [
                     Text("Amount: ", style: robotoBold.copyWith()),
-                    CustomPrice(
-                      price: order.price!,
-                      lebanese: order.currency == "LBP",
-                    )
+                    Text(
+                      "${order.price!}${order.currency}",
+                      style: robotoBold.copyWith(
+                        fontSize: 16,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
                   ],
                 )
               ],

@@ -223,6 +223,7 @@ class _GiftCardCategoryDetailsScreenState
                                         OrderConfirmationDialog(
                                             details:
                                                 "Do you really want to submit this order",
+                                            lebanese: false,
                                             totalPrice: calcPrice(),
                                             onConfirm: placeOrder));
                                   },

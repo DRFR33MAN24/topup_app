@@ -7,9 +7,13 @@ class CustomPrice extends StatefulWidget {
   final String price;
   final String? formatStyle;
   final bool lebanese;
-  const CustomPrice(
-      {Key? key, required this.price, this.formatStyle, this.lebanese = false})
-      : super(key: key);
+
+  const CustomPrice({
+    Key? key,
+    required this.price,
+    this.formatStyle,
+    this.lebanese = false,
+  }) : super(key: key);
 
   @override
   _CustomPriceState createState() => _CustomPriceState();

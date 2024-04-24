@@ -114,7 +114,7 @@ class MobileVerificationScreenState extends State<MobileVerificationScreen> {
                               onTap: () async {
                                 String controllerNum =
                                     _numberController!.text.trim();
-                                if (controllerNum.length == 10) {
+                                if (controllerNum.startsWith('0')) {
                                   controllerNum = controllerNum.substring(1);
                                 }
 
