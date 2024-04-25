@@ -281,10 +281,42 @@ class PrintingProvider extends ChangeNotifier {
     //   List.from(cSizeESCn.codeUnits)..add(48),
     // );
 
-    bytes += ticket.hr();
+    // bytes += ticket.hr();
+    bytes += ticket.text('giftme',
+        linesAfter: 1,
+        styles: PosStyles(
+          align: PosAlign.center,
+          height: PosTextSize.size1,
+          width: PosTextSize.size1,
+        ));
+    bytes += ticket.text(order.service!.title!,
+        linesAfter: 1,
+        styles: PosStyles(
+          align: PosAlign.center,
+          height: PosTextSize.size1,
+          width: PosTextSize.size1,
+        ));
     bytes += ticket!.row([
       PosColumn(
-        text: "ID",
+        text: "ORDER ID",
+        width: 3,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+      PosColumn(
+        text: order.id.toString(),
+        width: 9,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+    ]);
+    bytes += ticket!.row([
+      PosColumn(
+        text: "DATE",
         width: 2,
         styles: PosStyles(
             align: PosAlign.center,
@@ -292,7 +324,7 @@ class PrintingProvider extends ChangeNotifier {
             fontType: PosFontType.fontB),
       ),
       PosColumn(
-        text: "TOKEN",
+        text: getDateFormatted(order.createdAt),
         width: 10,
         styles: PosStyles(
             align: PosAlign.center,
@@ -300,53 +332,115 @@ class PrintingProvider extends ChangeNotifier {
             fontType: PosFontType.fontB),
       ),
     ]);
-    bytes += ticket.hr();
-    int id = 1;
+    bytes += ticket!.row([
+      PosColumn(
+        text: "------------------------------",
+        width: 12,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+    ]);
+
+    //bytes += ticket.hr();
+
     test2.forEach((element) {
       if (element.isEmpty) {
         return;
       }
+      var card = element.split('%');
+      card.forEach((detail) {
+        if (detail.isEmpty) {
+          return;
+        }
+        bytes += ticket!.row([
+          PosColumn(
+            text: detail,
+            width: 12,
+            styles: PosStyles(
+                align: PosAlign.center,
+                underline: false,
+                fontType: PosFontType.fontB),
+          ),
+        ]);
+      });
+
       bytes += ticket!.row([
         PosColumn(
-          text: id.toString(),
-          width: 2,
-          styles: PosStyles(
-              align: PosAlign.center,
-              underline: false,
-              fontType: PosFontType.fontB),
-        ),
-        PosColumn(
-          text: element,
-          width: 10,
+          text: "******************************",
+          width: 12,
           styles: PosStyles(
               align: PosAlign.center,
               underline: false,
               fontType: PosFontType.fontB),
         ),
       ]);
-      id++;
     });
-    bytes += ticket.hr();
-    bytes += ticket.hr();
     bytes += ticket!.row([
       PosColumn(
-        text: 'Total',
-        width: 2,
+        text: "------------------------------",
+        width: 12,
         styles: PosStyles(
             align: PosAlign.center,
-            underline: true,
-            fontType: PosFontType.fontB),
-      ),
-      PosColumn(
-        text: order!.price! + "LBP",
-        width: 10,
-        styles: PosStyles(
-            align: PosAlign.center,
-            underline: true,
+            underline: false,
             fontType: PosFontType.fontB),
       ),
     ]);
-    bytes += ticket.hr();
+    // bytes += ticket.hr();
+    // bytes += ticket.hr();
+    // bytes += ticket!.row([
+    //   PosColumn(
+    //     text: 'Total',
+    //     width: 2,
+    //     styles: PosStyles(
+    //         align: PosAlign.center,
+    //         underline: false,
+    //         fontType: PosFontType.fontB),
+    //   ),
+    //   PosColumn(
+    //     text: order!.price! + "LBP",
+    //     width: 10,
+    //     styles: PosStyles(
+    //         align: PosAlign.center,
+    //         underline: false,
+    //         fontType: PosFontType.fontB),
+    //   ),
+    // ]);
+    bytes += ticket!.row([
+      PosColumn(
+        text: "------------------------------",
+        width: 12,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+    ]);
+    if (order.service!.title!.toLowerCase().contains('alfa')) {
+      bytes += ticket!.row([
+        PosColumn(
+          text: "Dial*14*xxxxxxxxxxxxxx#",
+          width: 12,
+          styles: PosStyles(
+              align: PosAlign.center,
+              underline: false,
+              fontType: PosFontType.fontB),
+        ),
+      ]);
+    } else {
+      bytes += ticket!.row([
+        PosColumn(
+          text: "Dial*200*xxxxxxxxxxxxxx#",
+          width: 12,
+          styles: PosStyles(
+              align: PosAlign.center,
+              underline: false,
+              fontType: PosFontType.fontB),
+        ),
+      ]);
+    }
+    // bytes += ticket.hr();
     bytes += ticket.text('Thank you!',
         styles: PosStyles(
           align: PosAlign.center,

@@ -220,7 +220,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           widget.order.reason != null
                               ? Html(
                                   data: widget.order.reason!
-                                      .replaceAll(',', '<br>'),
+                                      .replaceAll(',', '<br>')
+                                      .replaceAll('%', '<br>'),
                                 )
                               : SizedBox(
                                   height: 100,

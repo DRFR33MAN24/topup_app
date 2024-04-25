@@ -106,6 +106,38 @@ class _ContactUsState extends State<ContactUs> {
                           ),
                         ],
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            splashProvider.configModel!.phone2!,
+                            style: robotoBold.copyWith(fontSize: 16),
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              await Clipboard.setData(ClipboardData(
+                                  text: splashProvider.configModel!.phone2!));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                      behavior: SnackBarBehavior.floating,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(24),
+                                      ),
+                                      content: Text("Phone copied!"),
+                                      backgroundColor: Colors.green));
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(8),
+                              margin: EdgeInsets.all(8),
+                              color: Theme.of(context).canvasColor,
+                              child: Icon(
+                                Icons.copy,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       Text(
                         "USDT Wallet Address (TRC20)",
                         style: robotoBold,
@@ -179,6 +211,21 @@ class _ContactUsState extends State<ContactUs> {
                       Divider(),
                       ListTile(
                         leading: Icon(
+                          Icons.phone,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        title: Text(
+                            "Support: ${splashProvider.configModel!.phone2!}"),
+                        onTap: () async {
+                          Uri uri = Uri(
+                              scheme: 'tel',
+                              path: splashProvider.configModel!.phone2);
+                          await launchUrl(uri);
+                        },
+                      ),
+                      Divider(),
+                      ListTile(
+                        leading: Icon(
                           Icons.chat,
                           color: Theme.of(context).primaryColor,
                         ),
@@ -189,6 +236,22 @@ class _ContactUsState extends State<ContactUs> {
                               scheme: 'https',
                               path:
                                   'wa.me/${splashProvider.configModel!.phone}');
+                          await launchUrl(uri);
+                        },
+                      ),
+                      Divider(),
+                      ListTile(
+                        leading: Icon(
+                          Icons.chat,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        title: Text(
+                            "Whatsapp: ${splashProvider.configModel!.phone2!}"),
+                        onTap: () async {
+                          Uri uri = Uri(
+                              scheme: 'https',
+                              path:
+                                  'wa.me/${splashProvider.configModel!.phone2}');
                           await launchUrl(uri);
                         },
                       ),
