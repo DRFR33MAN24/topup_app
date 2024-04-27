@@ -1,6 +1,7 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
+import 'package:giftme/view/basewidgets/CustomPrice.dart';
 import 'package:provider/provider.dart';
 import 'package:giftme/localization/language_constants.dart';
 import 'package:giftme/provider/auth_provider.dart';
@@ -31,7 +32,8 @@ class TelecomCreditCategoryDetailsScreen extends StatefulWidget {
 
 class _TelecomCreditCategoryDetailsScreenState
     extends State<TelecomCreditCategoryDetailsScreen> {
-  TextEditingController _amountController = TextEditingController();
+  TextEditingController _amountController = TextEditingController(text: "0");
+  String amount = "0.00";
 
   // TextEditingController note = TextEditingController();
   TextEditingController? _numberController;
@@ -135,11 +137,41 @@ class _TelecomCreditCategoryDetailsScreenState
                       SizedBox(
                         height: 15,
                       ),
-                      CustomTextField(
-                        hintText: "Amount (LBP)",
+                      TextField(
                         controller: _amountController,
                         textInputAction: TextInputAction.done,
-                        textInputType: TextInputType.number,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: "Amount (USD)",
+                          hintStyle: titilliumRegular.copyWith(
+                              color: Theme.of(context).hintColor),
+                          errorStyle: const TextStyle(height: 1.5),
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 12.0, horizontal: 15),
+                          isDense: true,
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            amount = value;
+                          });
+                        },
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Total price"),
+                          Text(
+                            calcPrice() + " LBP",
+                            style: robotoBold.copyWith(
+                              fontSize: 14,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          )
+                        ],
                       ),
                       SizedBox(
                         height: 15,
@@ -167,7 +199,7 @@ class _TelecomCreditCategoryDetailsScreenState
                                   showAnimatedDialog(
                                       context,
                                       OrderConfirmationDialog(
-                                          totalPrice: _amountController.text,
+                                          totalPrice: calcPrice(),
                                           lebanese: true,
                                           details: "Confirm order?",
                                           onConfirm: placeOrder));
@@ -218,7 +250,7 @@ class _TelecomCreditCategoryDetailsScreenState
     await Provider.of<OrderProvider>(context, listen: false)
         .placeTelecomCreditTransferOrder(
             _numberController!.text.trim(),
-            _amountController.text.trim(),
+            calcPrice(),
             Provider.of<AuthProvider>(context, listen: false).getUserToken(),
             route);
 
@@ -242,6 +274,14 @@ class _TelecomCreditCategoryDetailsScreenState
           ),
           content: Text(message),
           backgroundColor: Colors.green));
+    }
+  }
+
+  calcPrice() {
+    if (_amountController.text != "") {
+      return "${(double.parse(amount.trim()) * Provider.of<SplashProvider>(context, listen: false).configModel!.currencyConversionFactor!).toStringAsFixed(3)}";
+    } else {
+      return "0.00";
     }
   }
 }

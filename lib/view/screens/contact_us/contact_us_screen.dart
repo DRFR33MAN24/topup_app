@@ -68,7 +68,7 @@ class _ContactUsState extends State<ContactUs> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Image.asset(Images.wish_gateway,
-                            width: 250, height: 125),
+                            width: 150, height: 75),
                       ),
                       Text(
                         "الرقم المخصص للدفع عبر ويش",

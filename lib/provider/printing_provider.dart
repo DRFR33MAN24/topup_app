@@ -130,8 +130,34 @@ class PrintingProvider extends ChangeNotifier {
     final profile = await CapabilityProfile.load();
     final Generator ticket = Generator(paper, profile);
     List<int> bytes = [];
+    bytes += ticket.text('giftme',
+        linesAfter: 1,
+        styles: PosStyles(
+          align: PosAlign.center,
+          height: PosTextSize.size1,
+          width: PosTextSize.size1,
+        ));
+    bytes += ticket!.row([
+      PosColumn(
+        text: order!.service!.title!,
+        width: 12,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      )
+    ]);
+    bytes += ticket!.row([
+      PosColumn(
+        text: "------------------------------",
+        width: 12,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+    ]);
 
-    bytes += ticket.hr();
     bytes += ticket!.row([
       PosColumn(
         text: "ID",
@@ -150,24 +176,7 @@ class PrintingProvider extends ChangeNotifier {
             fontType: PosFontType.fontB),
       ),
     ]);
-    bytes += ticket!.row([
-      PosColumn(
-        text: "NAME",
-        width: 2,
-        styles: PosStyles(
-            align: PosAlign.center,
-            underline: false,
-            fontType: PosFontType.fontB),
-      ),
-      PosColumn(
-        text: order.service!.title!,
-        width: 10,
-        styles: PosStyles(
-            align: PosAlign.center,
-            underline: false,
-            fontType: PosFontType.fontB),
-      ),
-    ]);
+
     bytes += ticket!.row([
       PosColumn(
         text: "DATE",
@@ -204,7 +213,16 @@ class PrintingProvider extends ChangeNotifier {
             fontType: PosFontType.fontB),
       ),
     ]);
-    bytes += ticket.hr();
+    bytes += ticket!.row([
+      PosColumn(
+        text: "------------------------------",
+        width: 12,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+    ]);
 
     bytes += ticket!.row([
       PosColumn(
@@ -224,10 +242,28 @@ class PrintingProvider extends ChangeNotifier {
             fontType: PosFontType.fontB),
       ),
     ]);
-    bytes += ticket.hr();
+    bytes += ticket!.row([
+      PosColumn(
+        text: "------------------------------",
+        width: 12,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+    ]);
     bytes += ticket.text("RESULT:");
     bytes += ticket.text(order.reason!);
-    bytes += ticket.hr();
+    bytes += ticket!.row([
+      PosColumn(
+        text: "------------------------------",
+        width: 12,
+        styles: PosStyles(
+            align: PosAlign.center,
+            underline: false,
+            fontType: PosFontType.fontB),
+      ),
+    ]);
     bytes += ticket.text('Thank you!',
         styles: PosStyles(
           align: PosAlign.center,
