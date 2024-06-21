@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<key>NSFaceIDUsageDescription</key>
+<string>Need to authenticate with face id to protect transactions</string>
+<key>NSBluetoothAlwaysUsageDescription</key>
+<string>You need bluetooth access to print to thermal printer</string>
+<key>NSBluetoothPeripheralUsageDescription</key>
+<string>You need bluetooth access to print to thermal printer</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>You need Photo Library Access to upload profile photo.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

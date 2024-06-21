@@ -45,7 +45,8 @@ class DashboardScreenState extends State<DashboardScreen> {
       );
       print(authenticated);
       if (!authenticated) {
-        exit(0);
+        _authenticate();
+        // exit(0);
       }
 
       setState(() {
@@ -140,13 +141,16 @@ class DashboardScreenState extends State<DashboardScreen> {
               _setPage(index);
             },
           ),
-          body: PageView.builder(
-            controller: _pageController,
-            itemCount: _screens.length,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return _screens[index];
-            },
+          body: AbsorbPointer(
+            absorbing: _authorized != 'Authorized',
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: _screens.length,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return _screens[index];
+              },
+            ),
           ),
         ));
   }

@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDyDFOD7-3SGVC9-67t25ZWDw3MgeGG3_Y',
-    appId: '1:984329879853:android:517fcb7f1956b5e129d3a4',
+    appId: '1:984329879853:android:f13dd11a04ff051e29d3a4',
     messagingSenderId: '984329879853',
     projectId: 'giftme-2a991',
     storageBucket: 'giftme-2a991.appspot.com',
@@ -67,7 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '984329879853',
     projectId: 'giftme-2a991',
     storageBucket: 'giftme-2a991.appspot.com',
-    iosBundleId: 'com.codeone.giftme',
+    iosBundleId: 'com.codeone.giftmestore',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -76,6 +76,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '984329879853',
     projectId: 'giftme-2a991',
     storageBucket: 'giftme-2a991.appspot.com',
-    iosBundleId: 'com.codeone.giftme.RunnerTests',
+    iosBundleId: 'com.codeone.giftmestore.RunnerTests',
   );
 }

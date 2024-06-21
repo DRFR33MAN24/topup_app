@@ -1,4 +1,4 @@
-package com.codeone.giftme
+package com.codeone.giftmestore
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

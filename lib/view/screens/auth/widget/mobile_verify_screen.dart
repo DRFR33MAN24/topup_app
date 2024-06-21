@@ -94,6 +94,7 @@ class MobileVerificationScreenState extends State<MobileVerificationScreen> {
                                     .textTheme
                                     .displayLarge!
                                     .color),
+                            countryFilter: ['LB'],
                           ),
                           Expanded(
                               child: CustomTextField(

@@ -58,7 +58,7 @@ class _GiftCardCategoryDetailsScreenState
 
   @override
   Widget build(BuildContext context) {
-    print(selectedService.min_amount);
+    print(selectedService.price);
     buildDynamicFields();
     return WillPopScope(
         onWillPop: () async {
@@ -315,9 +315,9 @@ class _GiftCardCategoryDetailsScreenState
             .isReseller ==
         1) {
       return (qty! * num.parse(selectedService.reseller_price!))
-          .toStringAsFixed(2);
+          .toStringAsFixed(5);
     } else {
-      return (qty! * num.parse(selectedService.price!)).toStringAsFixed(3);
+      return (qty! * num.parse(selectedService.price!)).toStringAsFixed(5);
     }
   }
 

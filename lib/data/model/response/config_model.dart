@@ -5,6 +5,8 @@ class ConfigModel {
   String? _phone;
   String? _phone2;
   String? _usdtWallet;
+  String? _credit_transfer_percent;
+  String? _ticker_text;
 
   num? _currencyConversionFactor;
   String? _termsConditions;
@@ -33,6 +35,8 @@ class ConfigModel {
       String? phone,
       String? phone2,
       String? usdtWallet,
+      String? credit_transfer_percent,
+      String? ticker_text,
       num? currencyConversionFactor,
       String? termsConditions,
       RefundPolicy? refundPolicy,
@@ -54,6 +58,8 @@ class ConfigModel {
     _phone = phone;
     _phone2 = phone2;
     _usdtWallet = usdtWallet;
+    _credit_transfer_percent = credit_transfer_percent;
+    _ticker_text = ticker_text;
 
     _termsConditions = termsConditions;
     if (refundPolicy != null) {
@@ -87,6 +93,8 @@ class ConfigModel {
   String? get phone => _phone;
   String? get phone2 => _phone2;
   String? get usdtWallet => _usdtWallet;
+  String? get credit_transfer_percent => _credit_transfer_percent;
+  String? get ticker_text => _ticker_text;
   String? get email => _email;
   num? get currencyConversionFactor => _currencyConversionFactor;
 
@@ -115,6 +123,8 @@ class ConfigModel {
     _phone = json['company_phone'];
     _phone2 = json['company_phone2'];
     _usdtWallet = json['usdt_wallet'];
+    _credit_transfer_percent = json['credit_transfer_percent'];
+    _ticker_text = json['ticker_text'];
     _currencyConversionFactor = json['currency_conversion_factor'];
 
     _termsConditions = json['terms_and_conditions'];
@@ -163,6 +173,8 @@ class ConfigModel {
     data['company_phone'] = _phone;
     data['company_phone2'] = _phone2;
     data['usdt_wallet'] = _usdtWallet;
+    data['credit_transfer_percent'] = _credit_transfer_percent;
+    data['ticker_text'] = _ticker_text;
     data['company_email'] = _email;
     data["currency_conversion_factor"] = _currencyConversionFactor;
 

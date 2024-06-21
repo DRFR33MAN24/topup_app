@@ -78,6 +78,7 @@ class Images {
   static const String logo_giftme = 'assets/images/logo_giftme.png';
   static const String logo_giftme2 = 'assets/images/logo_giftme2.png';
   static const String wish_gateway = 'assets/images/wish.png';
+  static const String whatsapp = 'assets/images/whatsapp.svg';
   static const String cPolicy = 'assets/images/c_policy.png';
   static const String returnPolicy = 'assets/images/return_policy.png';
   static const String refundPolicy = 'assets/images/refund_policy.png';

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -14,7 +16,7 @@ import 'package:giftme/localization/app_localization.dart';
 import 'package:giftme/notification/my_notification.dart';
 import 'package:giftme/provider/auth_provider.dart';
 import 'package:giftme/provider/category_provider.dart';
-import 'package:giftme/provider/google_sign_in_provider.dart';
+
 import 'package:giftme/provider/localization_provider.dart';
 import 'package:giftme/provider/onboarding_provider.dart';
 import 'package:giftme/provider/order_provider.dart';
@@ -53,6 +55,10 @@ Future<void> main() async {
         ? int.parse(notificationAppLaunchDetails.payload!)
         : null;
   }
+
+  if (Platform.isIOS) {
+    FirebaseMessaging.instance.requestPermission();
+  }
   final RemoteMessage? remoteMessage =
       await FirebaseMessaging.instance.getInitialMessage();
   if (remoteMessage != null) {
@@ -79,7 +85,6 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (context) => di.sl<LocalizationProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<PrintingProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<ThemeProvider>()),
-    ChangeNotifierProvider(create: (context) => di.sl<GoogleSignInProvider>()),
     ChangeNotifierProvider(create: (context) => di.sl<NotificationProvider>()),
   ], child: const MyApp()));
 }

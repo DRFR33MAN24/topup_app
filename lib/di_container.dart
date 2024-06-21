@@ -15,7 +15,7 @@ import 'package:giftme/data/repository/transaction_repo.dart';
 import 'package:giftme/helper/network_info.dart';
 import 'package:giftme/provider/auth_provider.dart';
 import 'package:giftme/provider/category_provider.dart';
-import 'package:giftme/provider/google_sign_in_provider.dart';
+
 import 'package:giftme/provider/localization_provider.dart';
 import 'package:giftme/provider/onboarding_provider.dart';
 import 'package:giftme/provider/order_provider.dart';
@@ -79,7 +79,6 @@ Future<void> init() async {
       () => LocalizationProvider(sharedPreferences: sl(), dioClient: sl()));
   sl.registerFactory(() => PrintingProvider(sharedPreferences: sl()));
   sl.registerFactory(() => ThemeProvider(sharedPreferences: sl()));
-  sl.registerFactory(() => GoogleSignInProvider());
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();

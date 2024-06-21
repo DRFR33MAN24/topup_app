@@ -1,10 +1,10 @@
 import 'package:giftme/data/model/response/language_model.dart';
 
 class AppConstants {
-  static const String appName = 'GiftMe';
+  static const String appName = 'GiftMe Store';
   static const String appVersion = '14.0';
-  // static const String baseUrl = 'http://192.168.1.9:8000';
-  static const String baseUrl = 'https://admin.giftmeapp.net';
+  static const String baseUrl = 'http://192.168.1.9:8000';
+  // static const String baseUrl = 'https://admin.giftmeapp.net';
   static const String socketUri = 'ws://192.168.1.9:6001';
   static const String categories_url = '/assets/uploads/categories/';
   static const String services_url = '/assets/uploads/services/';

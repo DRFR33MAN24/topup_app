@@ -48,7 +48,7 @@ class _TelecomCategoryDetailsScreenState
                 child: Column(
               children: [
                 SizedBox(
-                    height: Dimensions.cardHeight * 3,
+                    height: Dimensions.cardHeight * 2.1,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: StaggeredGridView.countBuilder(

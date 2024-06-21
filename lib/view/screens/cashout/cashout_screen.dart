@@ -9,7 +9,6 @@ import 'package:giftme/util/dimensions.dart';
 import 'package:giftme/util/images.dart';
 import 'package:giftme/view/basewidgets/button/custom_button.dart';
 import 'package:giftme/view/screens/cashout/widget/custom_check_box.dart';
-import 'package:giftme/view/screens/payment/payment_screen.dart';
 
 class CashoutScreen extends StatefulWidget {
   final Package package;
@@ -122,11 +121,11 @@ class _CashoutScreenState extends State<CashoutScreen> {
               var paymentMethodIndex =
                   Provider.of<PyamentProvider>(context).paymentMethodIndex;
               var credit_bundle_id = widget.package.id.toString();
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => PaymentScreen(
-                        paymentMethod: paymentMethodIndex.toString(),
-                        credit_bundle_id: credit_bundle_id,
-                      )));
+              // Navigator.of(context).push(MaterialPageRoute(
+              //     builder: (BuildContext context) => PaymentScreen(
+              //           paymentMethod: paymentMethodIndex.toString(),
+              //           credit_bundle_id: credit_bundle_id,
+              //         )));
             },
           ),
         ));

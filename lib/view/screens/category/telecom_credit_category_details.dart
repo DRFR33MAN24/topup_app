@@ -191,9 +191,8 @@ class _TelecomCreditCategoryDetailsScreenState
                                             borderRadius:
                                                 BorderRadius.circular(24),
                                           ),
-                                          content: Text(getTranslated(
-                                              'Please enter both fields to continue',
-                                              context)!),
+                                          content: Text(
+                                              'Please enter both fields to continue'),
                                           backgroundColor: Colors.red));
                                 } else {
                                   showAnimatedDialog(
@@ -279,7 +278,7 @@ class _TelecomCreditCategoryDetailsScreenState
 
   calcPrice() {
     if (_amountController.text != "") {
-      return "${(double.parse(amount.trim()) * Provider.of<SplashProvider>(context, listen: false).configModel!.currencyConversionFactor!).toStringAsFixed(3)}";
+      return "${(double.parse(amount.trim()) + (double.parse(amount.trim()) * double.parse(Provider.of<SplashProvider>(context, listen: false).configModel!.credit_transfer_percent!) / 100) * Provider.of<SplashProvider>(context, listen: false).configModel!.currencyConversionFactor!).toStringAsFixed(3)}";
     } else {
       return "0.00";
     }
